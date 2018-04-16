@@ -39,6 +39,7 @@ public class O3Client {
         case getPortfolioValue = "/v1/historical"
         case getNewsFeed = "/v1/feed/"
         case getFeatureFeed = "/v1/features"
+        case getTokenSales = "https://s3-ap-northeast-1.amazonaws.com/network.o3.cdn/data/___tokensale.json"
     }
 
     enum HTTPMethod: String {
@@ -191,6 +192,23 @@ public class O3Client {
                         return
                 }
                 completion(.success(list))
+            }
+        }
+    }
+
+    func getTokenSales(completion: @escaping(O3ClientResult<TokenSales>) -> Void) {
+        let endpoint = "https://s3-ap-northeast-1.amazonaws.com/network.o3.cdn/data/___tokensale.json"
+        sendRequest(endpoint, method: .GET, data: nil, noBaseURL: true) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let decoder = JSONDecoder()
+                guard let data = try? JSONSerialization.data(withJSONObject: response, options: .prettyPrinted),
+                    let liveSales = try? decoder.decode(TokenSales.self, from: data) else {
+                        return
+                }
+                completion(.success(liveSales))
             }
         }
     }

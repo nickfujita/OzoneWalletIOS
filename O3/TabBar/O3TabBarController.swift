@@ -78,6 +78,15 @@ class O3TabBarController: UITabBarController {
         present(modal, animated: true, completion: nil)
     }
 
+    func tokenSaleTapped() {
+        let modal = UIStoryboard(name: "TokenSale", bundle: nil).instantiateInitialViewController() as? UINavigationController
+        let transitionDelegate = DeckTransitioningDelegate()
+        modal?.transitioningDelegate = transitionDelegate
+        modal?.modalPresentationStyle = .custom
+        modal?.childViewControllers[0].navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "times"), style: .plain, target: self, action: #selector(tappedLeftBarButtonItem(_:)))
+        present(modal!, animated: true, completion: nil)
+    }
+
     @IBAction func tappedLeftBarButtonItem(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -97,6 +106,13 @@ class O3TabBarController: UITabBarController {
             self.receivedTapped()
         }
         actionSheet.addAction(receive)
+
+        let tokenSale = UIAlertAction(title: "Token Sale", style: .default) { _ in
+            self.tokenSaleTapped()
+        }
+        if O3Cache.gasBalance() > 0 || O3Cache.neoBalance() > 0 {
+            actionSheet.addAction(tokenSale)
+        }
 
         let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
 

@@ -218,6 +218,7 @@ class HomeViewModel {
                                                                assetType: AssetType.nativeAsset,
                                                                decimal: 0,
                                                                balance: Decimal(Double(asset.value) ?? 0))
+                            if !isReadOnly { O3Cache.setNEOForSession(neoBalance: Int(asset.value) ?? 0) }
                         } else {
                             assetToAdd = TransferableAsset(assetID: NeoSwift.AssetId.gasAssetId.rawValue,
                                                           name: "GAS",
@@ -225,6 +226,7 @@ class HomeViewModel {
                                                           assetType: AssetType.nativeAsset,
                                                           decimal: 8,
                                                           balance: Decimal(Double(asset.value) ?? 0))
+                            if !isReadOnly { O3Cache.setGASForSession(gasBalance: Double(asset.value) ?? 0.0) }
                         }
                         if isReadOnly {
                             self.addReadOnlyAsset(assetToAdd)
