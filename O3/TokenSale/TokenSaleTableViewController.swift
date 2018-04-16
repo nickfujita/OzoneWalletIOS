@@ -21,6 +21,7 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     var neoRateInfo: TokenSales.SaleInfo.AcceptingAsset?
     var gasRateInfo: TokenSales.SaleInfo.AcceptingAsset?
     var amountString: String?
+    var totalTokens: Double = 0.0
     let checkboxPriority = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
 
     public struct TokenSaleTransactionInfo {
@@ -154,7 +155,7 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
             assetNameUsedToPurchase: selectedAsset?.name ?? "",
             assetAmount: Double(truncating: amountStringToNumber(amountString: amountString!)!),
             tokenSaleContractHash: "INSERT TOKEN CONTRACT HASH HERE",
-            tokensToRecieveAmount: 0.0,
+            tokensToRecieveAmount: totalTokens,
             tokensToReceiveName: "TOKEN NAME"
         )
         guard let tokenSaleVC = segue.destination as? TokenSaleReviewTableViewController else {
@@ -171,6 +172,10 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         } else {
             participateButton.isEnabled = false
         }
+    }
+
+    func setTokenAmount(totalTokens: Double) {
+        self.totalTokens = totalTokens
     }
 
     func setContributionAsset(asset: TransferableAsset) {

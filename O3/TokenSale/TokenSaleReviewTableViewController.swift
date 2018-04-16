@@ -19,6 +19,8 @@ class TokenSaleReviewTableViewController: UITableViewController {
     @IBOutlet weak var assetToRecieveLabel: UILabel!
     @IBOutlet weak var priorityLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var sendTitleLabel: UILabel!
+    @IBOutlet weak var receiveTitleLabel: UILabel!
 
     var transactionInfo: TokenSaleTableViewController.TokenSaleTransactionInfo!
     var logoURL: String = ""
@@ -34,6 +36,12 @@ class TokenSaleReviewTableViewController: UITableViewController {
         checkboxO3.tintColor = Theme.light.accentColor
         checkboxO3.checkmarkLineWidth = 2.0
         o3AgreementCheckboxContainer.addSubview(checkboxO3)
+
+        tableView.theme_separatorColor = O3Theme.tableSeparatorColorPicker
+        tableView.theme_backgroundColor = O3Theme.backgroundColorPicker
+        view.theme_backgroundColor = O3Theme.backgroundColorPicker
+        sendTitleLabel.theme_textColor = O3Theme.titleColorPicker
+        receiveTitleLabel.theme_textColor = O3Theme.titleColorPicker
     }
 
     override func viewDidLoad() {
@@ -43,12 +51,12 @@ class TokenSaleReviewTableViewController: UITableViewController {
         logoImageView.kf.setImage(with: URL(string: logoURL))
         assetToSendLabel.text = transactionInfo.assetAmount.description +
             transactionInfo.assetNameUsedToPurchase.description
-        assetToRecieveLabel.text = ""
+        assetToRecieveLabel.text = transactionInfo.tokensToRecieveAmount.description + transactionInfo.tokensToReceiveName
     }
 
     @IBAction func partcipateTapped(_ sender: Any) {
         // TODO: PERFORM TRANSACTION AND FIGURE OUT IF IT SUCCEEDED OR NOT
-        // SEGUE TO THE RELEVANT SCREEn
+        // SEGUE TO THE RELEVANT SCREEN
         self.performSegue(withIdentifier: "transactionCompletedSegue", sender: nil)
     }
 

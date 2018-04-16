@@ -13,6 +13,7 @@ import NeoSwift
 protocol ContributionCellDelegate: class {
     func setContributionAmount(amountString: String)
     func setContributionAsset(asset: TransferableAsset)
+    func setTokenAmount(totalTokens: Double)
 }
 
 class ContributionTableViewCell: UITableViewCell {
@@ -26,11 +27,25 @@ class ContributionTableViewCell: UITableViewCell {
     @IBOutlet weak var gasRateLabel: UILabel!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var tokenAmountLabel: UILabel!
+    @IBOutlet weak var acceptingAssetHint: UILabel!
 
-    var neoRateInfo: TokenSales.SaleInfo.AcceptingAsset!
-    var gasRateInfo: TokenSales.SaleInfo.AcceptingAsset!
+    var neoRateInfo: TokenSales.SaleInfo.AcceptingAsset? {
+        didSet {
+            neoRateLabel.text = "1 NEO = " + (neoRateInfo?.basicRate.description ?? "")
+        }
+    }
+
+    var gasRateInfo: TokenSales.SaleInfo.AcceptingAsset? {
+        didSet {
+            gasRateLabel.text = "1 GAS = " + (gasRateInfo?.basicRate.description ?? "")
+        }
+    }
     var tokenName: String!
-    var selectedAsset: TransferableAsset = TransferableAsset.NEO()
+    var selectedAsset: TransferableAsset = TransferableAsset.NEO() {
+        didSet {
+            acceptingAssetHint.text = selectedAsset.symbol.uppercased()
+        }
+    }
 
     func setThemedElements() {
         contentView.theme_backgroundColor = O3Theme.backgroundColorPicker
@@ -50,6 +65,7 @@ class ContributionTableViewCell: UITableViewCell {
             let totalTokens = tokenSaleController.amountStringToNumber(amountString: amountString)!.doubleValue * (rate?.basicRate ?? 0)
             tokenAmountLabel.text = totalTokens.description + tokenName
             delegate?.setContributionAmount(amountString: amountString)
+            delegate?.setTokenAmount(totalTokens: totalTokens)
         }
     }
 
@@ -83,11 +99,10 @@ class ContributionTableViewCell: UITableViewCell {
         setThemedElements()
         neoSelectorContainerView.isUserInteractionEnabled = true
         gasSelectorContainerView.isUserInteractionEnabled = true
-    neoSelectorContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.setContributionAsset(_:))))
-    gasSelectorContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.setContributionAsset(_:))))
-
-        neoRateLabel.text = "1 NEO = " + neoRateInfo.basicRate.description
-        gasRateLabel.text = "1 GAS = " + gasRateInfo.basicRate.description
+        neoSelectorContainerView.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(self.setContributionAsset(_:))))
+        gasSelectorContainerView.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(self.setContributionAsset(_:))))
         super.awakeFromNib()
     }
 
