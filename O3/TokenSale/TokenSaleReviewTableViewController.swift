@@ -22,20 +22,21 @@ class TokenSaleReviewTableViewController: UITableViewController {
     @IBOutlet weak var sendTitleLabel: UILabel!
     @IBOutlet weak var receiveTitleLabel: UILabel!
 
+    let checkBoxO3 = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
+    let checkBoxIssuer = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
+
     var transactionInfo: TokenSaleTableViewController.TokenSaleTransactionInfo!
     var logoURL: String = ""
 
     func setThemedElements() {
-        let checkboxIssuer = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
-        checkboxIssuer.secondaryTintColor = Theme.light.primaryColor
-        checkboxIssuer.tintColor = Theme.light.primaryColor
-        checkboxIssuer.checkmarkLineWidth = 2.0
-        issueAgreementCheckboxContainer.addSubview(checkboxIssuer)
-        let checkboxO3 = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
-        checkboxO3.secondaryTintColor = Theme.light.accentColor
-        checkboxO3.tintColor = Theme.light.accentColor
-        checkboxO3.checkmarkLineWidth = 2.0
-        o3AgreementCheckboxContainer.addSubview(checkboxO3)
+        checkBoxIssuer.secondaryTintColor = Theme.light.primaryColor
+        checkBoxIssuer.tintColor = Theme.light.primaryColor
+        checkBoxIssuer.checkmarkLineWidth = 2.0
+        issueAgreementCheckboxContainer.addSubview(checkBoxIssuer)
+        checkBoxO3.secondaryTintColor = Theme.light.accentColor
+        checkBoxO3.tintColor = Theme.light.accentColor
+        checkBoxO3.checkmarkLineWidth = 2.0
+        o3AgreementCheckboxContainer.addSubview(checkBoxO3)
 
         tableView.theme_separatorColor = O3Theme.tableSeparatorColorPicker
         tableView.theme_backgroundColor = O3Theme.backgroundColorPicker
@@ -44,9 +45,15 @@ class TokenSaleReviewTableViewController: UITableViewController {
         receiveTitleLabel.theme_textColor = O3Theme.titleColorPicker
     }
 
+    @objc func checkParticipateEnabledState() {
+        if checkBoxO3.state == .selected && checkBoxO3.state == .selected {
+            participateButton.isEnabled = true
+        }
+        participateButton.isEnabled = false
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        participateButton.isEnabled = false
         setThemedElements()
         logoImageView.kf.setImage(with: URL(string: logoURL))
         assetToSendLabel.text = transactionInfo.assetAmount.description +
@@ -57,7 +64,11 @@ class TokenSaleReviewTableViewController: UITableViewController {
     @IBAction func partcipateTapped(_ sender: Any) {
         // TODO: PERFORM TRANSACTION AND FIGURE OUT IF IT SUCCEEDED OR NOT
         // SEGUE TO THE RELEVANT SCREEN
-        self.performSegue(withIdentifier: "transactionCompletedSegue", sender: nil)
+        if checkBoxO3.checkState == .checked && checkBoxIssuer.checkState == .checked {
+            self.performSegue(withIdentifier: "transactionCompletedSegue", sender: nil)
+        } else {
+            OzoneAlert.alertDialog(message: "Please aggree to the disclaimers", dismissTitle: "OK") { }
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
