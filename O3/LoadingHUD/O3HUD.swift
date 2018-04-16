@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Lottie
 import SwiftTheme
 
 class O3HUD: UIViewController {

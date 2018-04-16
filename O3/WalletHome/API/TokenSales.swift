@@ -27,6 +27,7 @@ public struct TokenSales: Codable {
 
     public struct SaleInfo: Codable {
         var name: String
+        var symbol: String
         var scriptHash: String
         var webURL: String
         var imageURL: String
@@ -37,6 +38,7 @@ public struct TokenSales: Codable {
 
         enum CodingKeys: String, CodingKey {
             case name
+            case symbol
             case scriptHash
             case webURL
             case imageURL
@@ -46,9 +48,10 @@ public struct TokenSales: Codable {
             case info
         }
 
-        public init(name: String, scriptHash: String, webURL: String, imageURL: String, startTime: Int, endTime: Int,
+        public init(name: String, symbol: String, scriptHash: String, webURL: String, imageURL: String, startTime: Int, endTime: Int,
                     acceptingAssets: [AcceptingAsset], info: [InfoRow]) {
             self.name = name
+            self.symbol = symbol
             self.scriptHash = scriptHash
             self.webURL = webURL
             self.imageURL = imageURL
@@ -61,6 +64,7 @@ public struct TokenSales: Codable {
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let name: String = try container.decode(String.self, forKey: .name)
+            let symbol: String = try container.decode(String.self, forKey: .symbol)
             let scriptHash: String = try container.decode(String.self, forKey: .scriptHash)
             let webURL: String = try container.decode(String.self, forKey: .webURL)
             let imageURL: String = try container.decode(String.self, forKey: .imageURL)
@@ -68,7 +72,7 @@ public struct TokenSales: Codable {
             let endTime: Int = try container.decode(Int.self, forKey: .endTime)
             let acceptingAssets: [AcceptingAsset] = try container.decode([AcceptingAsset].self, forKey: .acceptingAssets)
             let info: [InfoRow] = try container.decode([InfoRow].self, forKey: .info)
-            self.init(name: name, scriptHash: scriptHash, webURL: webURL, imageURL: imageURL, startTime: startTime, endTime: endTime, acceptingAssets: acceptingAssets, info: info)
+            self.init(name: name,symbol: symbol, scriptHash: scriptHash, webURL: webURL, imageURL: imageURL, startTime: startTime, endTime: endTime, acceptingAssets: acceptingAssets, info: info)
         }
 
         public struct AcceptingAsset: Codable {

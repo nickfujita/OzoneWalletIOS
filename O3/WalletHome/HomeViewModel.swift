@@ -203,7 +203,7 @@ class HomeViewModel {
     func fetchAssetBalances(address: String, isReadOnly: Bool) {
         group.enter()
         DispatchQueue.global().async {
-            Neo.client.getAccountState(for: address) { result in
+             NeoClient(seed: UserDefaultsManager.seed).getAccountState(for: address) { result in
                 switch result {
                 case .failure:
                     self.fetchNativeAssetsFromCache(isReadOnly: isReadOnly)

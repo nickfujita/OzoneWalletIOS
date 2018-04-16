@@ -8,6 +8,7 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -561,20 +562,43 @@
                         <outlet property="priorityLabel" destination="Pxk-j0-h3h" id="ddB-ox-F3T"/>
                         <outlet property="receiveTitleLabel" destination="Ee7-TY-kWF" id="G4t-Du-GaG"/>
                         <outlet property="sendTitleLabel" destination="JN8-w0-aW8" id="Lhl-XY-9gm"/>
-                        <segue destination="f7J-1f-Ven" kind="presentation" identifier="transactionCompletedSegue" id="kBA-6k-eM0"/>
+                        <segue destination="IAl-PI-Y22" kind="show" identifier="success" id="chE-fO-Fxd"/>
+                        <segue destination="ghj-3r-oTb" kind="show" identifier="error" id="0eC-gT-f6a"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YNh-aY-TNd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1428" y="-280.20989505247377"/>
         </scene>
-        <!--TransactionComplete-->
-        <scene sceneID="Y3z-FV-cK1">
+        <!--View Controller-->
+        <scene sceneID="Y6h-N3-FyG">
             <objects>
-                <viewControllerPlaceholder storyboardName="Send" referencedIdentifier="TransactionComplete" id="f7J-1f-Ven" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FlM-Fq-05X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="IAl-PI-Y22" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VuQ-x3-gtZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="T2Z-3u-fSW"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="liE-Bn-kWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1994" y="-281"/>
+            <point key="canvasLocation" x="2390" y="-281"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="jIf-qT-959">
+            <objects>
+                <viewController id="ghj-3r-oTb" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cLE-tH-dJ6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="4qz-OF-N7u"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TTs-sk-tvh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2390" y="413"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o0E-NE-h8d">
@@ -599,9 +623,6 @@
         <image name="repeat-alt" width="56" height="56"/>
         <namedColor name="grey">
             <color red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="lightThemeOrange">
-            <color red="1" green="0.49803921568627452" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="lightThemeOrange">
             <color red="1" green="0.49803921568627452" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

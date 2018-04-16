@@ -154,9 +154,9 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
             assetIDUsedToPurchase: selectedAsset?.assetID ?? "",
             assetNameUsedToPurchase: selectedAsset?.name ?? "",
             assetAmount: Double(truncating: amountStringToNumber(amountString: amountString!)!),
-            tokenSaleContractHash: "INSERT TOKEN CONTRACT HASH HERE",
+            tokenSaleContractHash: saleInfo.scriptHash,
             tokensToRecieveAmount: totalTokens,
-            tokensToReceiveName: "TOKEN NAME"
+            tokensToReceiveName: saleInfo.symbol
         )
         guard let tokenSaleVC = segue.destination as? TokenSaleReviewTableViewController else {
             return

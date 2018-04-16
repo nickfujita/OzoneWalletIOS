@@ -20,7 +20,7 @@ class AvailableNEP5TokensTableViewController: UITableViewController {
              request = NSMutableURLRequest(url: URL(string: "https://o3.network/settings/nep5.test.json")!)
         #endif
         #if PRIVATENET
-             request = NSMutableURLRequest(url: URL(string: "https://o3.network/settings/nep5.test.json")!)
+             request = NSMutableURLRequest(url: URL(string: "https://o3.network/settings/nep5.private.json")!)
         #endif
 
         request.httpMethod = "GET"
