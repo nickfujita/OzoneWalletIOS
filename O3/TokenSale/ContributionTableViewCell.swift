@@ -38,21 +38,19 @@ class ContributionTableViewCell: UITableViewCell {
             inputToolbar?.asset = neo
         }
     }
+    
     @IBOutlet weak var tokenAmountLabel: UILabel!
     @IBOutlet weak var acceptingAssetHint: UILabel!
     
-    var neoRateInfo: TokenSales.SaleInfo.AcceptingAsset? {
-        didSet {
-            neoRateLabel.text = "1 NEO = " + (neoRateInfo?.basicRate.string(0, removeTrailing: true) ?? "")
-        }
-    }
+    var neoRateInfo: TokenSales.SaleInfo.AcceptingAsset?
+    var gasRateInfo: TokenSales.SaleInfo.AcceptingAsset?
     
-    var gasRateInfo: TokenSales.SaleInfo.AcceptingAsset? {
-        didSet {
-            gasRateLabel.text = "1 GAS = " + (gasRateInfo?.basicRate.string(0, removeTrailing: true) ?? "")
+    var tokenName: String! {
+        didSet{
+            neoRateLabel.text = "1 NEO = " + (neoRateInfo?.basicRate.string(0, removeTrailing: true) ?? "") + " " + tokenName
+            gasRateLabel.text = "1 GAS = " + (gasRateInfo?.basicRate.string(0, removeTrailing: true) ?? "") + " " + tokenName
         }
     }
-    var tokenName: String!
     var selectedAsset: TransferableAsset = TransferableAsset.NEO() {
         didSet {
             acceptingAssetHint.text = selectedAsset.symbol.uppercased()

@@ -27,6 +27,8 @@ class TokenSalesListTableViewController: UITableViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setThemedElements()
+        //this to avoid double call in cellForRow
+        //assign datasource and delegate only when data is loaded
         self.tableView.delegate = nil
         self.tableView.dataSource = nil
         O3Client().getTokenSales { result in
@@ -39,11 +41,21 @@ class TokenSalesListTableViewController: UITableViewController {
                     self.tableView.delegate = self
                     self.tableView.dataSource = self
                     self.tableView.reloadData()
-                    
                 }
             }
         }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "times"), style: .plain, target: self, action: #selector(tappedLeftBarButtonItem(_:)))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setupNavigationBar()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        //this will remove a title to the back button in the pushed view
+        self.title = ""
     }
     
     @IBAction func tappedLeftBarButtonItem(_ sender: UIBarButtonItem) {

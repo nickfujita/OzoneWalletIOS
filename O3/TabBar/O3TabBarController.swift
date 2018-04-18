@@ -80,10 +80,6 @@ class O3TabBarController: UITabBarController {
 
     func tokenSaleTapped() {
         let modal = UIStoryboard(name: "TokenSale", bundle: nil).instantiateInitialViewController() as? UINavigationController
-//        let transitionDelegate = DeckTransitioningDelegate()
-//        modal?.transitioningDelegate = transitionDelegate
-//        modal?.modalPresentationStyle = .custom
-//        modal?.childViewControllers[0].navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "times"), style: .plain, target: self, action: #selector(tappedLeftBarButtonItem(_:)))
         present(modal!, animated: true, completion: nil)
     }
 

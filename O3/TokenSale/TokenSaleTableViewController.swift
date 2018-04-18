@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import M13Checkbox
+import WebBrowser
 
 class TokenSaleTableViewController: UITableViewController, ContributionCellDelegate {
     @IBOutlet weak var logoImageView: UIImageView!
@@ -58,6 +59,7 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = saleInfo.name
         self.navigationItem.largeTitleDisplayMode = .never
         participateButton.isEnabled = false
         self.tableView.keyboardDismissMode = .onDrag
@@ -66,6 +68,23 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         setAssetRateInfo()
         let tap = UITapGestureRecognizer(target: self, action: #selector(priorityTapped(_:)))
         priorityLabel?.addGestureRecognizer(tap)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "external-link-alt"), style: .plain, target: self, action: #selector(externalLinkTapped(_:)))
+    }
+    
+    @objc func externalLinkTapped(_ sender: Any) {
+        let webBrowserViewController = WebBrowserViewController()
+        webBrowserViewController.isToolbarHidden = false
+        webBrowserViewController.title = saleInfo.name
+        webBrowserViewController.isShowURLInNavigationBarWhenLoading = true
+        webBrowserViewController.barTintColor = UserDefaultsManager.themeIndex == 0 ? Theme.light.backgroundColor: Theme.dark.backgroundColor
+        webBrowserViewController.tintColor = Theme.light.primaryColor
+        webBrowserViewController.isShowPageTitleInNavigationBar = true
+        webBrowserViewController.loadURLString(saleInfo.webURL)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.navigationController?.pushViewController(webBrowserViewController, animated: true)
+        }
     }
     
     @objc func priorityTapped(_ sender: Any) {
@@ -186,6 +205,8 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
             cell.neoRateInfo = neoRateInfo
             cell.gasRateInfo = gasRateInfo
             cell.tokenName = saleInfo.symbol
+            //init with 0
+            cell.tokenAmountLabel.text = String(format: "0 %@", saleInfo.symbol)
             return cell
         }
         

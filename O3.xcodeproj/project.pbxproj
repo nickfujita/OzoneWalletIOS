@@ -59,6 +59,7 @@
 		6E244EC52085BF71001B4B22 /* AssetInputToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E244EC42085BF71001B4B22 /* AssetInputToolbar.xib */; };
 		6E244EC72085C15A001B4B22 /* AssetInputToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E244EC62085C15A001B4B22 /* AssetInputToolbar.swift */; };
 		6E244EC92085D5CE001B4B22 /* NumberOnlyUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E244EC82085D5CE001B4B22 /* NumberOnlyUITextField.swift */; };
+		6E244ECB208714E8001B4B22 /* TokenSaleAsset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E244ECA208714E8001B4B22 /* TokenSaleAsset.xcassets */; };
 		6E3E381A1FA4436E004965F8 /* FirstTimeLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3E38191FA4436E004965F8 /* FirstTimeLoginViewController.swift */; };
 		6E3E381C1FA4437A004965F8 /* PreCreateWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3E381B1FA4437A004965F8 /* PreCreateWalletViewController.swift */; };
 		6E3E381E1FA44C84004965F8 /* LoginToCurrentWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3E381D1FA44C84004965F8 /* LoginToCurrentWalletViewController.swift */; };
@@ -241,6 +242,7 @@
 		6E244EC42085BF71001B4B22 /* AssetInputToolbar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssetInputToolbar.xib; sourceTree = "<group>"; };
 		6E244EC62085C15A001B4B22 /* AssetInputToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetInputToolbar.swift; sourceTree = "<group>"; };
 		6E244EC82085D5CE001B4B22 /* NumberOnlyUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOnlyUITextField.swift; sourceTree = "<group>"; };
+		6E244ECA208714E8001B4B22 /* TokenSaleAsset.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TokenSaleAsset.xcassets; sourceTree = "<group>"; };
 		6E3E38191FA4436E004965F8 /* FirstTimeLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeLoginViewController.swift; sourceTree = "<group>"; };
 		6E3E381B1FA4437A004965F8 /* PreCreateWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreCreateWalletViewController.swift; sourceTree = "<group>"; };
 		6E3E381D1FA44C84004965F8 /* LoginToCurrentWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginToCurrentWalletViewController.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				6E73679A2084B3B900F4202B /* TokenSaleSuccessViewController.swift */,
 				6E73679C2084B3C400F4202B /* TokenSaleErrorViewController.swift */,
 				6E244EBE208583F1001B4B22 /* TokenSaleSubmitViewController.swift */,
+				6E244ECA208714E8001B4B22 /* TokenSaleAsset.xcassets */,
 			);
 			path = TokenSale;
 			sourceTree = "<group>";
@@ -828,6 +831,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E244ECB208714E8001B4B22 /* TokenSaleAsset.xcassets in Resources */,
 				6EE34BA0201607C7006558E9 /* oval.json in Resources */,
 				6E7367992084AB0800F4202B /* success-blue.json in Resources */,
 				6E1BBF7F1F77BEE30095F466 /* WalletHomeAssets.xcassets in Resources */,
