@@ -35,6 +35,7 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         var tokenSaleContractHash: String
         var tokensToRecieveAmount: Double
         var tokensToReceiveName: String
+        var saleInfo: TokenSales.SaleInfo
     }
     
     func setThemedElements() {
@@ -241,7 +242,8 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
             assetAmount: Double(truncating: amountStringToNumber(amountString: amountString!)!),
             tokenSaleContractHash: saleInfo.scriptHash,
             tokensToRecieveAmount: totalTokens,
-            tokensToReceiveName: saleInfo.symbol
+            tokensToReceiveName: saleInfo.symbol,
+            saleInfo: saleInfo
         )
         guard let tokenSaleVC = segue.destination as? TokenSaleReviewTableViewController else {
             return

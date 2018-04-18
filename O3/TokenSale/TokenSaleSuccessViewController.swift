@@ -9,16 +9,72 @@
 import UIKit
 import Lottie
 
-class TokenSaleSuccessViewController: UIViewController {
+class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var animationView: UIView!
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var transactionCardView: UIView!
+    @IBOutlet var statusLabel: UILabel!
+    
+    var transactionInfo: TokenSaleTableViewController.TokenSaleTransactionInfo!
     
     func setThemedElements() {
         view.theme_backgroundColor = O3Theme.backgroundColorPicker
+        transactionCardView.theme_backgroundColor = O3Theme.cardColorPicker
+        tableView.theme_backgroundColor = O3Theme.cardColorPicker
+        statusLabel.theme_textColor = O3Theme.accentColorPicker
+    }
+
+    var tokenSaleTransactionItems: [TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem]! = []
+    
+    func buildTransactionInfoForTable() {
+        let now = Date();
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .medium
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "dd MMM yyyy, HH:mm ZZZZZ"
+        let localDate = dateFormatter.string(from: now)
+        
+        let dateItem = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "DATE", value: localDate)
+        tokenSaleTransactionItems.append(dateItem)
+        
+        let tokenSale = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "TOKEN SALE", value: transactionInfo.saleInfo.name)
+        tokenSaleTransactionItems.append(tokenSale)
+        
+        let txID = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "TXID", value: "389470367287e9f99e561a66d6ab5875f8375506ec1a16d54e9c628f34b8efe8")
+        tokenSaleTransactionItems.append(txID)
+        
+        
+        let amountFormatter = NumberFormatter()
+        amountFormatter.minimumFractionDigits = 0
+        amountFormatter.numberStyle = .decimal
+        amountFormatter.locale = Locale.current
+        amountFormatter.usesGroupingSeparator = true
+        
+        let sending = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "SENDING", value: String(format:"%@ %@",amountFormatter.string(from: NSNumber(value: transactionInfo.assetAmount))!, transactionInfo.assetNameUsedToPurchase))
+        tokenSaleTransactionItems.append(sending)
+        
+        
+        let forTokens = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "FOR", value: String(format:"%@ %@",amountFormatter.string(from: NSNumber(value: transactionInfo.tokensToRecieveAmount))!, transactionInfo.tokensToReceiveName))
+        tokenSaleTransactionItems.append(forTokens)
+        
+        //better move fee to its own const
+        if transactionInfo.priorityIncluded == true {
+            let priority = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "PRIORITY 🚀", value: "0.0011 GAS")
+            tokenSaleTransactionItems.append(priority)
+        }
+        
+        DispatchQueue.main.async {
+            self.tableView.delegate = self
+            self.tableView.dataSource = self
+            self.tableView.reloadData()
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
         self.navigationItem.hidesBackButton = true
         setThemedElements()
         let lottieView = LOTAnimationView(name: "success-blue")
@@ -27,9 +83,40 @@ class TokenSaleSuccessViewController: UIViewController {
         lottieView.play{ (finished) in
             
         }
+        
+        //build transaction for the table
+        buildTransactionInfoForTable()
     }
     
     @IBAction func closeTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func shareTapped(_ sender: Any) {
+        //share this via email with text 
+    }
+}
+
+extension TokenSaleSuccessViewController {
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 32.0
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tokenSaleTransactionItems.count
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TokenSaleTransactionInfoTableViewCell else {
+            return UITableViewCell()
+        }
+        let item = tokenSaleTransactionItems[indexPath.row]
+        cell.info = item
+        return cell
+    }
+    
 }

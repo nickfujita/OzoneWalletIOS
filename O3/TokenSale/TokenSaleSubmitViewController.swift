@@ -17,9 +17,6 @@ class TokenSaleSubmitViewController: UIViewController {
     }
     
     func submitTransaction() {
-        
-        //delay this screen for about 5 seconds
-        
         #if PRIVATENET
         UserDefaultsManager.seed = "http://localhost:30333"
         UserDefaultsManager.useDefaultSeed = false
@@ -31,9 +28,11 @@ class TokenSaleSubmitViewController: UIViewController {
         
         Authenticated.account?.participateTokenSales(scriptHash: transactionInfo.tokenSaleContractHash, assetID: transactionInfo.assetIDUsedToPurchase, amount: transactionInfo.assetAmount, remark: "O3X", networkFee: fee) { success, error in
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            //make delay to 10 seconds in production
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
                 if success == true {
-                    self.performSegue(withIdentifier: "success", sender: nil)
+                    self.performSegue(withIdentifier: "success", sender: self.transactionInfo)
                     return
                 }
                 self.performSegue(withIdentifier: "error", sender: nil)
@@ -44,11 +43,21 @@ class TokenSaleSubmitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
+        self.navigationController?.isNavigationBarHidden = true
         setThemedElements()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         submitTransaction()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "success" {
+            guard let vc = segue.destination as? TokenSaleSuccessViewController else {
+                return
+            }
+            vc.transactionInfo = sender as! TokenSaleTableViewController.TokenSaleTransactionInfo?
+        }
     }
 }

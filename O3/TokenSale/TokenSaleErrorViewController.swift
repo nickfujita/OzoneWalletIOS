@@ -16,6 +16,8 @@ class TokenSaleErrorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationItem.hidesBackButton = true
         setThemedElements()
     }
     

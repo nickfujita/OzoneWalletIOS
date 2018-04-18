@@ -9,12 +9,16 @@
 import UIKit
 
 protocol AssetInputToolbarDelegate {
-
+    
 }
 
 class AssetInputToolbar: UIView {
-    var view: UIView!
-
+    var view: UIView! {
+        didSet{
+            view.theme_backgroundColor = O3Theme.backgroundColorPicker
+        }
+    }
+    
     @IBOutlet var assetLabel: UILabel?
     @IBOutlet var assetBalance: UILabel?
     @IBOutlet var messageLabel: UILabel?
@@ -26,11 +30,17 @@ class AssetInputToolbar: UIView {
             }
             assetLabel?.text = String(format:"%@ BALANCE", asset!.symbol)
             assetBalance?.text = asset!.formattedBalanceString
+            
+            DispatchQueue.main.async {
+                self.view.theme_backgroundColor = O3Theme.backgroundColorPicker
+                self.assetLabel?.theme_textColor = O3Theme.titleColorPicker
+                self.assetBalance?.theme_textColor = O3Theme.titleColorPicker
+            }
         }
     }
     
     var delegate: AssetInputToolbarDelegate?
-   
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setup()
@@ -38,6 +48,11 @@ class AssetInputToolbar: UIView {
     
     func setup() {
         xibSetup()
+        DispatchQueue.main.async {
+            self.view.theme_backgroundColor = O3Theme.backgroundColorPicker
+            self.assetLabel?.theme_textColor = O3Theme.titleColorPicker
+            self.assetBalance?.theme_textColor = O3Theme.titleColorPicker
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
