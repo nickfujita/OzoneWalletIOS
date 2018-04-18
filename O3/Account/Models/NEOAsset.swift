@@ -15,6 +15,19 @@ enum AssetType: Int, Codable {
     case nep5Token
 }
 
+extension TransferableAsset {
+    
+    var formattedBalanceString: String {
+        let amountFormatter = NumberFormatter()
+        amountFormatter.minimumFractionDigits = self.decimal
+        amountFormatter.numberStyle = .decimal
+        amountFormatter.locale = Locale.current
+        amountFormatter.usesGroupingSeparator = true
+        return String(format:"%@", amountFormatter.string(from: NSDecimalNumber(decimal: self.balance))!)
+    }
+}
+
+
 struct TransferableAsset: Codable {
     var assetID: String!
     var name: String!
@@ -34,7 +47,7 @@ extension TransferableAsset {
             decimal: 0,
             balance: Decimal(O3Cache.neoBalance()))
     }
-
+    
     static func GAS() -> TransferableAsset {
         return TransferableAsset(
             assetID: NeoSwift.AssetId.gasAssetId.rawValue,

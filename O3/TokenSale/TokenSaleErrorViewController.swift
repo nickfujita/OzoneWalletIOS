@@ -9,27 +9,28 @@
 import UIKit
 
 class TokenSaleErrorViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+   
+    func setThemedElements() {
+        view.theme_backgroundColor = O3Theme.backgroundColorPicker
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setThemedElements()
     }
-    */
-
+    
+    
+    @IBAction func contactTapped(_ sender: Any) {
+        self.dismiss(animated: true) {
+            let email = "support@o3.network"
+            if let url = URL(string: "mailto:\(email)") {
+                UIApplication.shared.open(url)
+            }
+        }
+    }
+    
+    @IBAction func closeTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }

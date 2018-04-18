@@ -23,6 +23,37 @@ class TokenSaleReviewTableViewController: UITableViewController {
     @IBOutlet weak var sendTitleLabel: UILabel!
     @IBOutlet weak var receiveTitleLabel: UILabel!
     
+    @IBOutlet weak var readSaleAgreementLabel: UILabel! {
+        didSet{
+            let tap = UITapGestureRecognizer(target: self, action: #selector(readSaleAgreementTapped(_:)))
+            readSaleAgreementLabel?.addGestureRecognizer(tap)
+        }
+    }
+    
+    @IBOutlet weak var iUnderstandLabel: UILabel! {
+        didSet{
+            let tap = UITapGestureRecognizer(target: self, action: #selector(iUnderStandTapped(_:)))
+            iUnderstandLabel?.addGestureRecognizer(tap)
+        }
+    }
+    
+    
+    @objc func readSaleAgreementTapped(_ sender: Any) {
+        if checkBoxIssuer.checkState == .checked {
+            checkBoxIssuer.checkState = .unchecked
+        } else {
+            checkBoxIssuer.checkState = .checked
+        }
+    }
+    @objc func iUnderStandTapped(_ sender: Any) {
+        if checkBoxO3.checkState == .checked {
+            checkBoxO3.checkState = .unchecked
+        } else {
+            checkBoxO3.checkState = .checked
+        }
+    }
+    
+    @IBOutlet var topSpaceConstraint: NSLayoutConstraint!
     let checkBoxO3 = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
     let checkBoxIssuer = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
     
@@ -57,43 +88,44 @@ class TokenSaleReviewTableViewController: UITableViewController {
         super.viewDidLoad()
         setThemedElements()
         logoImageView.kf.setImage(with: URL(string: logoURL))
-        assetToSendLabel.text = transactionInfo.assetAmount.description +
-            transactionInfo.assetNameUsedToPurchase.description
-        assetToRecieveLabel.text = transactionInfo.tokensToRecieveAmount.description + transactionInfo.tokensToReceiveName
+        
+        let amountFormatter = NumberFormatter()
+        amountFormatter.minimumFractionDigits = 0
+        amountFormatter.numberStyle = .decimal
+        amountFormatter.locale = Locale.current
+        amountFormatter.usesGroupingSeparator = true
+        
+        if transactionInfo.assetNameUsedToPurchase.lowercased() == TransferableAsset.GAS().name.lowercased() {
+            amountFormatter.maximumFractionDigits = 8
+        }
+        
+        if transactionInfo.priorityIncluded == false {
+            priorityLabel.isHidden = true
+            topSpaceConstraint.constant = -8
+        }
+        
+        assetToSendLabel.text = String(format:"%@ %@",amountFormatter.string(from: NSNumber(value: transactionInfo.assetAmount))!, transactionInfo.assetNameUsedToPurchase)
+        
+        assetToRecieveLabel.text = String(format:"%@ %@", amountFormatter.string(from: NSNumber(value: transactionInfo.tokensToRecieveAmount))!, transactionInfo.tokensToReceiveName)
     }
     
     @IBAction func partcipateTapped(_ sender: Any) {
         
-        #if PRIVATENET
-        UserDefaultsManager.seed = "http://localhost:30333"
-        UserDefaultsManager.useDefaultSeed = false
-        UserDefaultsManager.network = .privateNet
-        Authenticated.account?.neoClient = NeoClient(network: .privateNet)
-        #endif
-        
-        
         if checkBoxO3.checkState == .checked && checkBoxIssuer.checkState == .checked {
             
-            
-            let fee = transactionInfo.priorityIncluded == true ? Float64(0.0011) : Float64(0)
-            
-            Authenticated.account?.participateTokenSales(scriptHash: transactionInfo.tokenSaleContractHash, assetID: transactionInfo.assetIDUsedToPurchase, amount: transactionInfo.assetAmount, remark: "O3X", networkFee: fee) { success, error in
-            
-                if success == true {
-                    self.performSegue(withIdentifier: "success", sender: nil)
-                    return
-                }
-                self.performSegue(withIdentifier: "error", sender: nil)
-            }
-            
+            //ask for authentication
+            //if authenticated then call "submit"
+            self.performSegue(withIdentifier: "submit", sender: transactionInfo)
         } else {
             OzoneAlert.alertDialog(message: "Please aggree to the disclaimers", dismissTitle: "OK") { }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "success" {
-            //send info
+        if segue.identifier == "submit" {
+            if let vc = segue.destination as? TokenSaleSubmitViewController {
+                vc.transactionInfo = sender as! TokenSaleTableViewController.TokenSaleTransactionInfo
+            }
         }
     }
     

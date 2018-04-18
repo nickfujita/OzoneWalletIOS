@@ -15,7 +15,8 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     @IBOutlet weak var priorityCheckboxContainer: UIView!
     @IBOutlet weak var participateButton: ShadowedButton!
     @IBOutlet weak var priorityInfoButton: UIButton!
-
+    @IBOutlet var priorityLabel: UILabel?
+    
     var saleInfo: TokenSales.SaleInfo!
     var selectedAsset: TransferableAsset? = TransferableAsset.NEO()
     var neoRateInfo: TokenSales.SaleInfo.AcceptingAsset?
@@ -23,7 +24,8 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     var amountString: String?
     var totalTokens: Double = 0.0
     let checkboxPriority = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
-
+    
+    
     public struct TokenSaleTransactionInfo {
         var priorityIncluded: Bool
         var assetIDUsedToPurchase: String
@@ -33,7 +35,7 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         var tokensToRecieveAmount: Double
         var tokensToReceiveName: String
     }
-
+    
     func setThemedElements() {
         tableView.theme_separatorColor = O3Theme.tableSeparatorColorPicker
         tableView.theme_backgroundColor = O3Theme.backgroundColorPicker
@@ -44,7 +46,7 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         checkboxPriority.checkmarkLineWidth = 2.0
         priorityCheckboxContainer.addSubview(checkboxPriority)
     }
-
+    
     func setAssetRateInfo() {
         guard let neoIndex = saleInfo.acceptingAssets.index (where: {$0.asset.lowercased() == "neo" }),
             let gasIndex = saleInfo.acceptingAssets.index (where: {$0.asset.lowercased() == "gas" }) else {
@@ -53,45 +55,82 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         neoRateInfo = saleInfo.acceptingAssets[neoIndex]
         gasRateInfo = saleInfo.acceptingAssets[gasIndex]
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.largeTitleDisplayMode = .never
         participateButton.isEnabled = false
+        self.tableView.keyboardDismissMode = .onDrag
         setThemedElements()
         logoImageView.kf.setImage(with: URL(string: saleInfo.imageURL))
         setAssetRateInfo()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(priorityTapped(_:)))
+        priorityLabel?.addGestureRecognizer(tap)
     }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == saleInfo.info.count {
-            return 200
+    
+    @objc func priorityTapped(_ sender: Any) {
+        if checkboxPriority.checkState == .checked {
+            checkboxPriority.checkState = .unchecked
+        } else {
+            checkboxPriority.checkState = .checked
         }
-        return 44
     }
-
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1 {
+            return 218.0
+        }
+        return 35
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return saleInfo.info.count + 1
+        //sales info section
+        if section == 0 {
+            return saleInfo.info.count
+        }
+        //contribution cell
+        return 1
     }
-
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func amountStringToNumber(amountString: String) -> NSNumber? {
         let amountFormatter = NumberFormatter()
         amountFormatter.minimumFractionDigits = 0
-        amountFormatter.maximumFractionDigits = self.selectedAsset!.decimal
         amountFormatter.numberStyle = .decimal
+        amountFormatter.maximumFractionDigits = self.selectedAsset!.decimal
+        amountFormatter.locale = Locale.current
+        amountFormatter.usesGroupingSeparator = true
         return amountFormatter.number(from: amountString)
-
     }
-
+    
     func validateAmount(amountString: String) -> Bool {
+        let contributionIndexPath = IndexPath(row: 0, section: 1)
+        guard let cell = tableView.cellForRow(at: contributionIndexPath) as? ContributionTableViewCell else {
+            return false
+        }
+        //clear error message label
+        cell.errorLabel.text = ""
+    
+        if amountString.count == 0 {
+            return false
+        }
+        //never alert inside a validation method that return bool
         let assetId: String! = self.selectedAsset!.assetID!
         let assetName: String! = self.selectedAsset?.name!
-        var amount = amountStringToNumber(amountString: amountString)
-
+        let amount = amountStringToNumber(amountString: amountString)
+        
         if amount == nil {
             OzoneAlert.alertDialog(message: "Invalid amount", dismissTitle: "OK") {}
             return false
         }
-
+       
+        //validation
+        //1. check balance first
+        //2. check min/max contribution
+        
         //validate amount
         if amount!.decimalValue > self.selectedAsset!.balance! {
             let balanceDecimal = self.selectedAsset!.balance
@@ -107,22 +146,49 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
             OzoneAlert.alertDialog(message: "When sending all GAS, please subtract 0.00000001 from the total amount. This prevents rounding errors which can cause the transaction to not process", dismissTitle: "Ok") {}
             return false
         }
+        
+        
+        let filteredResults = saleInfo.acceptingAssets.filter { (asset) -> Bool in
+            return asset.asset.lowercased() == self.selectedAsset?.name.lowercased()
+        }
+        
+        //TODO make this validation better
+        //showing a message instead of an alert
+        if filteredResults.count == 1 {
+            let contributingAsset = filteredResults.first!
+            if amount!.doubleValue > contributingAsset.max {
+                cell.errorLabel.shakeToShowError()
+                let message = String(format: "Maximum contribution for %@ is %@",contributingAsset.asset.uppercased(), contributingAsset.max.string(0, removeTrailing: true))
+                cell.errorLabel.text = message
+                return false
+            }
+            
+            if amount!.doubleValue < contributingAsset.min {
+                cell.errorLabel.shakeToShowError()
+                let message = String(format: "Minimum contribution for %@ is %@",contributingAsset.asset.uppercased(), contributingAsset.min.string(8, removeTrailing: true))
+                cell.errorLabel.text = message
+                return false
+            }
+        }
+        
         return true
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == saleInfo.info.count {
+        
+        //contribution section
+        if indexPath.section == 1 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "contributionTableViewCell") as? ContributionTableViewCell else {
                 return UITableViewCell()
             }
-
+            
             cell.delegate = self
             cell.neoRateInfo = neoRateInfo
             cell.gasRateInfo = gasRateInfo
-            cell.tokenName = saleInfo.name
+            cell.tokenName = saleInfo.symbol
             return cell
         }
-
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "tokenSaleInfoRowTableViewCell") as? TokenSaleInfoRowTableViewCell else {
             return UITableViewCell()
         }
@@ -131,7 +197,7 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         cell.infoData = infoRowData
         return cell
     }
-
+    
     @IBAction func particpateTapped(_ sender: Any) {
         DispatchQueue.main.async {
             if self.validateAmount(amountString: self.amountString ?? "") {
@@ -139,16 +205,14 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
             }
         }
     }
-
+    
     @IBAction func partcipateInfoTapped(_ sender: Any) {
         DispatchQueue.main.async {
             OzoneAlert.alertDialog(message: "Priority allows you to get on blocks first. In periods of high traffic increasing priority will improve your chances of getting on an ICO.", dismissTitle: "OK") {}
         }
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        // TODO: MAKE THESE THE PROPER VALUES FOR RECIEVING
         let tx = TokenSaleTransactionInfo (
             priorityIncluded: checkboxPriority.checkState == .checked,
             assetIDUsedToPurchase: selectedAsset?.assetID ?? "",
@@ -164,20 +228,21 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         tokenSaleVC.logoURL = saleInfo.imageURL
         tokenSaleVC.transactionInfo = tx
     }
-
+    
     func setContributionAmount(amountString: String) {
         self.amountString = amountString
-        if amountString != "" {
+        let valid = validateAmount(amountString: amountString)
+        if amountString != "" && valid == true {
             participateButton.isEnabled = true
         } else {
             participateButton.isEnabled = false
         }
     }
-
+    
     func setTokenAmount(totalTokens: Double) {
         self.totalTokens = totalTokens
     }
-
+    
     func setContributionAsset(asset: TransferableAsset) {
         self.selectedAsset = asset
     }

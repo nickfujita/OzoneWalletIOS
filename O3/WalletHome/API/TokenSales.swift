@@ -28,33 +28,42 @@ public struct TokenSales: Codable {
     public struct SaleInfo: Codable {
         var name: String
         var symbol: String
+        var shortDescription: String
         var scriptHash: String
         var webURL: String
         var imageURL: String
-        var startTime: Int
-        var endTime: Int
+        var squareLogoURL: String
+        var startTime: Double
+        var endTime: Double
         var acceptingAssets: [AcceptingAsset]
         var info: [InfoRow]
 
+        //this field always false until we call check tokensale_status rpc
+        var allowToParticipate: Bool = false
+        
         enum CodingKeys: String, CodingKey {
             case name
             case symbol
+            case shortDescription
             case scriptHash
             case webURL
             case imageURL
+            case squareLogoURL
             case startTime
             case endTime
             case acceptingAssets
             case info
         }
 
-        public init(name: String, symbol: String, scriptHash: String, webURL: String, imageURL: String, startTime: Int, endTime: Int,
+        public init(name: String, symbol: String, shortDescription: String, scriptHash: String, webURL: String, imageURL: String, squareLogoURL: String, startTime: Double, endTime: Double,
                     acceptingAssets: [AcceptingAsset], info: [InfoRow]) {
             self.name = name
             self.symbol = symbol
+            self.shortDescription = shortDescription
             self.scriptHash = scriptHash
             self.webURL = webURL
             self.imageURL = imageURL
+            self.squareLogoURL = squareLogoURL
             self.startTime = startTime
             self.endTime = endTime
             self.acceptingAssets = acceptingAssets
@@ -65,14 +74,16 @@ public struct TokenSales: Codable {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let name: String = try container.decode(String.self, forKey: .name)
             let symbol: String = try container.decode(String.self, forKey: .symbol)
+            let shortDescription: String =  try container.decode(String.self, forKey: .shortDescription)
             let scriptHash: String = try container.decode(String.self, forKey: .scriptHash)
             let webURL: String = try container.decode(String.self, forKey: .webURL)
             let imageURL: String = try container.decode(String.self, forKey: .imageURL)
-            let startTime: Int = try container.decode(Int.self, forKey: .startTime)
-            let endTime: Int = try container.decode(Int.self, forKey: .endTime)
+            let squareLogoURL: String = try container.decode(String.self, forKey: .squareLogoURL)
+            let startTime: Double = try container.decode(Double.self, forKey: .startTime)
+            let endTime: Double = try container.decode(Double.self, forKey: .endTime)
             let acceptingAssets: [AcceptingAsset] = try container.decode([AcceptingAsset].self, forKey: .acceptingAssets)
             let info: [InfoRow] = try container.decode([InfoRow].self, forKey: .info)
-            self.init(name: name,symbol: symbol, scriptHash: scriptHash, webURL: webURL, imageURL: imageURL, startTime: startTime, endTime: endTime, acceptingAssets: acceptingAssets, info: info)
+            self.init(name: name,symbol: symbol, shortDescription: shortDescription, scriptHash: scriptHash, webURL: webURL, imageURL: imageURL,squareLogoURL: squareLogoURL, startTime: startTime, endTime: endTime, acceptingAssets: acceptingAssets, info: info)
         }
 
         public struct AcceptingAsset: Codable {
