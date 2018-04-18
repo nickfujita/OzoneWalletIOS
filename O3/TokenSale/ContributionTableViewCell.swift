@@ -68,10 +68,8 @@ class ContributionTableViewCell: UITableViewCell {
     }
     
     @IBAction func contributionAmountChanged(_ sender: Any) {
-        guard let tokenSaleController = delegate as? TokenSaleTableViewController else {
-            return
-        }
-        let amountString = amountTextField.text ?? ""
+        //simple validation with number only field
+        let amountString = amountTextField.text?.trim() ?? ""
         if amountString == "" {
             tokenAmountLabel.text = String(format:"0 %@", tokenName)
             delegate?.setContributionAmount(amountString: amountString)
@@ -79,25 +77,34 @@ class ContributionTableViewCell: UITableViewCell {
             return
         }
         
-        //don't call validate here. it's a caller job to validate it
-        
-        let rate = selectedAsset.symbol.lowercased() == "neo" ? neoRateInfo : gasRateInfo
-        let totalTokens = tokenSaleController.amountStringToNumber(amountString: amountString)!.doubleValue * (rate?.basicRate ?? 0)
+        //formatter to format string to a proper numbers
         let amountFormatter = NumberFormatter()
         amountFormatter.minimumFractionDigits = 0
+        amountFormatter.maximumFractionDigits = 8
         amountFormatter.numberStyle = .decimal
         amountFormatter.locale = Locale.current
         amountFormatter.usesGroupingSeparator = true
+        
+        let amount = amountFormatter.number(from: (amountString.trim()))
+        
+        if amount == nil {
+            return
+        }
+        
+        //calculate the rate
+        let rate = selectedAsset.symbol.lowercased() == "neo" ? neoRateInfo : gasRateInfo
+        let totalTokens = amount!.doubleValue * (rate?.basicRate ?? 0)
+        
         tokenAmountLabel.text = String(format:"%@ %@", amountFormatter.string(from: NSNumber(value:totalTokens))!, tokenName)
         delegate?.setContributionAmount(amountString: amountString)
         delegate?.setTokenAmount(totalTokens: totalTokens)
-        
     }
     
     //When switch between NEO/GAS
     @objc func setContributionAsset(_ sender: UITapGestureRecognizer) {
+        //reset the field when switch the contributing asset
+        amountTextField.text = ""
         if sender.view == neoSelectorContainerView {
-            
             var neo = TransferableAsset.NEO()
             neo.balance = Decimal(O3Cache.neoBalance())
             inputToolbar?.asset = neo
@@ -148,5 +155,5 @@ class ContributionTableViewCell: UITableViewCell {
 }
 extension ContributionTableViewCell: AssetInputToolbarDelegate {
     
-  
+    
 }
