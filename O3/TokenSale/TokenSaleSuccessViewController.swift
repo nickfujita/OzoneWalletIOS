@@ -93,7 +93,12 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     @IBAction func shareTapped(_ sender: Any) {
-        //share this via email with text 
+        let text = String(format: "TXID: %@", transactionInfo.txID)
+        let transactionCard = UIImage.imageWithView(view: self.transactionCardView)
+        let activityViewController = UIActivityViewController(activityItems: [text, transactionCard], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        
+        self.present(activityViewController, animated: true, completion: nil)
     }
 }
 
