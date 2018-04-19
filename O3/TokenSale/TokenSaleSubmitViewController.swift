@@ -25,8 +25,8 @@ class TokenSaleSubmitViewController: UIViewController {
         #endif
     
         let fee = transactionInfo.priorityIncluded == true ? Float64(0.0011) : Float64(0)
-        
-        Authenticated.account?.participateTokenSales(scriptHash: transactionInfo.tokenSaleContractHash, assetID: transactionInfo.assetIDUsedToPurchase, amount: transactionInfo.assetAmount, remark: "O3X", networkFee: fee) { success, txID, error in
+        let remark = String(format:"O3X%@", transactionInfo.saleInfo.name)
+        Authenticated.account?.participateTokenSales(scriptHash: transactionInfo.tokenSaleContractHash, assetID: transactionInfo.assetIDUsedToPurchase, amount: transactionInfo.assetAmount, remark: remark, networkFee: fee) { success, txID, error in
             
             //make delay to 10 seconds in production
             
