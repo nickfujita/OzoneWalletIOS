@@ -24,6 +24,8 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     var amountString: String?
     var totalTokens: Double = 0.0
     
+    var endingSoon: Bool = false
+    
     public struct TokenSaleTransactionInfo {
         var priorityIncluded: Bool
         var assetIDUsedToPurchase: String
@@ -52,10 +54,27 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         neoRateInfo = saleInfo.acceptingAssets[neoIndex]
         gasRateInfo = saleInfo.acceptingAssets[gasIndex]
     }
+    var countdownTimer: Timer?
+    
+    deinit {
+        countdownTimer?.invalidate()
+        countdownTimer = nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = saleInfo.name
+        
+        let date1: Date = Date()
+        let date2: Date = Date(timeIntervalSince1970: saleInfo.endTime)
+        let calender:Calendar = Calendar.current
+        let components: DateComponents = calender.dateComponents([.hour], from: date1, to: date2)
+        //less than 6 hours
+        if  components.hour! < 6 {
+            self.endingSoon =  true
+            countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDownDate), userInfo: nil, repeats: true)
+        }
+        
         self.navigationItem.largeTitleDisplayMode = .never
         participateButton.isEnabled = false
         self.tableView.keyboardDismissMode = .onDrag
@@ -66,6 +85,31 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         priorityLabel?.addGestureRecognizer(tap)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "external-link-alt"), style: .plain, target: self, action: #selector(externalLinkTapped(_:)))
+    }
+    
+    @objc func countDownDate() {
+        let now = Date()
+        let calendar = Calendar.current
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .abbreviated
+        formatter.calendar = calendar
+        let tokenSaleEndDate = Date(timeIntervalSince1970: saleInfo.endTime)
+        let string = formatter.string(from: now, to: tokenSaleEndDate)!
+        if let cell = tableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? TokenSaleInfoRowTableViewCell {
+            DispatchQueue.main.async {
+                if tokenSaleEndDate < now {
+                    cell.subtitleLabel.text = "Ended"
+                    cell.subtitleLabel.theme_textColor = O3Theme.negativeLossColorPicker
+                    self.countdownTimer?.invalidate()
+                    self.countdownTimer = nil
+                } else {
+                    cell.subtitleLabel.text = string
+                    cell.subtitleLabel.theme_textColor = O3Theme.negativeLossColorPicker
+                }
+                
+            }
+        }
     }
     
     @objc func externalLinkTapped(_ sender: Any) {
@@ -85,7 +129,7 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     
     @objc func priorityLabelTapped(_ sender: Any) {
         //toggel when tap at the label
-      checkboxPriority!.isSelected = !checkboxPriority!.isSelected
+        checkboxPriority!.isSelected = !checkboxPriority!.isSelected
     }
     
     @IBAction func priorityTapped(_ sender: Any) {
@@ -93,23 +137,37 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 1 {
+        if indexPath.section == 0 || indexPath.section == 1{
+            return 35.0
+        }
+        
+        if indexPath.section == 2 {
             return 218.0
         }
+        
         return 35
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //sales info section
+        //ending soon section will show only when the sale is less than 6 hours
         if section == 0 {
+            if endingSoon == true {
+                return 1
+            }
+            return 0
+        }
+        
+        //sales info section
+        if section == 1 {
             return saleInfo.info.count
         }
+        
         //contribution cell
         return 1
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func amountStringToNumber(amountString: String) -> NSNumber? {
@@ -123,18 +181,17 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     }
     
     func validateAmount(amountString: String) -> Bool {
-        let contributionIndexPath = IndexPath(row: 0, section: 1)
+        let contributionIndexPath = IndexPath(row: 0, section: 2)
         guard let cell = tableView.cellForRow(at: contributionIndexPath) as? ContributionTableViewCell else {
             return false
         }
         //clear error message label
         cell.errorLabel.text = ""
-    
+        
         if amountString.count == 0 {
             return false
         }
-        //never alert inside a validation method that return bool
-        let assetId: String! = self.selectedAsset!.assetID!
+        
         let assetName: String! = self.selectedAsset?.name!
         let amount = amountStringToNumber(amountString: amountString)
         
@@ -142,7 +199,7 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
             OzoneAlert.alertDialog(message: "Invalid amount", dismissTitle: "OK") {}
             return false
         }
-       
+        
         //validation
         //1. check balance first
         //2. check min/max contribution
@@ -168,7 +225,6 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
             return asset.asset.lowercased() == self.selectedAsset?.name.lowercased()
         }
         
-        //TODO make this validation better
         //showing a message instead of an alert
         if filteredResults.count == 1 {
             let contributingAsset = filteredResults.first!
@@ -191,33 +247,57 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        //contribution section
-        if indexPath.section == 1 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "contributionTableViewCell") as? ContributionTableViewCell else {
+        //ending soon section
+        if indexPath.section == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "tokenSaleInfoRowTableViewCell") as? TokenSaleInfoRowTableViewCell else {
                 return UITableViewCell()
             }
             
-            cell.delegate = self
-            cell.neoRateInfo = neoRateInfo
-            cell.gasRateInfo = gasRateInfo
-            cell.tokenName = saleInfo.symbol
-            //init with 0
-            cell.tokenAmountLabel.text = String(format: "0 %@", saleInfo.symbol)
+            let infoRowData = TokenSaleInfoRowTableViewCell.InfoData(title: "Ends in", subtitle: "")
+            cell.infoData = infoRowData
             return cell
         }
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "tokenSaleInfoRowTableViewCell") as? TokenSaleInfoRowTableViewCell else {
+        //contribution section
+        if indexPath.section == 1 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "tokenSaleInfoRowTableViewCell") as? TokenSaleInfoRowTableViewCell else {
+                return UITableViewCell()
+            }
+            
+            let infoRow = saleInfo.info[indexPath.row]
+            let infoRowData = TokenSaleInfoRowTableViewCell.InfoData(title: infoRow.label, subtitle: infoRow.value)
+            cell.infoData = infoRowData
+            return cell
+            
+        }
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "contributionTableViewCell") as? ContributionTableViewCell else {
             return UITableViewCell()
         }
-        let infoRow = saleInfo.info[indexPath.row]
-        let infoRowData = TokenSaleInfoRowTableViewCell.InfoData(title: infoRow.label, subtitle: infoRow.value)
-        cell.infoData = infoRowData
+        
+        cell.delegate = self
+        cell.neoRateInfo = neoRateInfo
+        cell.gasRateInfo = gasRateInfo
+        cell.tokenName = saleInfo.symbol
+        //init with 0
+        cell.tokenAmountLabel.text = String(format: "0 %@", saleInfo.symbol)
         return cell
     }
     
     @IBAction func particpateTapped(_ sender: Any) {
         DispatchQueue.main.async {
+            
+            let date1: Date = Date()
+            let date2: Date = Date(timeIntervalSince1970: self.saleInfo.endTime)
+            let calender:Calendar = Calendar.current
+            let components: DateComponents = calender.dateComponents([.second], from: date1, to: date2)
+            //already ended
+            if  components.second! < 0 {
+                let message = String(format: "%@ token sale has ended.", self.saleInfo.name)
+                OzoneAlert.alertDialog(message: message, dismissTitle: "OK") {}
+                return
+            }
+            
             if self.validateAmount(amountString: self.amountString ?? "") {
                 self.performSegue(withIdentifier: "showReviewTokenSale", sender: nil)
             }

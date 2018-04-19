@@ -282,7 +282,6 @@ class HomeViewModel {
                 switch result {
                 case .failure:
                     self.delegate?.hideLoadingIndicator()
-                    print(result)
                 case .success(let portfolio):
                     self.delegate?.hideLoadingIndicator()
                     self.delegate?.updateWithPortfolioData(portfolio)

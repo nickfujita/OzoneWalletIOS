@@ -27,6 +27,14 @@ class TokenSalesListTableViewController: UITableViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setThemedElements()
+        
+        #if PRIVATENET
+        UserDefaultsManager.seed = "http://localhost:30333"
+        UserDefaultsManager.useDefaultSeed = false
+        UserDefaultsManager.network = .privateNet
+        Authenticated.account?.neoClient = NeoClient(network: .privateNet)
+        #endif
+        
         //this to avoid double call in cellForRow
         //assign datasource and delegate only when data is loaded
         self.tableView.delegate = nil
@@ -107,15 +115,6 @@ class TokenSalesListTableViewController: UITableViewController {
             guard let cell = self.tableView.cellForRow(at: indexPath) as? TokenSaleTableViewCell else {
                 return
             }
-            
-            #if PRIVATENET
-            UserDefaultsManager.seed = "http://localhost:30333"
-            UserDefaultsManager.useDefaultSeed = false
-            UserDefaultsManager.network = .privateNet
-            Authenticated.account?.neoClient = NeoClient(network: .privateNet)
-            #endif
-            
-            
             Authenticated.account?.allowToParticipateInTokenSale(scriptHash: sale.scriptHash, completion: { (result) in
                 DispatchQueue.main.async {
                     switch result {

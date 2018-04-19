@@ -34,6 +34,11 @@ class TokenSaleTableViewCell: UITableViewCell {
     }
     
     var tokenSaleEndDate: Date?
+    var countdownTimer: Timer?
+    deinit {
+        countdownTimer?.invalidate()
+        countdownTimer = nil
+    }
     
     var tokenSaleData: TokenSaleData? {
         didSet {
@@ -42,7 +47,7 @@ class TokenSaleTableViewCell: UITableViewCell {
             tokenSaleShortDescriptionLabel.text = tokenSaleData?.shortDescription ?? ""
             tokenSaleEndDate = Date(timeIntervalSince1970: Double((tokenSaleData?.time)!))
             countDownDate()
-            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDownDate), userInfo: nil, repeats: true)
+            countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDownDate), userInfo: nil, repeats: true)
             
         }
     }
@@ -51,9 +56,18 @@ class TokenSaleTableViewCell: UITableViewCell {
         let now = Date()
         let calendar = Calendar.current
         let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.day, .hour]
-        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.day, .hour, .minute]
+        formatter.unitsStyle = .abbreviated
         formatter.calendar = calendar
+        //if the sale ends then we invalidate the timer
+        if tokenSaleEndDate! < now {
+            actionLabel.text = "Ended"
+            actionLabel.theme_textColor = O3Theme.negativeLossColorPicker
+            countdownTimer?.invalidate()
+            countdownTimer = nil
+            return
+        }
+        
         let string = formatter.string(from: now, to: tokenSaleEndDate!)!
         tokenSaleTimeLabel.text = String(format:"Ends in %@", string)
     }
