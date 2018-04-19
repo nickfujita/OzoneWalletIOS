@@ -9,7 +9,8 @@
 import UIKit
 
 protocol AssetInputToolbarDelegate {
-    
+    func percentAmountTapped(value: Decimal)
+    func maxAmountTapped(value: Decimal)
 }
 
 class AssetInputToolbar: UIView {
@@ -22,7 +23,8 @@ class AssetInputToolbar: UIView {
     @IBOutlet var assetLabel: UILabel?
     @IBOutlet var assetBalance: UILabel?
     @IBOutlet var messageLabel: UILabel?
-    
+    var delegate: AssetInputToolbarDelegate?
+
     var asset: TransferableAsset? {
         didSet{
             if asset == nil {
@@ -38,8 +40,6 @@ class AssetInputToolbar: UIView {
             }
         }
     }
-    
-    var delegate: AssetInputToolbarDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,6 +58,17 @@ class AssetInputToolbar: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setup()
+    }
+    
+    //mark: -
+    @IBAction func percentTapped(_ sender: UIButton) {
+        let percent = Double(sender.tag)
+        let value = NSDecimalNumber(decimal: self.asset!.balance).doubleValue * (percent / 100.0)
+        self.delegate?.percentAmountTapped(value: NSDecimalNumber(value: value) as Decimal)
+    }
+    
+    @IBAction func maxTapped(_ sender: Any) {
+        self.delegate?.maxAmountTapped(value: self.asset!.balance)
     }
 }
 

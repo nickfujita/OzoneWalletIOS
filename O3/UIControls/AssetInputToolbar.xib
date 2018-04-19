@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,9 +23,9 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1,000,000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ceh-2i-7pS">
-                    <rect key="frame" x="16" y="17" width="90" height="22"/>
+                    <rect key="frame" x="16" y="17" width="120" height="22"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="90" id="mrY-12-lAR"/>
+                        <constraint firstAttribute="width" constant="120" id="mrY-12-lAR"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                     <nil key="textColor"/>
@@ -40,21 +41,70 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eiA-Ac-vOa">
-                    <rect key="frame" x="114" y="0.0" width="245" height="44"/>
+                    <rect key="frame" x="144" y="0.0" width="215" height="44"/>
                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="oU2-iK-wZT">
+                    <rect key="frame" x="136" y="0.0" width="239" height="44"/>
+                    <subviews>
+                        <button opaque="NO" tag="25" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OuO-ah-6ZP">
+                            <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                            <state key="normal" title="25%">
+                                <color key="titleColor" name="lightThemePrimary"/>
+                            </state>
+                            <connections>
+                                <action selector="percentTapped:" destination="-1" eventType="touchUpInside" id="mwC-dm-pch"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="50" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mdP-D3-Q4Z">
+                            <rect key="frame" x="60" y="0.0" width="59.5" height="44"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                            <state key="normal" title="50%">
+                                <color key="titleColor" name="lightThemePrimary"/>
+                            </state>
+                            <connections>
+                                <action selector="percentTapped:" destination="-1" eventType="touchUpInside" id="Tgv-ST-33d"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hF-gf-8dO">
+                            <rect key="frame" x="119.5" y="0.0" width="60" height="44"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                            <state key="normal" title="75%">
+                                <color key="titleColor" name="lightThemePrimary"/>
+                            </state>
+                            <connections>
+                                <action selector="percentTapped:" destination="-1" eventType="touchUpInside" id="1qg-WM-b7I"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zRk-Jt-iyx">
+                            <rect key="frame" x="179.5" y="0.0" width="59.5" height="44"/>
+                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                            <state key="normal" title="MAX">
+                                <color key="titleColor" name="lightThemePrimary"/>
+                            </state>
+                            <connections>
+                                <action selector="maxTapped:" destination="-1" eventType="touchUpInside" id="4iM-cz-xl0"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
             <constraints>
+                <constraint firstItem="u1V-rJ-Fyh" firstAttribute="trailing" secondItem="oU2-iK-wZT" secondAttribute="trailing" id="25a-Br-7J2"/>
+                <constraint firstItem="u1V-rJ-Fyh" firstAttribute="bottom" secondItem="oU2-iK-wZT" secondAttribute="bottom" id="AhA-hS-A4w"/>
                 <constraint firstItem="ceh-2i-7pS" firstAttribute="leading" secondItem="u1V-rJ-Fyh" secondAttribute="leading" constant="16" id="D8m-PU-Jgx"/>
                 <constraint firstItem="u1V-rJ-Fyh" firstAttribute="bottom" secondItem="ceh-2i-7pS" secondAttribute="bottom" constant="5" id="KY8-y6-vR8"/>
                 <constraint firstItem="u1V-rJ-Fyh" firstAttribute="bottom" secondItem="eiA-Ac-vOa" secondAttribute="bottom" id="NSU-ak-Ip4"/>
+                <constraint firstItem="oU2-iK-wZT" firstAttribute="top" secondItem="u1V-rJ-Fyh" secondAttribute="top" id="Tdv-6h-9Ep"/>
                 <constraint firstItem="eiA-Ac-vOa" firstAttribute="top" secondItem="u1V-rJ-Fyh" secondAttribute="top" id="Zl2-9Q-SBW"/>
                 <constraint firstItem="Mo5-iB-pgL" firstAttribute="top" secondItem="u1V-rJ-Fyh" secondAttribute="top" constant="6" id="aQ6-ig-o8B"/>
                 <constraint firstItem="eiA-Ac-vOa" firstAttribute="leading" secondItem="ceh-2i-7pS" secondAttribute="trailing" constant="8" id="b3A-sO-LGJ"/>
                 <constraint firstItem="u1V-rJ-Fyh" firstAttribute="trailing" secondItem="eiA-Ac-vOa" secondAttribute="trailing" constant="16" id="dnX-HT-zZe"/>
                 <constraint firstItem="Mo5-iB-pgL" firstAttribute="leading" secondItem="u1V-rJ-Fyh" secondAttribute="leading" constant="16" id="etM-rI-Jna"/>
+                <constraint firstItem="oU2-iK-wZT" firstAttribute="leading" secondItem="ceh-2i-7pS" secondAttribute="trailing" id="tVL-Gy-gx7"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -63,4 +113,9 @@
             <point key="canvasLocation" x="365.5" y="-315"/>
         </view>
     </objects>
+    <resources>
+        <namedColor name="lightThemePrimary">
+            <color red="0.0" green="0.41176470588235292" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

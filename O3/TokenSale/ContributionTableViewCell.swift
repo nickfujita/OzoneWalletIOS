@@ -33,6 +33,8 @@ class ContributionTableViewCell: UITableViewCell {
             inputToolbar = AssetInputToolbar()
             inputToolbar?.delegate = self
             amountTextField.inputAccessoryView = inputToolbar?.loadNib()
+            amountTextField.inputAccessoryView?.theme_backgroundColor = O3Theme.backgroundColorPicker
+            
             var neo = TransferableAsset.NEO()
             neo.balance = Decimal(O3Cache.neoBalance())
             inputToolbar?.asset = neo
@@ -46,7 +48,7 @@ class ContributionTableViewCell: UITableViewCell {
     var gasRateInfo: TokenSales.SaleInfo.AcceptingAsset?
     
     var tokenName: String! {
-        didSet{
+        didSet {
             neoRateLabel.text = "1 NEO = " + (neoRateInfo?.basicRate.string(0, removeTrailing: true) ?? "") + " " + tokenName
             gasRateLabel.text = "1 GAS = " + (gasRateInfo?.basicRate.string(0, removeTrailing: true) ?? "") + " " + tokenName
         }
@@ -125,7 +127,6 @@ class ContributionTableViewCell: UITableViewCell {
             gas.balance = Decimal(O3Cache.gasBalance())
             inputToolbar?.asset = gas
             
-            
             gasSelectorContainerView.borderColor = Theme.light.primaryColor
             gasContainerLabel.textColor = Theme.light.primaryColor
             gasRateLabel.textColor = Theme.light.primaryColor
@@ -153,5 +154,27 @@ class ContributionTableViewCell: UITableViewCell {
 }
 extension ContributionTableViewCell: AssetInputToolbarDelegate {
     
+    func maxAmountTapped(value: Decimal) {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = selectedAsset.decimal
+        formatter.numberStyle = .decimal
+        formatter.usesGroupingSeparator = false
+        let balanceString = formatter.string(for: value)
+        amountTextField.text = balanceString
+        contributionAmountChanged(amountTextField)
+    }
+    
+    func percentAmountTapped(value: Decimal) {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = selectedAsset.decimal
+        formatter.numberStyle = .decimal
+        formatter.usesGroupingSeparator = false
+        
+        let balanceString = formatter.string(for: value)
+        amountTextField.text = balanceString
+        contributionAmountChanged(amountTextField)
+    }
     
 }

@@ -42,7 +42,7 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
         let tokenSale = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "TOKEN SALE", value: transactionInfo.saleInfo.name)
         tokenSaleTransactionItems.append(tokenSale)
         
-        let txID = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "TXID", value: "389470367287e9f99e561a66d6ab5875f8375506ec1a16d54e9c628f34b8efe8")
+        let txID = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "TXID", value: transactionInfo.txID)
         tokenSaleTransactionItems.append(txID)
         
         

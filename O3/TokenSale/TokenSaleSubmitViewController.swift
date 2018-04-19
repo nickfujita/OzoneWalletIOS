@@ -26,12 +26,13 @@ class TokenSaleSubmitViewController: UIViewController {
     
         let fee = transactionInfo.priorityIncluded == true ? Float64(0.0011) : Float64(0)
         
-        Authenticated.account?.participateTokenSales(scriptHash: transactionInfo.tokenSaleContractHash, assetID: transactionInfo.assetIDUsedToPurchase, amount: transactionInfo.assetAmount, remark: "O3X", networkFee: fee) { success, error in
+        Authenticated.account?.participateTokenSales(scriptHash: transactionInfo.tokenSaleContractHash, assetID: transactionInfo.assetIDUsedToPurchase, amount: transactionInfo.assetAmount, remark: "O3X", networkFee: fee) { success, txID, error in
             
             //make delay to 10 seconds in production
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
                 if success == true {
+                    self.transactionInfo.txID = txID
                     self.performSegue(withIdentifier: "success", sender: self.transactionInfo)
                     return
                 }

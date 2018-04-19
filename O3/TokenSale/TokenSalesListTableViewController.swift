@@ -86,12 +86,7 @@ class TokenSalesListTableViewController: UITableViewController {
         guard let selectedSale = tokenSales?.live[indexPath.row] else {
             return
         }
-        if selectedSale.allowToParticipate == false {
-            //popup something
-            let message = String(format:"Your NEO address is not whitelisted to participate in %@ token sale. If you believe this is a mistake, Please contact the team directly. ",selectedSale.name)
-            OzoneAlert.alertDialog(message: message, dismissTitle: "OK") {}
-            return
-        }
+        //allow user to go into sale page to see what it's like in there but disable participate button
         self.performSegue(withIdentifier: "segueToTokenSale", sender: selectedSale)
     }
     

@@ -8,15 +8,14 @@
 
 import Foundation
 import UIKit
-import M13Checkbox
 import WebBrowser
 
 class TokenSaleTableViewController: UITableViewController, ContributionCellDelegate {
     @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var priorityCheckboxContainer: UIView!
     @IBOutlet weak var participateButton: ShadowedButton!
     @IBOutlet weak var priorityInfoButton: UIButton!
     @IBOutlet var priorityLabel: UILabel?
+    @IBOutlet var checkboxPriority: UIButton?
     
     var saleInfo: TokenSales.SaleInfo!
     var selectedAsset: TransferableAsset? = TransferableAsset.NEO()
@@ -24,8 +23,6 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     var gasRateInfo: TokenSales.SaleInfo.AcceptingAsset?
     var amountString: String?
     var totalTokens: Double = 0.0
-    let checkboxPriority = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
-    
     
     public struct TokenSaleTransactionInfo {
         var priorityIncluded: Bool
@@ -36,6 +33,8 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         var tokensToRecieveAmount: Double
         var tokensToReceiveName: String
         var saleInfo: TokenSales.SaleInfo
+        //this will be set when submitting the raw transaction
+        var txID: String
     }
     
     func setThemedElements() {
@@ -43,10 +42,6 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         tableView.theme_backgroundColor = O3Theme.backgroundColorPicker
         view.theme_backgroundColor = O3Theme.backgroundColorPicker
         priorityInfoButton.theme_setTitleColor(O3Theme.lightTextColorPicker, forState: UIControlState())
-        checkboxPriority.secondaryTintColor = Theme.light.accentColor
-        checkboxPriority.tintColor = Theme.light.accentColor
-        checkboxPriority.checkmarkLineWidth = 2.0
-        priorityCheckboxContainer.addSubview(checkboxPriority)
     }
     
     func setAssetRateInfo() {
@@ -67,7 +62,7 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         setThemedElements()
         logoImageView.kf.setImage(with: URL(string: saleInfo.imageURL))
         setAssetRateInfo()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(priorityTapped(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(priorityLabelTapped(_:)))
         priorityLabel?.addGestureRecognizer(tap)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "external-link-alt"), style: .plain, target: self, action: #selector(externalLinkTapped(_:)))
@@ -88,12 +83,13 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
         }
     }
     
-    @objc func priorityTapped(_ sender: Any) {
-        if checkboxPriority.checkState == .checked {
-            checkboxPriority.checkState = .unchecked
-        } else {
-            checkboxPriority.checkState = .checked
-        }
+    @objc func priorityLabelTapped(_ sender: Any) {
+        //toggel when tap at the label
+      checkboxPriority!.isSelected = !checkboxPriority!.isSelected
+    }
+    
+    @IBAction func priorityTapped(_ sender: Any) {
+        checkboxPriority!.isSelected = !checkboxPriority!.isSelected
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -236,14 +232,15 @@ class TokenSaleTableViewController: UITableViewController, ContributionCellDeleg
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let tx = TokenSaleTransactionInfo (
-            priorityIncluded: checkboxPriority.checkState == .checked,
+            priorityIncluded: checkboxPriority!.isSelected,
             assetIDUsedToPurchase: selectedAsset?.assetID ?? "",
             assetNameUsedToPurchase: selectedAsset?.name ?? "",
             assetAmount: Double(truncating: amountStringToNumber(amountString: amountString!)!),
             tokenSaleContractHash: saleInfo.scriptHash,
             tokensToRecieveAmount: totalTokens,
             tokensToReceiveName: saleInfo.symbol,
-            saleInfo: saleInfo
+            saleInfo: saleInfo,
+            txID: ""
         )
         guard let tokenSaleVC = segue.destination as? TokenSaleReviewTableViewController else {
             return

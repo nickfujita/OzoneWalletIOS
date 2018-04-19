@@ -8,13 +8,12 @@
 
 import Foundation
 import UIKit
-import M13Checkbox
 import Kingfisher
 import NeoSwift
+import WebBrowser
 
 class TokenSaleReviewTableViewController: UITableViewController {
-    @IBOutlet weak var issueAgreementCheckboxContainer: UIView!
-    @IBOutlet weak var o3AgreementCheckboxContainer: UIView!
+    
     @IBOutlet weak var participateButton: ShadowedButton!
     @IBOutlet weak var assetToSendLabel: UILabel!
     @IBOutlet weak var assetToRecieveLabel: UILabel!
@@ -22,6 +21,10 @@ class TokenSaleReviewTableViewController: UITableViewController {
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var sendTitleLabel: UILabel!
     @IBOutlet weak var receiveTitleLabel: UILabel!
+    
+    @IBOutlet weak var notWhitelistedContainer: UIView!
+    @IBOutlet weak var notWhitelistedLabel: UILabel!
+    @IBOutlet weak var tokenSaleWebsiteButton: UIButton!
     
     @IBOutlet weak var readSaleAgreementLabel: UILabel! {
         didSet{
@@ -38,55 +41,46 @@ class TokenSaleReviewTableViewController: UITableViewController {
     }
     
     
-    @objc func readSaleAgreementTapped(_ sender: Any) {
-        if checkBoxIssuer.checkState == .checked {
-            checkBoxIssuer.checkState = .unchecked
-        } else {
-            checkBoxIssuer.checkState = .checked
-        }
+    @objc @IBAction func readSaleAgreementTapped(_ sender: Any) {
+        checkBoxIssuer!.isSelected = !checkBoxIssuer!.isSelected
+        participateButton.isEnabled = checkBoxO3!.isSelected && checkBoxIssuer!.isSelected
     }
-    @objc func iUnderStandTapped(_ sender: Any) {
-        if checkBoxO3.checkState == .checked {
-            checkBoxO3.checkState = .unchecked
-        } else {
-            checkBoxO3.checkState = .checked
-        }
+    
+    @objc @IBAction  func iUnderStandTapped(_ sender: Any) {
+        checkBoxO3!.isSelected = !checkBoxO3!.isSelected
+        participateButton.isEnabled = checkBoxO3!.isSelected && checkBoxIssuer!.isSelected
     }
     
     @IBOutlet var topSpaceConstraint: NSLayoutConstraint!
-    let checkBoxO3 = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
-    let checkBoxIssuer = M13Checkbox(frame: CGRect(x: 0.0, y: 0.0, width: 25.0, height: 25.0))
+    @IBOutlet var checkBoxO3: UIButton?
+    @IBOutlet var checkBoxIssuer: UIButton?
     
     var transactionInfo: TokenSaleTableViewController.TokenSaleTransactionInfo!
     var logoURL: String = ""
     
     func setThemedElements() {
-        checkBoxIssuer.secondaryTintColor = Theme.light.primaryColor
-        checkBoxIssuer.tintColor = Theme.light.primaryColor
-        checkBoxIssuer.checkmarkLineWidth = 2.0
-        issueAgreementCheckboxContainer.addSubview(checkBoxIssuer)
-        checkBoxO3.secondaryTintColor = Theme.light.accentColor
-        checkBoxO3.tintColor = Theme.light.accentColor
-        checkBoxO3.checkmarkLineWidth = 2.0
-        o3AgreementCheckboxContainer.addSubview(checkBoxO3)
-        
         tableView.theme_separatorColor = O3Theme.tableSeparatorColorPicker
         tableView.theme_backgroundColor = O3Theme.backgroundColorPicker
         view.theme_backgroundColor = O3Theme.backgroundColorPicker
         sendTitleLabel.theme_textColor = O3Theme.titleColorPicker
         receiveTitleLabel.theme_textColor = O3Theme.titleColorPicker
-    }
-    
-    @objc func checkParticipateEnabledState() {
-        if checkBoxO3.state == .selected && checkBoxO3.state == .selected {
-            participateButton.isEnabled = true
-        }
-        participateButton.isEnabled = false
+        notWhitelistedContainer.theme_backgroundColor = O3Theme.backgroundColorPicker
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setThemedElements()
+        
+        if transactionInfo.saleInfo.allowToParticipate == false {
+             let message = String(format:"Your NEO address is not whitelisted to participate in %@ token sale. If you believe this is a mistake, Please contact the team directly. ",transactionInfo.saleInfo.name)
+            notWhitelistedLabel.text = message
+            notWhitelistedContainer.isHidden = false
+        } else {
+            notWhitelistedContainer.isHidden = true
+        }
+        
+        //disabled until check two checkboxes
+        participateButton.isEnabled = false
         logoImageView.kf.setImage(with: URL(string: logoURL))
         
         let amountFormatter = NumberFormatter()
@@ -109,10 +103,23 @@ class TokenSaleReviewTableViewController: UITableViewController {
         assetToRecieveLabel.text = String(format:"%@ %@", amountFormatter.string(from: NSNumber(value: transactionInfo.tokensToRecieveAmount))!, transactionInfo.tokensToReceiveName)
     }
     
-    @IBAction func partcipateTapped(_ sender: Any) {
+    @IBAction func tokenSaleWebsiteTapped(_ sender: Any) {
+        let webBrowserViewController = WebBrowserViewController()
+        webBrowserViewController.isToolbarHidden = false
+        webBrowserViewController.title = transactionInfo.saleInfo.name
+        webBrowserViewController.isShowURLInNavigationBarWhenLoading = true
+        webBrowserViewController.barTintColor = UserDefaultsManager.themeIndex == 0 ? Theme.light.backgroundColor: Theme.dark.backgroundColor
+        webBrowserViewController.tintColor = Theme.light.primaryColor
+        webBrowserViewController.isShowPageTitleInNavigationBar = true
+        webBrowserViewController.loadURLString(transactionInfo.saleInfo.webURL)
         
-        if checkBoxO3.checkState == .checked && checkBoxIssuer.checkState == .checked {
-            
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.navigationController?.pushViewController(webBrowserViewController, animated: true)
+        }
+    }
+    
+    @IBAction func partcipateTapped(_ sender: Any) {
+        if checkBoxO3!.isSelected && checkBoxIssuer!.isSelected {
             //ask for authentication
             //if authenticated then call "submit"
             self.performSegue(withIdentifier: "submit", sender: transactionInfo)
