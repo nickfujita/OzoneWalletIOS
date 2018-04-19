@@ -80,7 +80,7 @@ class ContributionTableViewCell: UITableViewCell {
         //formatter to format string to a proper numbers
         let amountFormatter = NumberFormatter()
         amountFormatter.minimumFractionDigits = 0
-        amountFormatter.maximumFractionDigits = 8
+        amountFormatter.maximumFractionDigits = selectedAsset.decimal
         amountFormatter.numberStyle = .decimal
         amountFormatter.locale = Locale.current
         amountFormatter.usesGroupingSeparator = true
@@ -102,42 +102,48 @@ class ContributionTableViewCell: UITableViewCell {
     
     //When switch between NEO/GAS
     @objc func setContributionAsset(_ sender: UITapGestureRecognizer) {
-        //reset the field when switch the contributing asset
-        amountTextField.text = ""
-        if sender.view == neoSelectorContainerView {
-            var neo = TransferableAsset.NEO()
-            neo.balance = Decimal(O3Cache.neoBalance())
-            inputToolbar?.asset = neo
+        DispatchQueue.main.async {
+            self.amountTextField.resignFirstResponder()
             
-            //allow only integer for neo
-            neoSelectorContainerView.borderColor = Theme.light.primaryColor
-            neoContainerLabel.textColor = Theme.light.primaryColor
-            neoRateLabel.textColor = Theme.light.primaryColor
-            
-            gasSelectorContainerView.borderColor = Theme.light.lightTextColor
-            gasContainerLabel.textColor = Theme.light.lightTextColor
-            gasRateLabel.textColor = Theme.light.lightTextColor
-            
-            delegate?.setContributionAsset(asset: TransferableAsset.NEO())
-            selectedAsset = TransferableAsset.NEO()
-            contributionAmountChanged(sender)
-        } else {
-            
-            var gas = TransferableAsset.GAS()
-            gas.balance = Decimal(O3Cache.gasBalance())
-            inputToolbar?.asset = gas
-            
-            gasSelectorContainerView.borderColor = Theme.light.primaryColor
-            gasContainerLabel.textColor = Theme.light.primaryColor
-            gasRateLabel.textColor = Theme.light.primaryColor
-            
-            neoSelectorContainerView.borderColor = Theme.light.lightTextColor
-            neoContainerLabel.textColor = Theme.light.lightTextColor
-            neoRateLabel.textColor = Theme.light.lightTextColor
-            
-            delegate?.setContributionAsset(asset: TransferableAsset.GAS())
-            selectedAsset = TransferableAsset.GAS()
-            contributionAmountChanged(sender)
+            //reset the field when switch the contributing asset
+            self.amountTextField.text = ""
+            if sender.view == self.neoSelectorContainerView {
+                var neo = TransferableAsset.NEO()
+                neo.balance = Decimal(O3Cache.neoBalance())
+                self.inputToolbar?.asset = neo
+                self.amountTextField.keyboardType = .numberPad
+                //allow only integer for neo
+                self.neoSelectorContainerView.borderColor = Theme.light.primaryColor
+                self.neoContainerLabel.textColor = Theme.light.primaryColor
+                self.neoRateLabel.textColor = Theme.light.primaryColor
+                
+                self.gasSelectorContainerView.borderColor = Theme.light.lightTextColor
+                self.gasContainerLabel.textColor = Theme.light.lightTextColor
+                self.gasRateLabel.textColor = Theme.light.lightTextColor
+                
+                self.delegate?.setContributionAsset(asset: TransferableAsset.NEO())
+                self.selectedAsset = TransferableAsset.NEO()
+                self.contributionAmountChanged(sender)
+            } else {
+                
+                var gas = TransferableAsset.GAS()
+                gas.balance = Decimal(O3Cache.gasBalance())
+                self.inputToolbar?.asset = gas
+                
+                self.amountTextField.keyboardType = .decimalPad
+                
+                self.gasSelectorContainerView.borderColor = Theme.light.primaryColor
+                self.gasContainerLabel.textColor = Theme.light.primaryColor
+                self.gasRateLabel.textColor = Theme.light.primaryColor
+                
+                self.neoSelectorContainerView.borderColor = Theme.light.lightTextColor
+                self.neoContainerLabel.textColor = Theme.light.lightTextColor
+                self.neoRateLabel.textColor = Theme.light.lightTextColor
+                
+                self.delegate?.setContributionAsset(asset: TransferableAsset.GAS())
+                self.selectedAsset = TransferableAsset.GAS()
+                self.contributionAmountChanged(sender)
+            }
         }
     }
     
