@@ -93,7 +93,7 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     @IBAction func shareTapped(_ sender: Any) {
-        let text = String(format: "TXID: %@", transactionInfo.txID)
+        let text = String(format: "This receipt proves that your transaction has submitted for procesing on the NEO Blockchain.\n\nOnce it has been authorized on to the blockchain, the funds will leave your wallet, and the token issuer will be responsible for the distribution of the tokens.You can use this transaction ID as proof of your participation in the token sale. Additional details follow.\n\n Date: %@\nToken Sale Name: %@\nTransaction ID: %@\nSent: %@\nShould Recieve: %@\n\nRegardsO3 Team",tokenSaleTransactionItems[0].value, tokenSaleTransactionItems[1].value, tokenSaleTransactionItems[2].value, tokenSaleTransactionItems[3].value, tokenSaleTransactionItems[4].value)
         let transactionCard = UIImage.imageWithView(view: self.transactionCardView)
         let activityViewController = UIActivityViewController(activityItems: [text, transactionCard], applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
@@ -103,7 +103,6 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
 }
 
 extension TokenSaleSuccessViewController {
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 32.0

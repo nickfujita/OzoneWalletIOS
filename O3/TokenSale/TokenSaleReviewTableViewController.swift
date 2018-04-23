@@ -79,6 +79,8 @@ class TokenSaleReviewTableViewController: UITableViewController {
             notWhitelistedContainer.isHidden = true
         }
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "external-link-alt"), style: .plain, target: self, action: #selector(externalLinkTapped(_:)))
+        
         //disabled until check two checkboxes
         participateButton.isEnabled = false
         logoImageView.kf.setImage(with: URL(string: logoURL))
@@ -101,6 +103,21 @@ class TokenSaleReviewTableViewController: UITableViewController {
         assetToSendLabel.text = String(format:"%@ %@",amountFormatter.string(from: NSNumber(value: transactionInfo.assetAmount))!, transactionInfo.assetNameUsedToPurchase)
         
         assetToRecieveLabel.text = String(format:"%@ %@", amountFormatter.string(from: NSNumber(value: transactionInfo.tokensToRecieveAmount))!, transactionInfo.tokensToReceiveName)
+    }
+    
+    @objc func externalLinkTapped(_ sender: Any) {
+        let webBrowserViewController = WebBrowserViewController()
+        webBrowserViewController.isToolbarHidden = false
+        webBrowserViewController.title = transactionInfo.saleInfo.name
+        webBrowserViewController.isShowURLInNavigationBarWhenLoading = true
+        webBrowserViewController.barTintColor = UserDefaultsManager.themeIndex == 0 ? Theme.light.backgroundColor: Theme.dark.backgroundColor
+        webBrowserViewController.tintColor = Theme.light.primaryColor
+        webBrowserViewController.isShowPageTitleInNavigationBar = true
+        webBrowserViewController.loadURLString(transactionInfo.saleInfo.webURL)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.navigationController?.pushViewController(webBrowserViewController, animated: true)
+        }
     }
     
     @IBAction func tokenSaleWebsiteTapped(_ sender: Any) {
