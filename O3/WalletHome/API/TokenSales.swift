@@ -10,19 +10,23 @@ import Foundation
 
 public struct TokenSales: Codable {
     var live: [SaleInfo]
-
+    var subscribeURL: String
+    
     enum CodingKeys: String, CodingKey {
         case live
+        case subscribeURL
     }
 
-    public init(live: [SaleInfo]) {
+    public init(live: [SaleInfo], subscribeURL: String) {
         self.live = live
+        self.subscribeURL = subscribeURL
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let live: [SaleInfo] = try container.decode([SaleInfo].self, forKey: .live)
-        self.init(live: live)
+        let subscribeURL: String = try container.decode(String.self, forKey: .subscribeURL)
+        self.init(live: live, subscribeURL: subscribeURL)
     }
 
     public struct SaleInfo: Codable {

@@ -43,6 +43,9 @@
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                                     <state key="normal" title="Sign up"/>
+                                    <connections>
+                                        <action selector="subscribeButtonTapped:" destination="ge6-vZ-Hxh" eventType="touchUpInside" id="8vq-4X-R8H"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -154,6 +157,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="whv-8Z-UX1"/>
                     <connections>
+                        <outlet property="subscribeButton" destination="7B6-LO-sn5" id="Hcy-dY-VBZ"/>
                         <segue destination="laS-zG-hbB" kind="show" identifier="segueToTokenSale" id="k26-YB-lKf"/>
                     </connections>
                 </tableViewController>

@@ -9,9 +9,12 @@
 import Foundation
 import UIKit
 import NeoSwift
+import WebBrowser
 
 class TokenSalesListTableViewController: UITableViewController {
     var tokenSales: TokenSales?
+    @IBOutlet var subscribeButton: UIButton?
+    
     func setupNavigationBar() {
         self.navigationController?.hideHairline()
         self.navigationItem.title = "Token Sales"
@@ -64,6 +67,17 @@ class TokenSalesListTableViewController: UITableViewController {
         super.viewWillDisappear(animated)
         //this will remove a title to the back button in the pushed view
         self.title = ""
+    }
+    
+    @IBAction func subscribeButtonTapped(_ sender: Any) {
+        if tokenSales?.subscribeURL == nil {
+            return
+        }
+        let webBrowserViewController = WebBrowserViewController()
+        webBrowserViewController.tintColor = Theme.light.primaryColor
+        webBrowserViewController.loadURLString(tokenSales!.subscribeURL)
+        let navigationWebBrowser = WebBrowserViewController.rootNavigationWebBrowser(webBrowser: webBrowserViewController)
+        present(navigationWebBrowser, animated: true, completion: nil)
     }
     
     @IBAction func tappedLeftBarButtonItem(_ sender: UIBarButtonItem) {
