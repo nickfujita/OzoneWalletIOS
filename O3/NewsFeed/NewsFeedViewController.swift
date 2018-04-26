@@ -73,7 +73,7 @@ class NewsFeedViewController: UIViewController, UITableViewDelegate, UITableView
 
         self.edgesForExtendedLayout = UIRectEdge.bottom
         self.navigationController?.hideHairline()
-        self.navigationItem.title = "News Feed"
+        self.navigationController?.navigationBar.topItem?.title = NSLocalizedString("NEWSFEED_News_Title", comment: "Title of the news feed page")
         loadNews()
     }
 

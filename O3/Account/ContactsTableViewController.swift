@@ -220,10 +220,10 @@ extension ContactsTableViewController: NSFetchedResultsControllerDelegate {
             break
         }
     }
-    
+
     func setLocalizedStrings() {
         addAddressButton.setTitle(NSLocalizedString("CONTACTS_Add_Contact_Button_Title", comment: "Title for button when you add a contact to address book"), for: UIControlState())
         addAddressDescriptionLabel.text =  NSLocalizedString("CONTACTS_Add_Contact_Description", comment: "An informative description about what happens when you add a contact")
-        
+
     }
 }
