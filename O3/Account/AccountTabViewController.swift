@@ -38,6 +38,7 @@ class AccountTabViewController: TabmanViewController, PageboyViewControllerDataS
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         addThemeObserver()
 
         let accountAssetViewController = UIStoryboard(name: "Account", bundle: nil).instantiateViewController(withIdentifier: "AccountAssetTableViewController")
@@ -59,9 +60,6 @@ class AccountTabViewController: TabmanViewController, PageboyViewControllerDataS
         })
         self.bar.location = .top
         self.bar.style = .buttonBar
-        self.bar.items = [Item(title: "ASSETS"),
-                          Item(title: "TRANSACTIONS"),
-                          Item(title: "CONTACTS")]
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "qrCode-button"), style: .plain, target: self, action: #selector(myAddressTapped(_:)))
         self.view.theme_backgroundColor = O3Theme.backgroundColorPicker
 
@@ -93,4 +91,9 @@ class AccountTabViewController: TabmanViewController, PageboyViewControllerDataS
         present(modal, animated: true, completion: nil)
     }
 
+    func setLocalizedStrings() {
+        self.bar.items = [Item(title: NSLocalizedString("WALLET_Assets", comment: "Title of assets tab in wallet screen")),
+                          Item(title: NSLocalizedString("WALLET_Transactions", comment: "Title of Transactions tab in wallet screen")),
+                          Item(title: NSLocalizedString("WALLET_Contacts", comment: "Title of Contacts tab in wallet screen"))]
+    }
 }

@@ -76,7 +76,6 @@
 		6E4E6F9420146BEC001A5844 /* TransactionHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E6F9320146BEC001A5844 /* TransactionHistoryTableViewController.swift */; };
 		6E4E6F9820147868001A5844 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E6F9720147868001A5844 /* ContactsTableViewController.swift */; };
 		6E4E6F9A20147ABB001A5844 /* AccentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E6F9920147ABB001A5844 /* AccentButton.swift */; };
-		6E4E6F9C20147FBC001A5844 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E6F9B20147FBC001A5844 /* HeaderTableViewCell.swift */; };
 		6E61BBD11F729D3B00D2B30B /* Money.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E61BBD01F729D3B00D2B30B /* Money.swift */; };
 		6E68B6B0206CB771008C25E8 /* TokenSale.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E68B6AF206CB771008C25E8 /* TokenSale.storyboard */; };
 		6E6BD24B1FFC69330049098A /* PKHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E6BD24A1FFC67E10049098A /* PKHUD.framework */; };
@@ -110,8 +109,6 @@
 		7501E8431F79536300123EA8 /* SettingsMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501E8421F79536300123EA8 /* SettingsMenuTableViewController.swift */; };
 		750E17431F6FD560001F62FD /* GraphPanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750E17421F6FD560001F62FD /* GraphPanView.swift */; };
 		7513FAD71F6952B8003450ED /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513FAD61F6952B8003450ED /* TransactionCell.swift */; };
-		7513FADB1F69541F003450ED /* TransactionsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513FADA1F69541F003450ED /* TransactionsHeaderCell.swift */; };
-		7513FADD1F695433003450ED /* AssetsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7513FADC1F695433003450ED /* AssetsHeaderCell.swift */; };
 		751666B01F80C190009ACC07 /* TransactionWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751666AF1F80C190009ACC07 /* TransactionWebViewController.swift */; };
 		751666B21F80C290009ACC07 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751666B11F80C290009ACC07 /* WebKit.framework */; };
 		75179F021F7620E700F4C67F /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75179F011F7620E700F4C67F /* Double.swift */; };
@@ -265,7 +262,6 @@
 		6E4E6F9320146BEC001A5844 /* TransactionHistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryTableViewController.swift; sourceTree = "<group>"; };
 		6E4E6F9720147868001A5844 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		6E4E6F9920147ABB001A5844 /* AccentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentButton.swift; sourceTree = "<group>"; };
-		6E4E6F9B20147FBC001A5844 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		6E61BBD01F729D3B00D2B30B /* Money.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Money.swift; sourceTree = "<group>"; };
 		6E68B6AF206CB771008C25E8 /* TokenSale.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenSale.storyboard; sourceTree = "<group>"; };
 		6E6BD24A1FFC67E10049098A /* PKHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PKHUD.framework; path = Carthage/Build/iOS/PKHUD.framework; sourceTree = "<group>"; };
@@ -296,8 +292,6 @@
 		7501E8421F79536300123EA8 /* SettingsMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuTableViewController.swift; sourceTree = "<group>"; };
 		750E17421F6FD560001F62FD /* GraphPanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphPanView.swift; sourceTree = "<group>"; };
 		7513FAD61F6952B8003450ED /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
-		7513FADA1F69541F003450ED /* TransactionsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsHeaderCell.swift; sourceTree = "<group>"; };
-		7513FADC1F695433003450ED /* AssetsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsHeaderCell.swift; sourceTree = "<group>"; };
 		751666AF1F80C190009ACC07 /* TransactionWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionWebViewController.swift; sourceTree = "<group>"; };
 		751666B11F80C290009ACC07 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		75179F011F7620E700F4C67F /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
@@ -430,7 +424,6 @@
 				35E5F613202ADE4300D65BEA /* NativeAssetSelectorTableViewCell.swift */,
 				6E4E6F8A20146627001A5844 /* NEP5TokenTableViewCell.swift */,
 				35E5F615202ADF1E00D65BEA /* NEP5TokenSelectorTableViewCell.swift */,
-				6E4E6F9B20147FBC001A5844 /* HeaderTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -676,8 +669,6 @@
 				6E4E6F82201462BF001A5844 /* Models */,
 				6E7C927B1F7A6B1400F8D7AA /* Account.storyboard */,
 				7513FAD61F6952B8003450ED /* TransactionCell.swift */,
-				7513FADA1F69541F003450ED /* TransactionsHeaderCell.swift */,
-				7513FADC1F695433003450ED /* AssetsHeaderCell.swift */,
 				751666AF1F80C190009ACC07 /* TransactionWebViewController.swift */,
 				6EF8D8E51F7A732C005CC24D /* AccountAssets.xcassets */,
 				6E97C4B61F7FC6FC00526FF0 /* MyAddressViewController.swift */,
@@ -929,7 +920,6 @@
 				35061E47205F5CFE004E89EB /* FeaturedCollectionCell.swift in Sources */,
 				75D5BFB41F6CEF2E00E64855 /* OnboardingCollectionCell.swift in Sources */,
 				35E5F616202ADF1E00D65BEA /* NEP5TokenSelectorTableViewCell.swift in Sources */,
-				7513FADB1F69541F003450ED /* TransactionsHeaderCell.swift in Sources */,
 				35061E49205F6306004E89EB /* FeatureFeed.swift in Sources */,
 				75CEACE81F66B683005974CE /* SendTableViewController.swift in Sources */,
 				75E14E571F7D2AEC00BEAE22 /* UIApplication.swift in Sources */,
@@ -949,7 +939,6 @@
 				75D5BFBA1F6CF5E200E64855 /* WelcomeTableViewController.swift in Sources */,
 				6E3E381E1FA44C84004965F8 /* LoginToCurrentWalletViewController.swift in Sources */,
 				353F364B200370D6002B4FE1 /* NewsFeedViewController.swift in Sources */,
-				6E4E6F9C20147FBC001A5844 /* HeaderTableViewCell.swift in Sources */,
 				6E73679B2084B3B900F4202B /* TokenSaleSuccessViewController.swift in Sources */,
 				6ED5D7EE2016C69D00AF3713 /* NEOAsset.swift in Sources */,
 				7520068C1F7F8AC400D19B5F /* PrivateKeyViewController.swift in Sources */,
@@ -999,7 +988,6 @@
 				6E4E6F812014611E001A5844 /* AccountAssetTableViewController.swift in Sources */,
 				757FEB731F77F07B0099E26F /* String.swift in Sources */,
 				6E61BBD11F729D3B00D2B30B /* Money.swift in Sources */,
-				7513FADD1F695433003450ED /* AssetsHeaderCell.swift in Sources */,
 				3549458E203FD4D000332E53 /* Decimal.swift in Sources */,
 				353F364D2003755B002B4FE1 /* NewsFeedCell.swift in Sources */,
 				75E28F2D1F9B249F006C6E37 /* NetworkTypeCell.swift in Sources */,

@@ -24,6 +24,7 @@ class UnclaimedGASTableViewCell: UITableViewCell {
     }
     @IBOutlet var headerLabel: UILabel!
     override func awakeFromNib() {
+        setLocalizedStrings()
         amountLabel.theme_textColor = O3Theme.titleColorPicker
         cardView.theme_backgroundColor = O3Theme.backgroundColorPicker
         contentView.theme_backgroundColor = O3Theme.backgroundColorPicker
@@ -39,5 +40,10 @@ class UnclaimedGASTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         cardView.theme_backgroundColor = O3Theme.backgroundColorPicker
         super.layoutSubviews()
+    }
+
+    func setLocalizedStrings() {
+        headerLabel.text = NSLocalizedString("WALLET_Unclaimed_Gas Title", comment: "A title for Unclaimed Gas in the wallet")
+        claimButton.setTitle(NSLocalizedString("WALLET_Claim", comment: "A Title for the claim Action"), for: UIControlState())
     }
 }

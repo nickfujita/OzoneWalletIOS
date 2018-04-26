@@ -47,11 +47,10 @@ class AvailableNEP5TokensTableViewController: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         applyNavBarTheme()
         tableView.theme_backgroundColor = O3Theme.backgroundColorPicker
         tableView.theme_separatorColor = O3Theme.tableSeparatorColorPicker
-        self.title = NSLocalizedString("NEP5 Tokens", comment: "")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Done", comment: "Done bar button item"), style: .done, target: self, action: #selector(doneTapped(_:)))
         self.loadTokens()
     }
 
@@ -115,5 +114,10 @@ class AvailableNEP5TokensTableViewController: UITableViewController {
             cell.accessoryType = .checkmark
 
         }
+    }
+
+    func setLocalizedStrings() {
+        self.title = NSLocalizedString("WALLET_NEP5_Tokens", comment: "Title for NEP-5 Tokens Selection View")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("WALLET_NEP_5_DONE", comment: "Done bar button item"), style: .done, target: self, action: #selector(doneTapped(_:)))
     }
 }

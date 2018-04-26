@@ -143,6 +143,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     override func viewDidLoad() {
+        setLocalizedStrings()
         ThemeManager.setTheme(index: UserDefaultsManager.themeIndex)
         addThemedElements()
         addObservers()
@@ -301,7 +302,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func setLocalizedStrings() {
-        self.title = NSLocalizedString("PORTFOLIO_Portfolio_Title", comment: "Title of the portfolio page")
+        self.navigationController?.navigationBar.topItem?.title = NSLocalizedString("PORTFOLIO_Portfolio_Title", comment: "Title of the portfolio page")
         fiveMinButton.setTitle(NSLocalizedString("PORTFOLIO_Interval_Button_6h", comment: "Interval Button on portfolio page, interval specifies SIX HOURS"), for: UIControlState())
         fifteenMinButton.setTitle(NSLocalizedString("PORTFOLIO_Interval_Button_24h", comment: "Interval Button on portfolio page, interval specifies 24 HOURS"), for: UIControlState())
         thirtyMinButton.setTitle(NSLocalizedString("PORTFOLIO_Interval_Button_1W", comment: "Interval Button on portfolio page, interval specifies 1 Week"), for: UIControlState())

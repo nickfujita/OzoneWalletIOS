@@ -15,6 +15,7 @@ import Crashlytics
 import StoreKit
 
 class AccountAssetTableViewController: UITableViewController {
+    @IBOutlet weak var addNEP5Button: UIButton!
 
     private enum sections: Int {
         case unclaimedGAS = 0
@@ -35,6 +36,10 @@ class AccountAssetTableViewController: UITableViewController {
     var cachedNEOBalance: Int = 0
     var cachedGASBalance: Double = 0.0
     var mostRecentClaimAmount = 0.0
+
+    let successfulClaimPrompt = NSLocalizedString("WALLET_Claim_Succeeded_Prompt", comment: "A Message to display in the alert after the user hs successfully claimed their gas")
+    let claimingInProgressTitle = NSLocalizedString("WALLET_Claim_In_Progress_Title", comment: "A title to display while claiming is in progress")
+    let claimingInProgressSubtitle = NSLocalizedString("WALLET_Claim_In_Progress_Subtitle", comment: "A subtitle to display while claiming is in progress")
 
     func initiateCache() {
         if let storage =  try? Storage(diskConfig: DiskConfig(name: "O3")) {
@@ -60,6 +65,7 @@ class AccountAssetTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         addObservers()
         self.view.theme_backgroundColor = O3Theme.backgroundColorPicker
         self.tableView.theme_backgroundColor = O3Theme.backgroundColorPicker
@@ -109,7 +115,7 @@ class AccountAssetTableViewController: UITableViewController {
                 HUD.hide()
 
                 DispatchQueue.main.async {
-                    OzoneAlert.alertDialog(message: "Your claim has succeeded, it may take a few minutes to be reflected in your transaction history. You can claim again after 5 minutes", dismissTitle: "Got it") {
+                    OzoneAlert.alertDialog(message: self.successfulClaimPrompt, dismissTitle: OzoneAlert.okPositiveConfirmString) {
                         UserDefaultsManager.numClaims += 1
                         if UserDefaultsManager.numClaims == 1 || UserDefaultsManager.numClaims % 10 == 0 {
                             SKStoreReviewController.requestReview()
@@ -150,7 +156,7 @@ class AccountAssetTableViewController: UITableViewController {
         //disable the button after tapped
         enableClaimButton(enable: false)
 
-        HUD.show(.labeledProgress(title: "Claiming GAS", subtitle: "This might take a little while..."))
+        HUD.show(.labeledProgress(title: claimingInProgressTitle, subtitle: claimingInProgressSubtitle))
 
         //select best node
         if let bestNode = NEONetworkMonitor.autoSelectBestNode() {
@@ -419,6 +425,11 @@ class AccountAssetTableViewController: UITableViewController {
             segue.destination.modalPresentationStyle = .custom
             segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
         }
+    }
+
+    func setLocalizedStrings() {
+        self.navigationController?.navigationBar.topItem?.title = NSLocalizedString("WALLET_Account", comment: "A title for the account screen")
+        addNEP5Button.setTitle(NSLocalizedString("WALLET_Add_NEP5_Token", comment: "A title for the button which allows you to add a NEP-5 Token to your wallet"), for: UIControlState())
     }
 }
 

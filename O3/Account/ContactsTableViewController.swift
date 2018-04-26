@@ -12,10 +12,17 @@ import DeckTransition
 import Crashlytics
 
 class ContactsTableViewController: UITableViewController, AddressAddDelegate {
-
+    @IBOutlet weak var addAddressButton: ShadowedButton!
+    @IBOutlet weak var addAddressDescriptionLabel: UILabel!
     let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     var fetchedResultsController: NSFetchedResultsController<Contact>?
     var selectedAddress = ""
+
+    let editNameString = NSLocalizedString("CONTACTS_Edit_Name", comment: "Title for editing name of a contact")
+    let sendToAddressString = NSLocalizedString("CONTACTS_Send_To", comment: "Title for sending to contact")
+    let copyAddressString = NSLocalizedString("CONTACTS_Copy_Address", comment: "Title to copy address")
+    let deleteString = NSLocalizedString("CONTACTS_Delete", comment: "Title to delete Contact")
+    let saveString = NSLocalizedString("CONTACTS_Save", comment: "Save Action for Contacts")
 
     @objc func loadData() {
         self.tableView.refreshControl?.beginRefreshing()
@@ -38,6 +45,7 @@ class ContactsTableViewController: UITableViewController, AddressAddDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         tableView.theme_backgroundColor = O3Theme.backgroundColorPicker
         tableView.theme_separatorColor = O3Theme.tableSeparatorColorPicker
         view.theme_backgroundColor = O3Theme.backgroundColorPicker
@@ -102,28 +110,28 @@ class ContactsTableViewController: UITableViewController, AddressAddDelegate {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let edit = UIAlertAction(title: "Edit Name", style: .default) { _ in
+        let edit = UIAlertAction(title: editNameString, style: .default) { _ in
             self.tappedEditWatchOnlyAddress(indexPath.row)
         }
         actionSheet.addAction(edit)
 
-        let send = UIAlertAction(title: "Send to Address", style: .default) { _ in
+        let send = UIAlertAction(title: sendToAddressString, style: .default) { _ in
             self.selectedAddress = self.fetchedResultsController?.object(at: indexPath).address ?? ""
             self.sendTapped()
         }
         actionSheet.addAction(send)
 
-        let copy = UIAlertAction(title: "Copy Address", style: .default) { _ in
+        let copy = UIAlertAction(title: copyAddressString, style: .default) { _ in
             UIPasteboard.general.string = self.fetchedResultsController?.object(at: indexPath).address ?? ""
         }
         actionSheet.addAction(copy)
 
-        let delete = UIAlertAction(title: "Delete", style: .destructive) { _ in
+        let delete = UIAlertAction(title: deleteString, style: .destructive) { _ in
             self.tappedRemoveAddress(indexPath.row)
         }
         actionSheet.addAction(delete)
 
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+        let cancel = UIAlertAction(title: OzoneAlert.cancelNegativeConfirmString, style: .cancel) { _ in
 
         }
         actionSheet.addAction(cancel)
@@ -135,11 +143,11 @@ class ContactsTableViewController: UITableViewController, AddressAddDelegate {
     func tappedEditWatchOnlyAddress(_ index: Int) {
         guard let contacts = fetchedResultsController?.fetchedObjects else { return  }
         let toUpdate = contacts[index]
-        let alert = UIAlertController(title: "Edit name", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: editNameString, message: nil, preferredStyle: .alert)
         alert.addTextField { (textfield) in
             textfield.text = toUpdate.nickName
         }
-        let save = UIAlertAction(title: "Save", style: .default) { _ in
+        let save = UIAlertAction(title: saveString, style: .default) { _ in
             let textfield = alert.textFields?.first
             toUpdate.nickName = textfield?.text?.trim()
             try? UIApplication.appDelegate.persistentContainer.viewContext.save()
@@ -148,7 +156,7 @@ class ContactsTableViewController: UITableViewController, AddressAddDelegate {
             self.tableView.reloadData()
         }
         alert.addAction(save)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+        let cancel = UIAlertAction(title: OzoneAlert.cancelNegativeConfirmString, style: .cancel) { _ in
 
         }
         alert.addAction(cancel)
@@ -211,5 +219,11 @@ extension ContactsTableViewController: NSFetchedResultsControllerDelegate {
             }
             break
         }
+    }
+    
+    func setLocalizedStrings() {
+        addAddressButton.setTitle(NSLocalizedString("CONTACTS_Add_Contact_Button_Title", comment: "Title for button when you add a contact to address book"), for: UIControlState())
+        addAddressDescriptionLabel.text =  NSLocalizedString("CONTACTS_Add_Contact_Description", comment: "An informative description about what happens when you add a contact")
+        
     }
 }

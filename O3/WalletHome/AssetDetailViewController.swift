@@ -162,7 +162,7 @@ class AssetDetailViewController: UIViewController, GraphPanDelegate, ScrollableG
             timeLabel.text = posixString.intervaledDateString(self.selectedInterval)
             timeLabel.sizeToFit()
         }
-        
+
         func setLocalizedStrings() {
             fiveMinButton.setTitle(NSLocalizedString("PORTFOLIO_Interval_Button_6h", comment: "Interval Button on portfolio page, interval specifies SIX HOURS"), for: UIControlState())
             fifteenMinButton.setTitle(NSLocalizedString("PORTFOLIO_Interval_Button_24h", comment: "Interval Button on portfolio page, interval specifies 24 HOURS"), for: UIControlState())

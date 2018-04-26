@@ -13,6 +13,13 @@ class MyAddressViewController: UIViewController {
     @IBOutlet var qrImageView: UIImageView!
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var qrCodeContainerView: UIView!
+    @IBOutlet weak var addressInfoLabel: UILabel!
+
+    let saveQRActionString = NSLocalizedString("WALLET_Save_Qr_Action", comment: "An Action Title for saving your QR code")
+    let copyAddressActionString = NSLocalizedString("WALLET_Copy_Address", comment: "An action title for copying our address")
+    let shareActionString = NSLocalizedString("WALLET_Share", comment: "An action title for sharing O3")
+    let savedTitle = NSLocalizedString("WALLET_Saved_Title", comment: "A title to display when you've successfully saved your wallet address qr code")
+    let savedMessage = NSLocalizedString("WALLET_Saved_Description", comment: "A description to give more information about saving the address")
 
     func configureView() {
         applyNavBarTheme()
@@ -37,21 +44,21 @@ class MyAddressViewController: UIViewController {
 
     @IBAction func showActionSheet() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let saveQR = UIAlertAction(title: "Save QR Code Image", style: .default) { _ in
+        let saveQR = UIAlertAction(title: saveQRActionString, style: .default) { _ in
             self.saveQRCodeImage()
         }
         alert.addAction(saveQR)
-        let copyAddress = UIAlertAction(title: "Copy Address", style: .default) { _ in
+        let copyAddress = UIAlertAction(title: copyAddressActionString, style: .default) { _ in
             UIPasteboard.general.string = Authenticated.account?.address
             //maybe need some Toast style to notify that it's copied
         }
         alert.addAction(copyAddress)
-        let share = UIAlertAction(title: "Share", style: .default) { _ in
+        let share = UIAlertAction(title: shareActionString, style: .default) { _ in
             self.share()
         }
         alert.addAction(share)
 
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+        let cancel = UIAlertAction(title: OzoneAlert.cancelNegativeConfirmString, style: .cancel) { _ in
 
         }
         alert.addAction(cancel)
@@ -61,19 +68,20 @@ class MyAddressViewController: UIViewController {
 
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
-            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            let alert = UIAlertController(title: OzoneAlert.errorTitle, message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: OzoneAlert.okPositiveConfirmString, style: .default))
             present(alert, animated: true)
         } else {
             //change it to Toast style.
-            let alert = UIAlertController(title: "Saved!", message: "Image saved successfully", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            let alert = UIAlertController(title: savedTitle, message: savedMessage, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: OzoneAlert.okPositiveConfirmString, style: .default))
             present(alert, animated: true)
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         configureView()
         let tap = UITapGestureRecognizer(target: self, action: #selector(showActionSheet))
         self.view.addGestureRecognizer(tap)
@@ -81,6 +89,11 @@ class MyAddressViewController: UIViewController {
 
     @IBAction func tappedLeftBarButtonItem(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+
+    func setLocalizedStrings() {
+        addressInfoLabel.text = NSLocalizedString("WALLET_My_Address_Explanation", comment: "Informative text explaining you can store neo, gas, and nep-5 tokens using this address")
+        self.title = NSLocalizedString("WALLET_My_Address_Title", comment: "Title of the My Address Page")
     }
 
 }
