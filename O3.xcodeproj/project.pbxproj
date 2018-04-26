@@ -165,7 +165,6 @@
 		75E14E541F7D27F900BEAE22 /* O3.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 75E14E521F7D27F900BEAE22 /* O3.xcdatamodeld */; };
 		75E14E571F7D2AEC00BEAE22 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E14E561F7D2AEC00BEAE22 /* UIApplication.swift */; };
 		75E28F2B1F9B2241006C6E37 /* NetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E28F2A1F9B2241006C6E37 /* NetworkTableViewController.swift */; };
-		75E28F2D1F9B249F006C6E37 /* NetworkTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E28F2C1F9B249F006C6E37 /* NetworkTypeCell.swift */; };
 		75E28F2F1F9B24B4006C6E37 /* NetworkSeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E28F2E1F9B24B4006C6E37 /* NetworkSeedCell.swift */; };
 		75E28F311F9B3B34006C6E37 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E28F301F9B3B34006C6E37 /* ThemeManager.swift */; };
 /* End PBXBuildFile section */
@@ -349,7 +348,6 @@
 		75E14E531F7D27F900BEAE22 /* O3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = O3.xcdatamodel; sourceTree = "<group>"; };
 		75E14E561F7D2AEC00BEAE22 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		75E28F2A1F9B2241006C6E37 /* NetworkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTableViewController.swift; sourceTree = "<group>"; };
-		75E28F2C1F9B249F006C6E37 /* NetworkTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTypeCell.swift; sourceTree = "<group>"; };
 		75E28F2E1F9B24B4006C6E37 /* NetworkSeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSeedCell.swift; sourceTree = "<group>"; };
 		75E28F301F9B3B34006C6E37 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -745,7 +743,6 @@
 			isa = PBXGroup;
 			children = (
 				75E28F2A1F9B2241006C6E37 /* NetworkTableViewController.swift */,
-				75E28F2C1F9B249F006C6E37 /* NetworkTypeCell.swift */,
 				75E28F2E1F9B24B4006C6E37 /* NetworkSeedCell.swift */,
 			);
 			path = Network;
@@ -990,7 +987,6 @@
 				6E61BBD11F729D3B00D2B30B /* Money.swift in Sources */,
 				3549458E203FD4D000332E53 /* Decimal.swift in Sources */,
 				353F364D2003755B002B4FE1 /* NewsFeedCell.swift in Sources */,
-				75E28F2D1F9B249F006C6E37 /* NetworkTypeCell.swift in Sources */,
 				75CEACE61F6678C0005974CE /* Color.swift in Sources */,
 				35E5F614202ADE4300D65BEA /* NativeAssetSelectorTableViewCell.swift in Sources */,
 				353F36522003842F002B4FE1 /* NewsItemViewController.swift in Sources */,

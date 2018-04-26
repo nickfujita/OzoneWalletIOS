@@ -39,23 +39,16 @@ class SettingsMenuTableViewController: UITableViewController, HalfModalPresentab
     @IBOutlet weak var currencyLabel: UILabel!
     @IBOutlet weak var supportLabel: UILabel!
 
-    var netString = UserDefaultsManager.network == .test ? "Network: Test Network": "Network: Main Network" {
-        didSet {
-            self.setNetLabel()
-        }
-    }
+    let logoutWarning = NSLocalizedString("SETTINGS_Logout_Warning", comment: "Warning that appears when attempting to logout from settings")
+    let logoutString = NSLocalizedString("SETTINGS_Logout", comment: "Settings Menu Title for Logout")
+    let authenticateString = NSLocalizedString("SETTINGS_Authenticate_To_View", comment: "Prompt requesting user to authenticate before viewing sensitive information like private key")
+    let classicThemeString = NSLocalizedString("SETTINGS_Theme_Classic", comment: "Label For Classic Theme")
+    let darkThemeString = NSLocalizedString("SETTINGS_Theme_Dark", comment: "Label For Dark Theme")
 
-    var themeString = UserDefaultsManager.themeIndex == 0 ? "Theme: Classic": "Theme: Dark" {
+    var themeString = UserDefaultsManager.themeIndex == 0 ? "SETTINGS_Theme_Classic": "SETTINGS_Theme_Dark" {
         didSet {
             self.setThemeLabel()
         }
-    }
-
-    func setNetLabel() {
-        guard let label = networkCell.viewWithTag(1) as? UILabel else {
-            fatalError("Undefined behavior with table view")
-        }
-        DispatchQueue.main.async { label.text = self.netString }
     }
 
     func setThemeLabel() {
@@ -82,6 +75,7 @@ class SettingsMenuTableViewController: UITableViewController, HalfModalPresentab
 
     override func viewDidLoad() {
         setThemedElements()
+        setLocalizedStrings()
         applyNavBarTheme()
         super.viewDidLoad()
         let rightBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "angle-up"), style: .plain, target: self, action: #selector(SettingsMenuTableViewController.maximize(_:)))
@@ -90,7 +84,6 @@ class SettingsMenuTableViewController: UITableViewController, HalfModalPresentab
         contactView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(sendMail)))
         supportView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openSupportForum)))
         themeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(changeTheme)))
-        setNetLabel()
         setThemeLabel()
 
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
@@ -100,7 +93,7 @@ class SettingsMenuTableViewController: UITableViewController, HalfModalPresentab
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        currencyLabel.text = "Currency: " + UserDefaultsManager.referenceFiatCurrency.rawValue.uppercased()
+        currencyLabel.text = String(format: NSLocalizedString("Settings_Currency", comment: "Settings Menu Title for Currency"), UserDefaultsManager.referenceFiatCurrency.rawValue.uppercased())
     }
 
     @objc func maximize(_ sender: Any) {
@@ -110,19 +103,19 @@ class SettingsMenuTableViewController: UITableViewController, HalfModalPresentab
     @objc func changeTheme() {
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        let lightThemeAction = UIAlertAction(title: "Classic Theme", style: .default) { _ in
+        let lightThemeAction = UIAlertAction(title: classicThemeString, style: .default) { _ in
             UserDefaultsManager.themeIndex = 0
             ThemeManager.setTheme(index: 0)
-            self.themeString = "Theme: Classic"
+            self.themeString = self.classicThemeString
         }
 
-        let darkThemeAction = UIAlertAction(title: "Dark Theme", style: .default) { _ in
+        let darkThemeAction = UIAlertAction(title: darkThemeString, style: .default) { _ in
             UserDefaultsManager.themeIndex = 1
             ThemeManager.setTheme(index: 1)
-            self.themeString = "Theme: Dark"
+            self.themeString = self.darkThemeString
         }
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+        let cancelAction = UIAlertAction(title: OzoneAlert.cancelNegativeConfirmString, style: .cancel) { _ in
         }
 
         optionMenu.addAction(lightThemeAction)
@@ -166,7 +159,7 @@ class SettingsMenuTableViewController: UITableViewController, HalfModalPresentab
         DispatchQueue.global().async {
             do {
                 let password = try keychain
-                    .authenticationPrompt("Authenticate to view your private key")
+                    .authenticationPrompt(self.authenticateString)
                     .get("ozonePrivateKey")
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "segueToPrivateKey", sender: nil)
@@ -202,7 +195,7 @@ class SettingsMenuTableViewController: UITableViewController, HalfModalPresentab
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.row == 7 {
-            OzoneAlert.confirmDialog(message: "Logging out will remove the private key from your device. Please make sure you already back it up or write it down. You will need to restore it from your backup to reenter the application.", cancelTitle: "Cancel", confirmTitle: "Log out", didCancel: {
+            OzoneAlert.confirmDialog(message: logoutWarning, cancelTitle: OzoneAlert.cancelNegativeConfirmString, confirmTitle: logoutString, didCancel: {
 
             }, didConfirm: {
                 self.performLogoutCleanup()
@@ -212,5 +205,19 @@ class SettingsMenuTableViewController: UITableViewController, HalfModalPresentab
             })
 
         }
+    }
+
+    func setLocalizedStrings() {
+        self.title = NSLocalizedString("SETTINGS_Settings_Title", comment: "Title for Settings Menu")
+        privateKeyLabel.text = NSLocalizedString("SETTINGS_My_Private_Key", comment: "Settings Menu Title for Private Key")
+        watchOnlyLabel.text = NSLocalizedString("SETTINGS_Watch_Only_Address", comment: "Settings Menu Title For Watch Only Address")
+        netLabel.text = NSLocalizedString("SETTINGS_Network", comment: "Settings Menu Title for Network")
+        themeLabel.text = NSLocalizedString("SETTINGS_Theme", comment: "Settings Menu Title for Theme")
+        currencyLabel.text = String(format: NSLocalizedString("SETTINGS_Currency", comment: "Settings Menu Title for Currency"), UserDefaultsManager.referenceFiatCurrency.rawValue.uppercased())
+        contactLabel.text = NSLocalizedString("SETTINGS_Contact", comment: "Settings Menu Title For Contact")
+        logoutLabel.text = logoutString
+        supportLabel.text = NSLocalizedString("SETTINGS_Support", comment: "Settings Mneu Title For Support")
+        versionLabel.text = NSLocalizedString("SETTINGS_Version", comment: "Settings Menu Title For Version")
+
     }
 }

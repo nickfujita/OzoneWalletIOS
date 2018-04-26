@@ -32,12 +32,14 @@ class AddressEntryTableViewController: UITableViewController, AVCaptureMetadataO
     let supportedCodeTypes = [
         AVMetadataObject.ObjectType.qr]
 
+    let invalidAddressError = NSLocalizedString("SETTINGS_Invalid_Address", comment: "Error To display when user tries to add an invalid address")
+
     @IBAction func addButtonTapped(_ sender: Any) {
         //validate address here
         let address = addressTextView.text.trim()
         if !NEOValidator.validateNEOAddress(address) {
             DispatchQueue.main.async {
-                OzoneAlert.alertDialog(message: "Invalid Address", dismissTitle: "OK", didDismiss: {
+                OzoneAlert.alertDialog(message: self.invalidAddressError, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
                     self.addressTextView.becomeFirstResponder()
                 })
             }
@@ -74,6 +76,7 @@ class AddressEntryTableViewController: UITableViewController, AVCaptureMetadataO
 
     override func viewDidLoad() {
         setThemedElements()
+        setLocalizedStrings()
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         addressTextView.delegate = self
@@ -136,6 +139,12 @@ class AddressEntryTableViewController: UITableViewController, AVCaptureMetadataO
         let address = addressTextView.text?.trim().isEmpty == false
         enabled = validNickname && address
         proceedButton.isEnabled = enabled
+    }
+
+    func setLocalizedStrings() {
+        addressLabel.text = NSLocalizedString("SETTINGS_Address_Label", comment: "Label to describe an address input field")
+        nicknameField.text = NSLocalizedString("SETTINGS_Nickname_LAbel", comment: "Lavel to describe a nickname input field")
+        closeButton.setTitle(NSLocalizedString("SETTINGS_Close_Title", comment: "String to describe a close action"), for: UIControlState())
     }
 }
 
