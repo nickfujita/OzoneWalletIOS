@@ -16,15 +16,17 @@ class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICo
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionPageControl: UIPageControl!
-    @IBOutlet weak var addAddressButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var createNewWalletButton: UIButton!
+    @IBOutlet weak var newToO3Label: UILabel!
+    var features: [OnboardingCollectionCell.Data]!
 
-    var features: [OnboardingCollectionCell.Data] = [OnboardingCollectionCell.Data(imageName: "chart", title: "Add-Watch Only Address", subtitle: "Safely monitor your wallet from mobile"),
-                                                     OnboardingCollectionCell.Data(imageName: "lock", title: "Login using a private key", subtitle: "Open your NEO wallet with private key"),
-                                                     OnboardingCollectionCell.Data(imageName: "exchange", title: "Send & Receive", subtitle: "Send & receive assets on NEO")]
+    let loginNoPassCodeError = NSLocalizedString("ONBOARDING_Login_No_Passcode_Error", comment: "Error message that is displayed when the user tries to login without a passcode")
+    let createWalletNoPassCodeError = NSLocalizedString("ONBOARDING_Create_Wallet_No_Passcode_Error", comment: "Error message that is displayed when the user tries to Create a New Wallet without a passcode")
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         self.navigationController?.hideHairline()
         ThemeManager.setTheme(index: 2)
         collectionView.delegate = self
@@ -72,7 +74,7 @@ class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICo
 
     @IBAction func loginButtonTapped(_ sender: Any) {
         if !LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil) {
-            OzoneAlert.alertDialog(message: "You'll need to set as passcode on your device before logging in. This is ensures that your wallet remains secure", dismissTitle: "OK") {}
+            OzoneAlert.alertDialog(message: loginNoPassCodeError, dismissTitle: OzoneAlert.okPositiveConfirmString) {}
             return
         }
         performSegue(withIdentifier: "segueToLogin", sender: nil)
@@ -81,7 +83,7 @@ class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBAction func createNewWalletButtonTapped(_ sender: Any) {
         //if user doesn't have wallet we then create one
         if !LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil) {
-            OzoneAlert.alertDialog(message: "You'll need to set as passcode on your device before creating a wallet. This is ensures that your wallet remains secure", dismissTitle: "OK") {}
+            OzoneAlert.alertDialog(message: createWalletNoPassCodeError, dismissTitle: OzoneAlert.okPositiveConfirmString) {}
             return
         }
         if UserDefaultsManager.o3WalletAddress == nil {
@@ -97,5 +99,25 @@ class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICo
             //create a new wallet
             Authenticated.account = Account()
         }
+    }
+
+    func setLocalizedStrings() {
+        let titleOne = NSLocalizedString("ONBOARDING_Tutorial_Title_One", comment: "The first title in the onboarding pages")
+        let titleTwo = NSLocalizedString("ONBOARDING_Tutorial_Title_Two", comment: "The second title in the onboarding pages")
+        let titleThree = NSLocalizedString("ONBOARDING_Tutorial_Title_Three", comment: "The third title in the onboarding pages")
+
+        let subtitleOne = NSLocalizedString("ONBOARDING_Tutorial_Subtitle_One", comment: "The first subtitle in the onboarding pages")
+        let subtitleTwo = NSLocalizedString("ONBOARDING_Tutorial_Subtitle_Two", comment: "The second subtitle in the onboarding pages")
+        let subtitleThree = NSLocalizedString("ONBOARDING_Tutorial_Subtitle_Three", comment: "The third subtitle in the onboarding pages")
+
+        features = [
+            OnboardingCollectionCell.Data(imageName: "chart", title: titleOne, subtitle: subtitleOne),
+            OnboardingCollectionCell.Data(imageName: "lock", title: titleTwo, subtitle: subtitleTwo),
+            OnboardingCollectionCell.Data(imageName: "exchange", title: titleThree, subtitle: subtitleThree)
+        ]
+
+        loginButton.setTitle(NSLocalizedString("ONBOARDING_Login_Title", comment: "Title for all login items in the onboarding flow"), for: UIControlState())
+        createNewWalletButton.setTitle(NSLocalizedString("ONBOARDING_Create_New _Wallet", comment: "Title For Creating a New Wallet in the onboarding flow"), for: UIControlState())
+        newToO3Label.text = NSLocalizedString("ONBOARDING_New To O3?", comment: "Welcome label to create a new wallet")
     }
 }

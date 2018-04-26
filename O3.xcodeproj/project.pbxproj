@@ -42,6 +42,9 @@
 		3549458E203FD4D000332E53 /* Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549458D203FD4D000332E53 /* Decimal.swift */; };
 		358E95D9200358AA00A1878B /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358E95D8200358AA00A1878B /* NewsFeed.swift */; };
 		35A6390F203517BB0054EA20 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A6390E203517BB0054EA20 /* CloudKit.framework */; };
+		35AD2B64209179010024A900 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 35AD2B61209179010024A900 /* Base.lproj */; };
+		35AD2B65209179010024A900 /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 35AD2B62209179010024A900 /* ja.lproj */; };
+		35AD2B66209179010024A900 /* zh-Hans.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 35AD2B63209179010024A900 /* zh-Hans.lproj */; };
 		35E5F60C20283AA600D65BEA /* AddressBookEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5F60B20283AA600D65BEA /* AddressBookEntryTableViewCell.swift */; };
 		35E5F60E20285CB800D65BEA /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5F60D20285CB800D65BEA /* Int.swift */; };
 		35E5F6102029412900D65BEA /* PortfolioAssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E5F60F2029412900D65BEA /* PortfolioAssetCell.swift */; };
@@ -101,7 +104,6 @@
 		6ED6001C1F76506B006760E6 /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6ED6001B1F76506B006760E6 /* SharedAssets.xcassets */; };
 		6ED6001E1F76559E006760E6 /* LogoAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6ED6001D1F76559E006760E6 /* LogoAssets.xcassets */; };
 		6ED600201F765C9C006760E6 /* WalletHomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED6001F1F765C9C006760E6 /* WalletHomeNavigationController.swift */; };
-		6EE34BA0201607C7006558E9 /* oval.json in Resources */ = {isa = PBXBuildFile; fileRef = 6EE34B9F201605FC006558E9 /* oval.json */; };
 		6EF8D8E61F7A732C005CC24D /* AccountAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EF8D8E51F7A732C005CC24D /* AccountAssets.xcassets */; };
 		6EFF839A20148CD700BDBE52 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFF839920148CD700BDBE52 /* CardView.swift */; };
 		7501C0271F7BBFF400B4B2FF /* AddressEntryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7501C0261F7BBFF400B4B2FF /* AddressEntryTableViewController.swift */; };
@@ -229,6 +231,11 @@
 		3549458D203FD4D000332E53 /* Decimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decimal.swift; sourceTree = "<group>"; };
 		358E95D8200358AA00A1878B /* NewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		35A6390E203517BB0054EA20 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		35AD2B5F209178D70024A900 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		35AD2B60209178D70024A900 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		35AD2B61209179010024A900 /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Base.lproj; sourceTree = "<group>"; };
+		35AD2B62209179010024A900 /* ja.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ja.lproj; sourceTree = "<group>"; };
+		35AD2B63209179010024A900 /* zh-Hans.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "zh-Hans.lproj"; sourceTree = "<group>"; };
 		35E5F60B20283AA600D65BEA /* AddressBookEntryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookEntryTableViewCell.swift; sourceTree = "<group>"; };
 		35E5F60D20285CB800D65BEA /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		35E5F60F2029412900D65BEA /* PortfolioAssetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioAssetCell.swift; sourceTree = "<group>"; };
@@ -283,7 +290,6 @@
 		6ED6001B1F76506B006760E6 /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedAssets.xcassets; sourceTree = "<group>"; };
 		6ED6001D1F76559E006760E6 /* LogoAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LogoAssets.xcassets; sourceTree = "<group>"; };
 		6ED6001F1F765C9C006760E6 /* WalletHomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletHomeNavigationController.swift; sourceTree = "<group>"; };
-		6EE34B9F201605FC006558E9 /* oval.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = oval.json; sourceTree = "<group>"; };
 		6EF8D8E51F7A732C005CC24D /* AccountAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AccountAssets.xcassets; sourceTree = "<group>"; };
 		6EFF839920148CD700BDBE52 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		7501C0261F7BBFF400B4B2FF /* AddressEntryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEntryTableViewController.swift; sourceTree = "<group>"; };
@@ -581,11 +587,6 @@
 			isa = PBXGroup;
 			children = (
 				6E68B6AE206CB75D008C25E8 /* TokenSale */,
-				6EE34B9F201605FC006558E9 /* oval.json */,
-				6ED600111F762189006760E6 /* O3.entitlements */,
-				75D5BFBB1F6D0EC400E64855 /* Global.swift */,
-				7518BFFF1F8B49D500FBA0BA /* UserDefaultsManager.swift */,
-				75E28F301F9B3B34006C6E37 /* ThemeManager.swift */,
 				7533B2A41F7F671C00A21B89 /* Transitions */,
 				75D5BFC51F6D1D2B00E64855 /* UIControls */,
 				75CEACE41F6678A4005974CE /* Extensions */,
@@ -598,15 +599,22 @@
 				752006841F7F695C00D19B5F /* TabBar */,
 				75BEB2601F89FAFE00DC20E9 /* LoadingHUD */,
 				755D8F541F665F5D00058434 /* WalletHome */,
-				7575ADC51F6006AC0077007B /* AppDelegate.swift */,
-				75D5BFC31F6D1A4F00E64855 /* AppAssets.xcassets */,
 				7575ADC91F6006AC0077007B /* Main.storyboard */,
 				7575ADCE1F6006AC0077007B /* LaunchScreen.storyboard */,
+				7575ADC51F6006AC0077007B /* AppDelegate.swift */,
+				75D5BFBB1F6D0EC400E64855 /* Global.swift */,
+				7518BFFF1F8B49D500FBA0BA /* UserDefaultsManager.swift */,
+				75E28F301F9B3B34006C6E37 /* ThemeManager.swift */,
+				350771CB208470C90049346B /* O3Cache.swift */,
 				7575ADD11F6006AC0077007B /* Info.plist */,
+				6ED600111F762189006760E6 /* O3.entitlements */,
+				75E14E521F7D27F900BEAE22 /* O3.xcdatamodeld */,
+				35AD2B61209179010024A900 /* Base.lproj */,
+				35AD2B62209179010024A900 /* ja.lproj */,
+				35AD2B63209179010024A900 /* zh-Hans.lproj */,
 				6ED6001B1F76506B006760E6 /* SharedAssets.xcassets */,
 				6ED6001D1F76559E006760E6 /* LogoAssets.xcassets */,
-				75E14E521F7D27F900BEAE22 /* O3.xcdatamodeld */,
-				350771CB208470C90049346B /* O3Cache.swift */,
+				75D5BFC31F6D1A4F00E64855 /* AppAssets.xcassets */,
 			);
 			path = O3;
 			sourceTree = "<group>";
@@ -835,9 +843,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E244ECB208714E8001B4B22 /* TokenSaleAsset.xcassets in Resources */,
-				6EE34BA0201607C7006558E9 /* oval.json in Resources */,
+				35AD2B64209179010024A900 /* Base.lproj in Resources */,
 				6E7367992084AB0800F4202B /* success-blue.json in Resources */,
+				35AD2B66209179010024A900 /* zh-Hans.lproj in Resources */,
 				6E1BBF7F1F77BEE30095F466 /* WalletHomeAssets.xcassets in Resources */,
+				35AD2B65209179010024A900 /* ja.lproj in Resources */,
 				7520173F1F73ED1D00090C4F /* Send.storyboard in Resources */,
 				7575ADD01F6006AC0077007B /* LaunchScreen.storyboard in Resources */,
 				6E244EC52085BF71001B4B22 /* AssetInputToolbar.xib in Resources */,
@@ -1008,6 +1018,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7575ADCA1F6006AC0077007B /* Base */,
+				35AD2B5F209178D70024A900 /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1016,6 +1027,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7575ADCF1F6006AC0077007B /* Base */,
+				35AD2B60209178D70024A900 /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1027,6 +1039,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1074,6 +1088,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LOCALIZED_STRING_MACRO_NAMES = (
+					NSLocalizedString,
+					CFLocalizedString,
+					Localized,
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1118,6 +1137,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1165,6 +1186,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LOCALIZED_STRING_MACRO_NAMES = (
+					NSLocalizedString,
+					CFLocalizedString,
+					Localized,
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1209,6 +1235,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1256,6 +1284,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LOCALIZED_STRING_MACRO_NAMES = (
+					NSLocalizedString,
+					CFLocalizedString,
+					Localized,
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1268,6 +1301,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_EMPTY_CONTEXT = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1309,6 +1344,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LOCALIZED_STRING_MACRO_NAMES = (
+					NSLocalizedString,
+					CFLocalizedString,
+					Localized,
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

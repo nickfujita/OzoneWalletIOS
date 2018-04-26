@@ -16,9 +16,18 @@ import SwiftTheme
 class WelcomeTableViewController: UITableViewController {
     @IBOutlet weak var privateKeyQR: UIImageView!
     @IBOutlet weak var privateKeyLabel: UILabel!
+    @IBOutlet weak var pleaseBackupWarning: UILabel!
+    @IBOutlet weak var privateKeyTitle: UILabel!
+    @IBOutlet weak var startButton: ShadowedButton!
+    
+    let keychainFailureError = NSLocalizedString("ONBOARDING_Keychain_Failure_Error", comment: "Error message to display when the system fails to retrieve the private key from the keychain")
+    let haveSavedPrivateKeyConfirmation =
+        NSLocalizedString("ONBARDING_Confirmed_Private_Key_Saved_Prompt", comment: "A prompt asking the user to please confirm that they have indeed backed up their private key in a secure location before continuing")
+    let selectingBestNodeTitle = NSLocalizedString("ONBOARDING_Selecting_Best_Node", comment: "Displayed when the app is waiting to connect to the network. It is finding the best NEO node to connect to")
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: 1))
         self.privateKeyQR.image = UIImage(qrData: Authenticated.account?.wif ?? "", width: self.privateKeyQR.frame.width, height: self.privateKeyQR.frame.height)
@@ -33,7 +42,7 @@ class WelcomeTableViewController: UITableViewController {
                     .set((Authenticated.account?.wif)!, key: "ozonePrivateKey")
             } catch _ {
                 DispatchQueue.main.async {
-                    OzoneAlert.alertDialog(message: "Something went wrong, make sure your passcode is set", dismissTitle: "OK") {
+                    OzoneAlert.alertDialog(message: self.keychainFailureError, dismissTitle: OzoneAlert.okPositiveConfirmString) {
                         Authenticated.account = nil
                         self.navigationController?.popViewController(animated: true)
                     }
@@ -42,18 +51,14 @@ class WelcomeTableViewController: UITableViewController {
         }
     }
 
-    deinit {
-        print ("hello")
-    }
-
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 
     @IBAction func startTapped(_ sender: Any) {
-        OzoneAlert.confirmDialog(message: "I confirm that I have read the warning text and have backed up my private key in another secure location.", cancelTitle: "Not yet.", confirmTitle: "Confirm", didCancel: {}) {
+        OzoneAlert.confirmDialog(message: haveSavedPrivateKeyConfirmation, cancelTitle: OzoneAlert.notYetNegativeConfirmString, confirmTitle: OzoneAlert.confirmPositiveConfirmString, didCancel: {}) {
             DispatchQueue.main.async {
-                HUD.show(.labeledProgress(title: nil, subtitle: "Selecting best node..."))
+                HUD.show(.labeledProgress(title: nil, subtitle: self.selectingBestNodeTitle))
                 DispatchQueue.global(qos: .background).async {
                     let bestNode = NEONetworkMonitor.autoSelectBestNode()
                     DispatchQueue.main.async {
@@ -68,5 +73,12 @@ class WelcomeTableViewController: UITableViewController {
                 }
             }
         }
+    }
+
+    func setLocalizedStrings() {
+        pleaseBackupWarning.text = NSLocalizedString("ONBOARDING_Please_Backup Warning", comment: "A warning given to the user to make sure that they have backed up their private key in a secure location. Also states that deletibg the passcode will delete the key from the device")
+        privateKeyTitle.text = NSLocalizedString("ONBOARDING_Private_Key_title", comment: "A title presented over the top of the private key, specifies WIF format. e.g. Your Private Key (WIF)")
+        self.title = NSLocalizedString("ONBOARDING_Welcome", comment: "Title Welciming the user after successful wallet creation")
+        startButton.setTitle("ONBOARDING_Start_Action_Title", for: "Title to start the app after completing the onboarding")
     }
 }

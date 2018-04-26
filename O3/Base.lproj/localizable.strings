@@ -1,0 +1,20 @@
+/* Created with Localizable Strings Merge, the swiss-army knife for iOS and OS X localization. */
+
+/* Section: Onboarding Description: Button used to Create a new wallet */
+"Create New Wallet" = "Create New Wallet"; /* NEW */
+
+/* Done bar button item */
+"Done" = "Done"; /* NEW */
+
+/* Section: Onboarding Description: Button used to login to the app */
+"Login" = "Login"; /* NEW */
+
+/* No comment provided by engineer. */
+"NEP5 Tokens" = "NEP5 Tokens"; /* NEW */
+
+/* Section: Onboarding Description: Welcome label to create a new wallet */
+"New To O3?" = "New To O3?"; /* NEW */
+
+/* No comment provided by engineer. */
+"Select Asset" = "Select Asset"; /* NEW */
+
