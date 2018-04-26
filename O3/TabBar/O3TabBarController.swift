@@ -121,7 +121,7 @@ class O3TabBarController: UITabBarController {
     @objc func tappedSettingsTab() {
        self.performSegue(withIdentifier: "segueToSettings", sender: nil)
     }
-    
+
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         guard let index = tabBar.items?.index(of: item) else { return }
         let tabTappedMessages = ["Portfolio", "Wallet", "Center Button", "News", "Settings" ]

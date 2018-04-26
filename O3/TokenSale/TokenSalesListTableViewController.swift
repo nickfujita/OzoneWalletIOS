@@ -14,30 +14,30 @@ import WebBrowser
 class TokenSalesListTableViewController: UITableViewController {
     var tokenSales: TokenSales?
     @IBOutlet var subscribeButton: UIButton?
-    
+
     func setupNavigationBar() {
         self.navigationController?.hideHairline()
         self.navigationItem.title = "Token Sales"
     }
-    
+
     func setThemedElements() {
         tableView.theme_separatorColor = O3Theme.tableSeparatorColorPicker
         tableView.theme_backgroundColor = O3Theme.backgroundColorPicker
         view.theme_backgroundColor = O3Theme.backgroundColorPicker
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         setThemedElements()
-        
+
         #if PRIVATENET
         UserDefaultsManager.seed = "http://localhost:30333"
         UserDefaultsManager.useDefaultSeed = false
         UserDefaultsManager.network = .privateNet
         Authenticated.account?.neoClient = NeoClient(network: .privateNet)
         #endif
-        
+
         //this to avoid double call in cellForRow
         //assign datasource and delegate only when data is loaded
         self.tableView.delegate = nil
@@ -57,18 +57,18 @@ class TokenSalesListTableViewController: UITableViewController {
         }
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "times"), style: .plain, target: self, action: #selector(tappedLeftBarButtonItem(_:)))
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupNavigationBar()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //this will remove a title to the back button in the pushed view
         self.title = ""
     }
-    
+
     @IBAction func subscribeButtonTapped(_ sender: Any) {
         if tokenSales?.subscribeURL == nil {
             return
@@ -79,31 +79,31 @@ class TokenSalesListTableViewController: UITableViewController {
         let navigationWebBrowser = WebBrowserViewController.rootNavigationWebBrowser(webBrowser: webBrowserViewController)
         present(navigationWebBrowser, animated: true, completion: nil)
     }
-    
+
     @IBAction func tappedLeftBarButtonItem(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 182.0
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tokenSales?.live.count ?? 0
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "tokenSaleTableViewCell") as? TokenSaleTableViewCell,
             let sale = tokenSales?.live[indexPath.row] else {
                 return UITableViewCell()
         }
-        let data = TokenSaleTableViewCell.TokenSaleData(imageURL: sale.squareLogoURL, name: sale.name,shortDescription: sale.shortDescription, time: sale.endTime)
+        let data = TokenSaleTableViewCell.TokenSaleData(imageURL: sale.squareLogoURL, name: sale.name, shortDescription: sale.shortDescription, time: sale.endTime)
         cell.tokenSaleData = data
         cell.actionLabel.text = "Checking status..."
         checkWhitelisted(sale: sale, indexPath: indexPath)
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedSale = tokenSales?.live[indexPath.row] else {
             return
@@ -111,7 +111,7 @@ class TokenSalesListTableViewController: UITableViewController {
         //allow user to go into sale page to see what it's like in there but disable participate button
         self.performSegue(withIdentifier: "segueToTokenSale", sender: selectedSale)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let dest = segue.destination as? TokenSaleTableViewController else {
             return
@@ -121,11 +121,11 @@ class TokenSalesListTableViewController: UITableViewController {
             dest.saleInfo = selectedSale
         }
     }
-    
+
     //mark: -
     func checkWhitelisted(sale: TokenSales.SaleInfo, indexPath: IndexPath) {
         DispatchQueue.main.async {
-            
+
             guard let cell = self.tableView.cellForRow(at: indexPath) as? TokenSaleTableViewCell else {
                 return
             }
