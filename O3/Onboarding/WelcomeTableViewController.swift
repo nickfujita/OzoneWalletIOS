@@ -19,7 +19,7 @@ class WelcomeTableViewController: UITableViewController {
     @IBOutlet weak var pleaseBackupWarning: UILabel!
     @IBOutlet weak var privateKeyTitle: UILabel!
     @IBOutlet weak var startButton: ShadowedButton!
-    
+
     let keychainFailureError = NSLocalizedString("ONBOARDING_Keychain_Failure_Error", comment: "Error message to display when the system fails to retrieve the private key from the keychain")
     let haveSavedPrivateKeyConfirmation =
         NSLocalizedString("ONBARDING_Confirmed_Private_Key_Saved_Prompt", comment: "A prompt asking the user to please confirm that they have indeed backed up their private key in a secure location before continuing")
@@ -79,6 +79,6 @@ class WelcomeTableViewController: UITableViewController {
         pleaseBackupWarning.text = NSLocalizedString("ONBOARDING_Please_Backup Warning", comment: "A warning given to the user to make sure that they have backed up their private key in a secure location. Also states that deletibg the passcode will delete the key from the device")
         privateKeyTitle.text = NSLocalizedString("ONBOARDING_Private_Key_title", comment: "A title presented over the top of the private key, specifies WIF format. e.g. Your Private Key (WIF)")
         self.title = NSLocalizedString("ONBOARDING_Welcome", comment: "Title Welciming the user after successful wallet creation")
-        startButton.setTitle("ONBOARDING_Start_Action_Title", for: "Title to start the app after completing the onboarding")
+        startButton.setTitle(NSLocalizedString("ONBOARDING_Start_Action_Title", comment: "Title to start the app after completing the onboarding"), for: UIControlState())
     }
 }

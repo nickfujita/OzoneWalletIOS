@@ -1,20 +1,95 @@
 /* Created with Localizable Strings Merge, the swiss-army knife for iOS and OS X localization. */
 
-/* Section: Onboarding Description: Button used to Create a new wallet */
-"Create New Wallet" = "Create New Wallet"; /* NEW */
+/* Negative Response to an alert message, it is a negative action stating that they want to cancel whatever their current action is */
+"ALERT_Cancel" = "ALERT_Cancel"; /* NEW */
+
+/* Positive Response to an alert message, it is a positive action stating that they have read the alert and are confirming whatever action they are about to take */
+"ALERT_Confirm" = "ALERT_Confirm"; /* NEW */
+
+/* Negative Response to an alert message, it is a negative action stating that they have not yet completed what they need to do */
+"ALERT_Not_Yet_Negative_Confirm" = "ALERT_Not_Yet_Negative_Confirm"; /* NEW */
+
+/* Positive Response to an alert message, it is a generic positive action replying ok to whatever the prompt is */
+"ALERT_OK" = "ALERT_OK"; /* NEW */
 
 /* Done bar button item */
-"Done" = "Done"; /* NEW */
-
-/* Section: Onboarding Description: Button used to login to the app */
-"Login" = "Login"; /* NEW */
+"Done" = "Done";
 
 /* No comment provided by engineer. */
-"NEP5 Tokens" = "NEP5 Tokens"; /* NEW */
+"NEP5 Tokens" = "NEP5 Tokens";
 
-/* Section: Onboarding Description: Welcome label to create a new wallet */
-"New To O3?" = "New To O3?"; /* NEW */
+/* A prompt asking the user to please confirm that they have indeed backed up their private key in a secure location before continuing */
+"ONBARDING_Confirmed_Private_Key_Saved_Prompt" = "ONBARDING_Confirmed_Private_Key_Saved_Prompt"; /* NEW */
+
+/* On authentication screen, when wallet already exists. Ask them to login using the specific type of authentication they have, e.g Login using TouchID */
+"ONBOARDING Login_Button_Specifying_Biometric" = "ONBOARDING Login_Button_Specifying_Biometric"; /* NEW */
+
+/* On authentication screen, when wallet already exists. Ask them to login using the specific type of authentication they have, e.g Login using Passcode */
+"ONBOARDING Login_Button_Specifying_PassCode" = "ONBOARDING Login_Button_Specifying_PassCode"; /* NEW */
+
+/* When the user tries to create a new wallet, but they already have one saved on the devicve, this explanation/warning is given to the user */
+"ONBOARDING_Already_Have_Wallet_Explanation" = "ONBOARDING_Already_Have_Wallet_Explanation"; /* NEW */
+
+/* String in onboarding that specifies a cancel action */
+"ONBOARDING_Cancel_Action" = "ONBOARDING_Cancel_Action"; /* NEW */
+
+/* Title For Creating a New Wallet in the onboarding flow */
+"ONBOARDING_Create_New _Wallet" = "ONBOARDING_Create_New _Wallet"; /* NEW */
+
+/* Title For Creating a New Wallet in the onboarding flow */
+"ONBOARDING_Create_New_Wallet" = "ONBOARDING_Create_New_Wallet"; /* NEW */
+
+/* Error message that is displayed when the user tries to Create a New Wallet without a passcode */
+"ONBOARDING_Create_Wallet_No_Passcode_Error" = "ONBOARDING_Create_Wallet_No_Passcode_Error"; /* NEW */
+
+/* Prompt asking the user to authenticate themselves when they already have a wallet stored on device. */
+"ONBOARDING_Existing_Wallet_Authentication_Prompt" = "ONBOARDING_Existing_Wallet_Authentication_Prompt"; /* NEW */
+
+/* Error message to display when the system fails to retrieve the private key from the keychain */
+"ONBOARDING_Keychain_Failure_Error" = "ONBOARDING_Keychain_Failure_Error"; /* NEW */
+
+/* Subtitle under the text field of the login controller. Explains what to do in textfield */
+"ONBOARDING_Login_Input_Info_Title" = "ONBOARDING_Login_Input_Info_Title"; /* NEW */
+
+/* Error message that is displayed when the user tries to login without a passcode */
+"ONBOARDING_Login_No_Passcode_Error" = "ONBOARDING_Login_No_Passcode_Error"; /* NEW */
+
+/* Title for all login items in the onboarding flow */
+"ONBOARDING_Login_Title" = "ONBOARDING_Login_Title"; /* NEW */
+
+/* Welcome label to create a new wallet */
+"ONBOARDING_New To O3?" = "ONBOARDING_New To O3?"; /* NEW */
+
+/* A warning given to the user to make sure that they have backed up their private key in a secure location. Also states that deletibg the passcode will delete the key from the device */
+"ONBOARDING_Please_Backup Warning" = "ONBOARDING_Please_Backup Warning"; /* NEW */
+
+/* A title presented over the top of the private key, specifies WIF format. e.g. Your Private Key (WIF) */
+"ONBOARDING_Private_Key_title" = "ONBOARDING_Private_Key_title"; /* NEW */
+
+/* Displayed when the app is waiting to connect to the network. It is finding the best NEO node to connect to */
+"ONBOARDING_Selecting_Best_Node" = "ONBOARDING_Selecting_Best_Node"; /* NEW */
+
+/* The first subtitle in the onboarding pages */
+"ONBOARDING_Tutorial_Subtitle_One" = "ONBOARDING_Tutorial_Subtitle_One"; /* NEW */
+
+/* The third subtitle in the onboarding pages */
+"ONBOARDING_Tutorial_Subtitle_Three" = "ONBOARDING_Tutorial_Subtitle_Three"; /* NEW */
+
+/* The second subtitle in the onboarding pages */
+"ONBOARDING_Tutorial_Subtitle_Two" = "ONBOARDING_Tutorial_Subtitle_Two"; /* NEW */
+
+/* The first title in the onboarding pages */
+"ONBOARDING_Tutorial_Title_One" = "ONBOARDING_Tutorial_Title_One"; /* NEW */
+
+/* The third title in the onboarding pages */
+"ONBOARDING_Tutorial_Title_Three" = "ONBOARDING_Tutorial_Title_Three"; /* NEW */
+
+/* The second title in the onboarding pages */
+"ONBOARDING_Tutorial_Title_Two" = "ONBOARDING_Tutorial_Title_Two"; /* NEW */
+
+/* Title Welciming the user after successful wallet creation */
+"ONBOARDING_Welcome" = "ONBOARDING_Welcome"; /* NEW */
 
 /* No comment provided by engineer. */
-"Select Asset" = "Select Asset"; /* NEW */
+"Select Asset" = "Select Asset";
 
