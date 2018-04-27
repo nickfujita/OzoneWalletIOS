@@ -21,8 +21,6 @@ class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var newToO3Label: UILabel!
     var features: [OnboardingCollectionCell.Data]!
 
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setLocalizedStrings()
@@ -101,7 +99,7 @@ class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICo
     }
 
     func setLocalizedStrings() {
-        
+
         features = [
             OnboardingCollectionCell.Data(imageName: "chart", title: OnboardingStrings.landingTitleOne,
                                           subtitle: OnboardingStrings.landingSubtitleOne),

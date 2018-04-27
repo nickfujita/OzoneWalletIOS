@@ -19,13 +19,13 @@ struct OnboardingStrings {
     static let loginTitle = NSLocalizedString("ONBOARDING_Login_Title", comment: "Title for all login items in the onboarding flow")
     static let createNewWalletTitle = NSLocalizedString("ONBOARDING_Create_New _Wallet", comment: "Title For Creating a New Wallet in the onboarding flow")
     static let newToO3 = NSLocalizedString("ONBOARDING_New To O3?", comment: "Welcome label to create a new wallet")
-   
+
     //Login Screen
     static let loginNoPassCodeError = NSLocalizedString("ONBOARDING_Login_No_Passcode_Error", comment: "Error message that is displayed when the user tries to login without a passcode")
     static let createWalletNoPassCodeError = NSLocalizedString("ONBOARDING_Create_Wallet_No_Passcode_Error", comment: "Error message that is displayed when the user tries to Create a New Wallet without a passcode")
     static let loginInputInfo = NSLocalizedString("ONBOARDING_Login_Input_Info_Title", comment: "Subtitle under the text field of the login controller. Explains what to do in textfield")
     static let selectingBestNodeTitle = NSLocalizedString("ONBOARDING_Selecting_Best_Node", comment: "Displayed when the app is waiting to connect to the network. It is finding the best NEO node to connect to")
-    
+
     //Welcome Screen
     static let keychainFailureError = NSLocalizedString("ONBOARDING_Keychain_Failure_Error", comment: "Error message to display when the system fails to retrieve the private key from the keychain")
     static let haveSavedPrivateKeyConfirmation =
@@ -35,7 +35,7 @@ struct OnboardingStrings {
     static let welcomeTitle = NSLocalizedString("ONBOARDING_Welcome", comment: "Title Welciming the user after successful wallet creation")
     static let startActionTitle = NSLocalizedString("ONBOARDING_Start_Action_Title", comment: "Title to start the app after completing the onboarding")
     static let alreadyHaveWalletWarning = NSLocalizedString("ONBOARDING_Already_Have_Wallet_Explanation", comment: "When the user tries to create a new wallet, but they already have one saved on the devicve, this explanation/warning is given to the user")
-    
+
     static let loginWithExistingPasscode = NSLocalizedString("ONBOARDING Login_Button_Specifying_PassCode", comment: "On authentication screen, when wallet already exists. Ask them to login using the specific type of authentication they have, e.g Login using Passcode")
     static let loginWithExistingBiometric = NSLocalizedString("ONBOARDING Login_Button_Specifying_Biometric", comment: "On authentication screen, when wallet already exists. Ask them to login using the specific type of authentication they have, e.g Login using TouchID")
     static let authenticationPrompt = NSLocalizedString("ONBOARDING_Existing_Wallet_Authentication_Prompt", comment: "Prompt asking the user to authenticate themselves when they already have a wallet stored on device.")

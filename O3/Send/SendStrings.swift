@@ -30,12 +30,12 @@ struct SendStrings {
     static let selectedAssetLabel = NSLocalizedString("SEND_Selected_Asset_Title", comment: "A title for the the selected asset label, before the user has selected any asset.")
     static let send = NSLocalizedString("SEND_Send_Title", comment: "A title indicating a send action")
     static let toAddressPlaceholder = NSLocalizedString("SEND_To_Address_Placeholder", comment: "A place holder text, indicating that the NEO Wallet Address should go in this text field")
-    
+
     static let close = NSLocalizedString("SEND_Close", comment: "Title for button to close send screen after transaction completed")
     static let transactionSucceededTitle = NSLocalizedString("SEND_Created_Transaction_Successfully_Title", comment: "Title to display when the transaction has successfuly been submitted to the NEO blockchain")
     static let transactionSucceededSubtitle = NSLocalizedString("SEND_Created_Transaction_Successfully_Description", comment: "Description to display when the transaction has successfuly been submitted to the NEO blockchain")
     static let transactionFailedTitle = NSLocalizedString("SEND_Created_Transaction_Failed_Title", comment: "Title to display when the transaction has failed to be submitted to the NEO blockchain")
     static let transactionFailedSubtitle = NSLocalizedString("SEND_Created_Transaction_Failed_Description", comment: "Description to display when the transaction has failed to be submitted to the NEO blockchain")
-    
+
     static let assetSelectorTitle = NSLocalizedString("SEND_Select_Asset_Title", comment: "A title for the Select Asset pull up menu")
 }

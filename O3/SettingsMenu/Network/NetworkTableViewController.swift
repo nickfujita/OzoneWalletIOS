@@ -54,7 +54,7 @@ class NetworkTableViewController: UITableViewController, NetworkSeedCellDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.theme_separatorColor = O3Theme.tableSeparatorColorPicker
-        navigationItem.title = NSLocalizedString("SETTINGS_Network_Title", comment: "Title for Network Screen In Settings")
+        navigationItem.title = SettingsStrings.networkTitle
         updateNodeData()
 
     }
@@ -78,7 +78,7 @@ class NetworkTableViewController: UITableViewController, NetworkSeedCellDelegate
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         OzoneAlert.confirmDialog(message: "Selecting this seed will switch network management to manual mode.", cancelTitle: "Cancel", confirmTitle: "Confirm", didCancel: {}) {
+         OzoneAlert.confirmDialog(message: SettingsStrings.networkSwitchWarning, cancelTitle: OzoneAlert.cancelNegativeConfirmString, confirmTitle: OzoneAlert.confirmPositiveConfirmString, didCancel: {}) {
 
             Answers.logCustomEvent(withName: "Network Node Set",
                                    customAttributes: ["Network Node": self.tableNodes[indexPath.row].URL])

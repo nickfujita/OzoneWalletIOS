@@ -17,7 +17,6 @@ class LoginToCurrentWalletViewController: UIViewController {
     @IBOutlet var loginButton: UIButton?
     @IBOutlet var mainImageView: UIImageView?
     @IBOutlet weak var cancelButton: UIButton!
-    let authenticationPrompt = NSLocalizedString("ONBOARDING_Existing_Wallet_Authentication_Prompt", comment: "Prompt asking the user to authenticate themselves when they already have a wallet stored on device.")
 
     func login() {
         let keychain = Keychain(service: "network.o3.neo.wallet")
