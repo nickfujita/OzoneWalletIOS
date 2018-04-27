@@ -25,7 +25,7 @@ class LoginToCurrentWalletViewController: UIViewController {
             do {
                 let key = try keychain
                     .accessibility(.whenPasscodeSetThisDeviceOnly, authenticationPolicy: .userPresence)
-                    .authenticationPrompt(self.authenticationPrompt)
+                    .authenticationPrompt(OnboardingStrings.authenticationPrompt)
                     .get("ozonePrivateKey")
                 if key == nil {
                     return
@@ -71,16 +71,16 @@ class LoginToCurrentWalletViewController: UIViewController {
     }
 
     func setLocalizedStrings() {
-        cancelButton.setTitle(NSLocalizedString("ONBOARDING_Cancel_Action", comment: "String in onboarding that specifies a cancel action"), for: UIControlState())
+        cancelButton.setTitle(OzoneAlert.cancelNegativeConfirmString, for: UIControlState())
         if #available(iOS 8.0, *) {
             var error: NSError?
             let hasTouchID = LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)
             //if touchID is unavailable.
             //change the caption of the button here.
             if hasTouchID == false {
-                loginButton?.setTitle(NSLocalizedString("ONBOARDING Login_Button_Specifying_PassCode", comment: "On authentication screen, when wallet already exists. Ask them to login using the specific type of authentication they have, e.g Login using Passcode"), for: .normal)
+                loginButton?.setTitle(OnboardingStrings.loginWithExistingPasscode, for: .normal)
             } else {
-                loginButton?.setTitle(NSLocalizedString("ONBOARDING Login_Button_Specifying_Biometric", comment: "On authentication screen, when wallet already exists. Ask them to login using the specific type of authentication they have, e.g Login using TouchID"), for: .normal)
+                loginButton?.setTitle(OnboardingStrings.loginWithExistingBiometric, for: .normal)
             }
         }
     }

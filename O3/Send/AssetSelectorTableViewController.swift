@@ -39,7 +39,7 @@ class AssetSelectorTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addThemedElements()
-        self.title = NSLocalizedString("SEND_Select_Asset_Title", comment: "A title for the Select Asset pull up menu")
+        self.title = SendStrings.assetSelectorTitle
 
         selectedNEP5Tokens = UserDefaultsManager.selectedNEP5Token!
         for token in selectedNEP5Tokens {

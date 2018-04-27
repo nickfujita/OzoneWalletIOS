@@ -21,8 +21,7 @@ class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var newToO3Label: UILabel!
     var features: [OnboardingCollectionCell.Data]!
 
-    let loginNoPassCodeError = NSLocalizedString("ONBOARDING_Login_No_Passcode_Error", comment: "Error message that is displayed when the user tries to login without a passcode")
-    let createWalletNoPassCodeError = NSLocalizedString("ONBOARDING_Create_Wallet_No_Passcode_Error", comment: "Error message that is displayed when the user tries to Create a New Wallet without a passcode")
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +73,7 @@ class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICo
 
     @IBAction func loginButtonTapped(_ sender: Any) {
         if !LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil) {
-            OzoneAlert.alertDialog(message: loginNoPassCodeError, dismissTitle: OzoneAlert.okPositiveConfirmString) {}
+            OzoneAlert.alertDialog(message: OnboardingStrings.loginNoPassCodeError, dismissTitle: OzoneAlert.okPositiveConfirmString) {}
             return
         }
         performSegue(withIdentifier: "segueToLogin", sender: nil)
@@ -83,7 +82,7 @@ class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBAction func createNewWalletButtonTapped(_ sender: Any) {
         //if user doesn't have wallet we then create one
         if !LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil) {
-            OzoneAlert.alertDialog(message: createWalletNoPassCodeError, dismissTitle: OzoneAlert.okPositiveConfirmString) {}
+            OzoneAlert.alertDialog(message: OnboardingStrings.createWalletNoPassCodeError, dismissTitle: OzoneAlert.okPositiveConfirmString) {}
             return
         }
         if UserDefaultsManager.o3WalletAddress == nil {
@@ -102,22 +101,18 @@ class OnboardingViewController: UIViewController, UICollectionViewDelegate, UICo
     }
 
     func setLocalizedStrings() {
-        let titleOne = NSLocalizedString("ONBOARDING_Tutorial_Title_One", comment: "The first title in the onboarding pages")
-        let titleTwo = NSLocalizedString("ONBOARDING_Tutorial_Title_Two", comment: "The second title in the onboarding pages")
-        let titleThree = NSLocalizedString("ONBOARDING_Tutorial_Title_Three", comment: "The third title in the onboarding pages")
-
-        let subtitleOne = NSLocalizedString("ONBOARDING_Tutorial_Subtitle_One", comment: "The first subtitle in the onboarding pages")
-        let subtitleTwo = NSLocalizedString("ONBOARDING_Tutorial_Subtitle_Two", comment: "The second subtitle in the onboarding pages")
-        let subtitleThree = NSLocalizedString("ONBOARDING_Tutorial_Subtitle_Three", comment: "The third subtitle in the onboarding pages")
-
+        
         features = [
-            OnboardingCollectionCell.Data(imageName: "chart", title: titleOne, subtitle: subtitleOne),
-            OnboardingCollectionCell.Data(imageName: "lock", title: titleTwo, subtitle: subtitleTwo),
-            OnboardingCollectionCell.Data(imageName: "exchange", title: titleThree, subtitle: subtitleThree)
+            OnboardingCollectionCell.Data(imageName: "chart", title: OnboardingStrings.landingTitleOne,
+                                          subtitle: OnboardingStrings.landingSubtitleOne),
+            OnboardingCollectionCell.Data(imageName: "lock", title: OnboardingStrings.landingTitleTwo,
+                                          subtitle: OnboardingStrings.landingSubtitleTwo),
+            OnboardingCollectionCell.Data(imageName: "exchange", title: OnboardingStrings.landingTitleThree,
+                                          subtitle: OnboardingStrings.landingSubtitleThree)
         ]
 
-        loginButton.setTitle(NSLocalizedString("ONBOARDING_Login_Title", comment: "Title for all login items in the onboarding flow"), for: UIControlState())
-        createNewWalletButton.setTitle(NSLocalizedString("ONBOARDING_Create_New _Wallet", comment: "Title For Creating a New Wallet in the onboarding flow"), for: UIControlState())
-        newToO3Label.text = NSLocalizedString("ONBOARDING_New To O3?", comment: "Welcome label to create a new wallet")
+        loginButton.setTitle(OnboardingStrings.loginTitle, for: UIControlState())
+    createNewWalletButton.setTitle(OnboardingStrings.createNewWalletTitle, for: UIControlState())
+        newToO3Label.text = OnboardingStrings.newToO3
     }
 }

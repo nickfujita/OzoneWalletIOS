@@ -18,16 +18,16 @@ class SendCompleteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        closeButton.setTitle(NSLocalizedString("SEND_Close", comment: "Title for button to close send screen after transaction completed"), for: UIControlState())
+        closeButton.setTitle(SendStrings.close, for: UIControlState())
 
         if transactionSucceeded {
             completeImage.image = #imageLiteral(resourceName: "checked")
-            completeTitle.text = NSLocalizedString("SEND_Created_Transaction_Successfully_Title", comment: "Title to display when the transaction has successfuly been submitted to the NEO blockchain")
-            completeSubtitle.text = NSLocalizedString("SEND_Created_Transaction_Successfully_Description", comment: "Description to display when the transaction has successfuly been submitted to the NEO blockchain")
+            completeTitle.text = SendStrings.transactionSucceededTitle
+            completeSubtitle.text = SendStrings.transactionSucceededSubtitle
         } else {
             completeImage.image = #imageLiteral(resourceName: "sad")
-            completeTitle.text = NSLocalizedString("SEND_Created_Transaction_Failed_Title", comment: "Title to display when the transaction has failed to be submitted to the NEO blockchain")
-            completeSubtitle.text = NSLocalizedString("SEND_Created_Transaction_Failed_Description", comment: "Description to display when the transaction has failed to be submitted to the NEO blockchain")
+            completeTitle.text = SendStrings.transactionFailedTitle
+            completeSubtitle.text = SendStrings.transactionFailedSubtitle
         }
     }
     @IBAction func closeTapped(_ sender: Any) {

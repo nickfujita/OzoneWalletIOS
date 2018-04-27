@@ -19,7 +19,6 @@ class LoginTableViewController: UITableViewController, QRScanDelegate {
     @IBOutlet weak var wifTextFieldInfoLabel: UILabel!
     @IBOutlet weak var loginButton: ShadowedButton!
     var watchAddresses = [WatchAddress]()
-    let selectingBestNodeTitle = NSLocalizedString("ONBOARDING_Selecting_Best_Node", comment: "Displayed when the app is waiting to connect to the network. It is finding the best NEO node to connect to")
 
     func loadWatchAddresses() {
         do {
@@ -60,7 +59,7 @@ class LoginTableViewController: UITableViewController, QRScanDelegate {
         //enable push notifcation. maybe put this in somewhere else?
         Channel.pushNotificationEnabled(true)
 
-        HUD.show(.labeledProgress(title: nil, subtitle: selectingBestNodeTitle))
+        HUD.show(.labeledProgress(title: nil, subtitle: OnboardingStrings.selectingBestNodeTitle))
         DispatchQueue.global(qos: .background).async {
             let bestNode = NEONetworkMonitor.autoSelectBestNode()
             DispatchQueue.main.async {
@@ -116,14 +115,13 @@ class LoginTableViewController: UITableViewController, QRScanDelegate {
     }
 
     func setLocalizedStrings() {
-        navigationItem.title = NSLocalizedString("ONBOARDING_Login_Title", comment: "Title for all login items in the onboarding flow")
-        wifTextFieldInfoLabel.text = NSLocalizedString("ONBOARDING_Login_Input_Info_Title", comment: "Subtitle under the text field of the login controller. Explains what to do in textfield")
-        loginButton.setTitle(NSLocalizedString("ONBOARDING_Login_Title", comment: "Title for all login items in the onboarding flow"), for: UIControlState())
+        navigationItem.title = OnboardingStrings.loginTitle
+        wifTextFieldInfoLabel.text = OnboardingStrings.loginInputInfo
+        loginButton.setTitle(OnboardingStrings.loginTitle, for: UIControlState())
     }
 }
 
 extension LoginTableViewController: UITextViewDelegate {
-
     func textViewDidChange(_ textView: UITextView) {
         self.checkToProceed()
     }

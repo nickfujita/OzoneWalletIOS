@@ -28,9 +28,9 @@ class PreCreateWalletViewController: UIViewController {
     }
 
     func setLocalizedStrings() {
-        self.title = NSLocalizedString("ONBOARDING_Create_New_Wallet", comment: "Title For Creating a New Wallet in the onboarding flow")
-        createNewWalletButton.setTitle(NSLocalizedString("ONBOARDING_Create_New_Wallet", comment: "Title For Creating a New Wallet in the onboarding flow"), for: UIControlState())
-        titleLabel.text = NSLocalizedString("ONBOARDING_Already_Have_Wallet_Explanation", comment: "When the user tries to create a new wallet, but they already have one saved on the devicve, this explanation/warning is given to the user")
+        self.title = OnboardingStrings.createNewWalletTitle
+    createNewWalletButton.setTitle(OnboardingStrings.createNewWalletTitle, for: UIControlState())
+        titleLabel.text = OnboardingStrings.alreadyHaveWalletWarning
 
     }
 }

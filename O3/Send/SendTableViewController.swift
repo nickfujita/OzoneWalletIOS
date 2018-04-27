@@ -37,19 +37,6 @@ class SendTableViewController: UITableViewController, AddressSelectDelegate, QRS
     var selectedAsset: TransferableAsset?
     var preselectedAddress = ""
 
-    let notEnoughBalanceError = NSLocalizedString("SEND_Not_Enough_Balance_Error",
-                                                  comment: "Error To display when the user is trying to send without enough balance")
-    let notEnoughGasForInvokeError = NSLocalizedString("SEND_Not_Enough_Gas_Token_Transfer",
-                                                       comment: "Error to display when the user is trying to send a token but does not have enough gas to make the invoke occur. It requires 0.00000001 GAS in the wallet in order to send a token" )
-    let roundingGasError = NSLocalizedString("SEND_Rounding_Gas_Error", comment: "Error to display when the user is trying to send gas, but the amount they are sending is the max amount. The user can round down the gas amount a small amount to precent this error")
-    let invalidAddressError = NSLocalizedString("SEND_Invalid_Address_Error", comment: "Error to display when the user tries to send to an invalid NEO address")
-    let invalidAmountError = NSLocalizedString("SEND_Invalid_Amount_Error", comment: "Error to display when the user tries to send an invalid amount")
-
-    let sendConfirmationPrompt = NSLocalizedString("SEND_Confirmation_Prompt", comment: "A confirmation dialog that asks the user to confirm the asset, amount, and recipient of their transaction")
-
-    let authenticateToSendPrompt = NSLocalizedString("SEND_Authenticate_To_Send",
-                                                     comment: "A prompt asking for user authentication before performing the send action")
-
     func addThemedElements() {
         let themedTitleLabels = [toLabel, assetLabel, amountLabel]
         for label in themedTitleLabels {
@@ -101,11 +88,11 @@ class SendTableViewController: UITableViewController, AddressSelectDelegate, QRS
     func sendNEP5Token(tokenHash: String, assetName: String, amount: Double, toAddress: String) {
 
         DispatchQueue.main.async {
-            OzoneAlert.confirmDialog(message: self.sendConfirmationPrompt, cancelTitle: OzoneAlert.cancelNegativeConfirmString, confirmTitle: OzoneAlert.confirmPositiveConfirmString, didCancel: {}) {
+            OzoneAlert.confirmDialog(message: SendStrings.sendConfirmationPrompt, cancelTitle: OzoneAlert.cancelNegativeConfirmString, confirmTitle: OzoneAlert.confirmPositiveConfirmString, didCancel: {}) {
             let keychain = Keychain(service: "network.o3.neo.wallet")
                 do {
                     _ = try keychain
-                        .authenticationPrompt(self.authenticateToSendPrompt)
+                        .authenticationPrompt(SendStrings.authenticateToSendPrompt)
                         .get("ozonePrivateKey")
                     O3HUD.start()
                     if let bestNode = NEONetworkMonitor.autoSelectBestNode() {
@@ -139,11 +126,11 @@ class SendTableViewController: UITableViewController, AddressSelectDelegate, QRS
 
     func sendNativeAsset(assetId: AssetId, assetName: String, amount: Double, toAddress: String) {
         DispatchQueue.main.async {
-            OzoneAlert.confirmDialog(message: self.sendConfirmationPrompt, cancelTitle: OzoneAlert.cancelNegativeConfirmString, confirmTitle: OzoneAlert.okPositiveConfirmString, didCancel: {}) {
+            OzoneAlert.confirmDialog(message: SendStrings.sendConfirmationPrompt, cancelTitle: OzoneAlert.cancelNegativeConfirmString, confirmTitle: OzoneAlert.okPositiveConfirmString, didCancel: {}) {
             let keychain = Keychain(service: "network.o3.neo.wallet")
                 do {
                     _ = try keychain
-                        .authenticationPrompt(self.authenticateToSendPrompt)
+                        .authenticationPrompt(SendStrings.authenticateToSendPrompt)
                         .get("ozonePrivateKey")
                     O3HUD.start()
                     if let bestNode = NEONetworkMonitor.autoSelectBestNode() {
@@ -190,7 +177,7 @@ class SendTableViewController: UITableViewController, AddressSelectDelegate, QRS
         var amount = amountFormatter.number(from: (self.amountField.text?.trim())!)
 
         if amount == nil {
-            OzoneAlert.alertDialog(message: invalidAmountError, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
+            OzoneAlert.alertDialog(message: SendStrings.invalidAmountError, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
                 self.amountField.becomeFirstResponder()
             })
             return
@@ -205,18 +192,18 @@ class SendTableViewController: UITableViewController, AddressSelectDelegate, QRS
             formatter.numberStyle = .decimal
             let balanceString = formatter.string(for: balanceDecimal)
 
-            let message = String(format: notEnoughBalanceError, assetName, balanceString!)
+            let message = String(format: SendStrings.notEnoughBalanceError, assetName, balanceString!)
             OzoneAlert.alertDialog(message: message, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
                 self.amountField.becomeFirstResponder()
             })
             return
         } else if selectedAsset?.name.lowercased() == "gas" && self.selectedAsset!.balance! - amount!.decimalValue <= 0.00000001 {
-            OzoneAlert.alertDialog(message: roundingGasError, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
+            OzoneAlert.alertDialog(message: SendStrings.roundingGasError, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
                     self.amountField.becomeFirstResponder()
             })
             return
         } else if selectedAsset?.assetType == AssetType.nep5Token && gasBalance == 0.0 {
-            OzoneAlert.alertDialog(message: notEnoughGasForInvokeError, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
+            OzoneAlert.alertDialog(message: SendStrings.notEnoughGasForInvokeError, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
                 self.amountField.becomeFirstResponder()
             })
             return
@@ -226,7 +213,7 @@ class SendTableViewController: UITableViewController, AddressSelectDelegate, QRS
         //validate address first
         if NEOValidator.validateNEOAddress(toAddress) == false {
             DispatchQueue.main.async {
-                OzoneAlert.alertDialog(message: self.invalidAddressError, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
+                OzoneAlert.alertDialog(message: SendStrings.invalidAddressError, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
                     self.toAddressField.becomeFirstResponder()
                 })
                 return
@@ -311,16 +298,16 @@ class SendTableViewController: UITableViewController, AddressSelectDelegate, QRS
     }
 
     func setLocalizedStrings() {
-        toLabel.text = NSLocalizedString("SEND_To_Label", comment: "Label title for the send to field on the send screen")
-        assetLabel.text = NSLocalizedString("SEND_Asset_Label", comment: "Label title for the asset field on the send screen")
-        amountLabel.text = NSLocalizedString("SEND_Amount_Label", comment: "Label title for the amount on the send screen")
-    pasteButton.setTitle(NSLocalizedString("SEND_Paste_Button_Title", comment: "A title for the paste button in the send screen"), for: UIControlState())
-       scanButton.setTitle(NSLocalizedString("SCAN_Button_Title", comment: "A title for the scan button in the send screen"), for: UIControlState())
-        addressButton.setTitle(NSLocalizedString("SEND_Address_Button_Title", comment: "A Title for the address book button in the send screen"), for: UIControlState())
-        selectedAssetLabel.text = NSLocalizedString("SEND_Selected_Asset_Title", comment: "A title for the the selected asset label, before the user has selected any asset.")
-        sendButton.setTitle(NSLocalizedString("SEND_Send_Title", comment: "A title indicating a send action"), for: UIControlState())
-        self.title = NSLocalizedString("SEND_Send_Title", comment: "A title indicating a send action")
-        toAddressField.placeholder = NSLocalizedString("SEND_To_Address_Placeholder", comment: "A place holder text, indicating that the NEO Wallet Address should go in this text field")
+        toLabel.text = SendStrings.toLabel
+        assetLabel.text = SendStrings.assetLabel
+        amountLabel.text = SendStrings.amountLabel
+        pasteButton.setTitle(SendStrings.paste, for: UIControlState())
+        scanButton.setTitle(SendStrings.scan, for: UIControlState())
+        addressButton.setTitle(SendStrings.addressBook, for: UIControlState())
+        selectedAssetLabel.text = SendStrings.selectedAssetLabel
+        sendButton.setTitle(SendStrings.send, for: UIControlState())
+        self.title = SendStrings.send
+        toAddressField.placeholder = SendStrings.toAddressPlaceholder
     }
 }
 

@@ -20,11 +20,6 @@ class WelcomeTableViewController: UITableViewController {
     @IBOutlet weak var privateKeyTitle: UILabel!
     @IBOutlet weak var startButton: ShadowedButton!
 
-    let keychainFailureError = NSLocalizedString("ONBOARDING_Keychain_Failure_Error", comment: "Error message to display when the system fails to retrieve the private key from the keychain")
-    let haveSavedPrivateKeyConfirmation =
-        NSLocalizedString("ONBARDING_Confirmed_Private_Key_Saved_Prompt", comment: "A prompt asking the user to please confirm that they have indeed backed up their private key in a secure location before continuing")
-    let selectingBestNodeTitle = NSLocalizedString("ONBOARDING_Selecting_Best_Node", comment: "Displayed when the app is waiting to connect to the network. It is finding the best NEO node to connect to")
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setLocalizedStrings()
@@ -42,7 +37,7 @@ class WelcomeTableViewController: UITableViewController {
                     .set((Authenticated.account?.wif)!, key: "ozonePrivateKey")
             } catch _ {
                 DispatchQueue.main.async {
-                    OzoneAlert.alertDialog(message: self.keychainFailureError, dismissTitle: OzoneAlert.okPositiveConfirmString) {
+                    OzoneAlert.alertDialog(message: OnboardingStrings.keychainFailureError, dismissTitle: OzoneAlert.okPositiveConfirmString) {
                         Authenticated.account = nil
                         self.navigationController?.popViewController(animated: true)
                     }
@@ -56,9 +51,9 @@ class WelcomeTableViewController: UITableViewController {
     }
 
     @IBAction func startTapped(_ sender: Any) {
-        OzoneAlert.confirmDialog(message: haveSavedPrivateKeyConfirmation, cancelTitle: OzoneAlert.notYetNegativeConfirmString, confirmTitle: OzoneAlert.confirmPositiveConfirmString, didCancel: {}) {
+        OzoneAlert.confirmDialog(message: OnboardingStrings.haveSavedPrivateKeyConfirmation, cancelTitle: OzoneAlert.notYetNegativeConfirmString, confirmTitle: OzoneAlert.confirmPositiveConfirmString, didCancel: {}) {
             DispatchQueue.main.async {
-                HUD.show(.labeledProgress(title: nil, subtitle: self.selectingBestNodeTitle))
+                HUD.show(.labeledProgress(title: nil, subtitle: OnboardingStrings.selectingBestNodeTitle))
                 DispatchQueue.global(qos: .background).async {
                     let bestNode = NEONetworkMonitor.autoSelectBestNode()
                     DispatchQueue.main.async {
@@ -76,9 +71,9 @@ class WelcomeTableViewController: UITableViewController {
     }
 
     func setLocalizedStrings() {
-        pleaseBackupWarning.text = NSLocalizedString("ONBOARDING_Please_Backup Warning", comment: "A warning given to the user to make sure that they have backed up their private key in a secure location. Also states that deletibg the passcode will delete the key from the device")
-        privateKeyTitle.text = NSLocalizedString("ONBOARDING_Private_Key_title", comment: "A title presented over the top of the private key, specifies WIF format. e.g. Your Private Key (WIF)")
-        self.title = NSLocalizedString("ONBOARDING_Welcome", comment: "Title Welciming the user after successful wallet creation")
-        startButton.setTitle(NSLocalizedString("ONBOARDING_Start_Action_Title", comment: "Title to start the app after completing the onboarding"), for: UIControlState())
+        pleaseBackupWarning.text = OnboardingStrings.pleaseBackupWarning
+        privateKeyTitle.text = OnboardingStrings.privateKeyTitle
+        self.title = OnboardingStrings.welcomeTitle
+        startButton.setTitle(OnboardingStrings.startActionTitle, for: UIControlState())
     }
 }
