@@ -14,9 +14,6 @@ import Crashlytics
 
 class O3TabBarController: UITabBarController {
     var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
-    let sendTitle = NSLocalizedString("TABBAR_Send_Action", comment: "Title for send action in tabbar")
-    let receiveTitle = NSLocalizedString("TABBAR_Receive_Action", comment: "Title for receive action in tabbar")
-    let tokenSalesTitle = NSLocalizedString("TABBAR_Token_Sale_Action", comment: "Title for Token Sale Action in tabbar")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,17 +93,17 @@ class O3TabBarController: UITabBarController {
     @objc func menuButtonAction(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        let send = UIAlertAction(title: sendTitle, style: .default) { _ in
+        let send = UIAlertAction(title: TabbarStrings.sendTitle, style: .default) { _ in
             self.sendTapped()
         }
         actionSheet.addAction(send)
 
-        let receive = UIAlertAction(title: receiveTitle, style: .default) { _ in
+        let receive = UIAlertAction(title: TabbarStrings.receiveTitle, style: .default) { _ in
             self.receivedTapped()
         }
         actionSheet.addAction(receive)
 
-        let tokenSale = UIAlertAction(title: tokenSalesTitle, style: .default) { _ in
+        let tokenSale = UIAlertAction(title: TabbarStrings.tokenSalesTitle, style: .default) { _ in
             self.tokenSaleTapped()
         }
         if O3Cache.gasBalance() > 0 || O3Cache.neoBalance() > 0 {
