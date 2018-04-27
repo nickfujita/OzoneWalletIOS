@@ -14,8 +14,10 @@ protocol AddAddressCellDelegate: class {
 }
 
 class AddAddressTableViewCell: UITableViewCell {
+    @IBOutlet weak var addAddressButton: ShadowedButton!
     weak var delegate: AddAddressCellDelegate?
     override func awakeFromNib() {
+        addAddressButton.setTitle(NSLocalizedString("SETTINGS_Add_Watch_Address", comment: "Title for add watch address button"), for: UIControlState())
         contentView.theme_backgroundColor = O3Theme.backgroundColorPicker
         theme_backgroundColor = O3Theme.backgroundColorPicker
         super.awakeFromNib()

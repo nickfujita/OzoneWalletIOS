@@ -1468,6 +1468,9 @@
                                                 <constraint firstItem="od2-zw-2au" firstAttribute="leading" secondItem="gBZ-En-ekn" secondAttribute="leading" constant="20" id="mml-Py-2Hm"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addAddressButton" destination="od2-zw-2au" id="zt5-ig-QIh"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -1482,6 +1485,7 @@
                         <viewLayoutGuide key="safeArea" id="jCq-0E-lDe"/>
                     </view>
                     <connections>
+                        <outlet property="addWatchAddressDescription" destination="nEY-eP-iOI" id="ICu-RG-n50"/>
                         <outlet property="tableView" destination="Nyf-NY-MJn" id="Nwf-cI-cQ2"/>
                         <segue destination="ZJi-SS-XK7" kind="presentation" identifier="showAddWatchOnlyAddress" id="cRR-Z4-Rsz"/>
                     </connections>

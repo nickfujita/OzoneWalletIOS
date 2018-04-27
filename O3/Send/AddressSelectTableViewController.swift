@@ -35,6 +35,7 @@ class AddressSelectTableViewController: UITableViewController, HalfModalPresenta
         addTheme()
         super.viewDidLoad()
         loadContacts()
+        self.title = NSLocalizedString("SEND_Address_Book_Title", comment: "A title for the address book screen when you select the contacts option")
         tableView.reloadData()
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
     }
