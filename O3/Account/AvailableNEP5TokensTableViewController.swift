@@ -117,7 +117,7 @@ class AvailableNEP5TokensTableViewController: UITableViewController {
     }
 
     func setLocalizedStrings() {
-        self.title = NSLocalizedString("WALLET_NEP5_Tokens", comment: "Title for NEP-5 Tokens Selection View")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("WALLET_NEP_5_DONE", comment: "Done bar button item"), style: .done, target: self, action: #selector(doneTapped(_:)))
+        self.title = AccountStrings.availableTokensTitle
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: AccountStrings.done, style: .done, target: self, action: #selector(doneTapped(_:)))
     }
 }

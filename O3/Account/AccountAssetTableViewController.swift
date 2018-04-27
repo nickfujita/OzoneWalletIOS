@@ -37,10 +37,6 @@ class AccountAssetTableViewController: UITableViewController {
     var cachedGASBalance: Double = 0.0
     var mostRecentClaimAmount = 0.0
 
-    let successfulClaimPrompt = NSLocalizedString("WALLET_Claim_Succeeded_Prompt", comment: "A Message to display in the alert after the user hs successfully claimed their gas")
-    let claimingInProgressTitle = NSLocalizedString("WALLET_Claim_In_Progress_Title", comment: "A title to display while claiming is in progress")
-    let claimingInProgressSubtitle = NSLocalizedString("WALLET_Claim_In_Progress_Subtitle", comment: "A subtitle to display while claiming is in progress")
-
     func initiateCache() {
         if let storage =  try? Storage(diskConfig: DiskConfig(name: "O3")) {
             tokensCache = (try? storage.object(ofType: [NEP5Token: Decimal].self, forKey: "tokenBalances")) ?? [:]
@@ -115,7 +111,7 @@ class AccountAssetTableViewController: UITableViewController {
                 HUD.hide()
 
                 DispatchQueue.main.async {
-                    OzoneAlert.alertDialog(message: self.successfulClaimPrompt, dismissTitle: OzoneAlert.okPositiveConfirmString) {
+                    OzoneAlert.alertDialog(message: AccountStrings.successfulClaimPrompt, dismissTitle: OzoneAlert.okPositiveConfirmString) {
                         UserDefaultsManager.numClaims += 1
                         if UserDefaultsManager.numClaims == 1 || UserDefaultsManager.numClaims % 10 == 0 {
                             SKStoreReviewController.requestReview()
@@ -156,7 +152,7 @@ class AccountAssetTableViewController: UITableViewController {
         //disable the button after tapped
         enableClaimButton(enable: false)
 
-        HUD.show(.labeledProgress(title: claimingInProgressTitle, subtitle: claimingInProgressSubtitle))
+        HUD.show(.labeledProgress(title: AccountStrings.claimingInProgressTitle, subtitle: AccountStrings.claimingInProgressSubtitle))
 
         //select best node
         if let bestNode = NEONetworkMonitor.autoSelectBestNode() {
@@ -428,8 +424,8 @@ class AccountAssetTableViewController: UITableViewController {
     }
 
     func setLocalizedStrings() {
-        self.navigationController?.navigationBar.topItem?.title = NSLocalizedString("WALLET_Account", comment: "A title for the account screen")
-        addNEP5Button.setTitle(NSLocalizedString("WALLET_Add_NEP5_Token", comment: "A title for the button which allows you to add a NEP-5 Token to your wallet"), for: UIControlState())
+        self.navigationController?.navigationBar.topItem?.title = AccountStrings.accountTitle
+        addNEP5Button.setTitle(AccountStrings.addNEP5Token, for: UIControlState())
     }
 }
 

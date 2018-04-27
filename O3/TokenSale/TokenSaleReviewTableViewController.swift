@@ -25,7 +25,7 @@ class TokenSaleReviewTableViewController: UITableViewController {
     @IBOutlet weak var notWhitelistedContainer: UIView!
     @IBOutlet weak var notWhitelistedLabel: UILabel!
     @IBOutlet weak var tokenSaleWebsiteButton: UIButton!
-    
+
     @IBOutlet weak var readSaleAgreementLabel: UILabel! {
         didSet {
             let tap = UITapGestureRecognizer(target: self, action: #selector(readSaleAgreementTapped(_:)))

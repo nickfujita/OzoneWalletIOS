@@ -43,7 +43,7 @@ class UnclaimedGASTableViewCell: UITableViewCell {
     }
 
     func setLocalizedStrings() {
-        headerLabel.text = NSLocalizedString("WALLET_Unclaimed_Gas Title", comment: "A title for Unclaimed Gas in the wallet")
-        claimButton.setTitle(NSLocalizedString("WALLET_Claim", comment: "A Title for the claim Action"), for: UIControlState())
+        headerLabel.text = AccountStrings.unclaimedGas
+        claimButton.setTitle(AccountStrings.claimAction, for: UIControlState())
     }
 }

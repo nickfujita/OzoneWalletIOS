@@ -27,7 +27,6 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
         tableView.theme_backgroundColor = O3Theme.cardColorPicker
         statusLabel.theme_textColor = O3Theme.accentColorPicker
     }
-    
 
     var tokenSaleTransactionItems: [TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem]! = []
 

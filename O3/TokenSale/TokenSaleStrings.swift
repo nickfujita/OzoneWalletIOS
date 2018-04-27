@@ -20,7 +20,7 @@ struct TokenSaleStrings {
     static let liveStatus = NSLocalizedString("TOKENSALE_Live_Status", comment: "A string showing that the displayed token sale is currently active")
     static let ended = NSLocalizedString("TOKENSALE_Ended", comment: "String showing that the token sale has already ended")
     static let endsIn = NSLocalizedString("TOKENSALE_Ends_In", comment: "A string displaying how muc time is left in the token sale")
-    
+
     //TOKEN SALE INFO
     static let priority = NSLocalizedString("TOKENSALE_Priority_Label", comment: "Label showing priority. Also displays the gas cost for priority. This is fixed at 0.0011GAS")
     static let review = NSLocalizedString("TOKENSALE_Review_Button_Title", comment: "A title for reviewing token sale participation buttton")
@@ -32,8 +32,7 @@ struct TokenSaleStrings {
     static let priorityExplanationDialog = NSLocalizedString("TOKENSALE_Priority_Explanation", comment: "A Dialog that shows explaining when, what is priority is tapped. Explains that priority allows your transactions to process faster on the blockchain")
     static let tokenSaleHasEndedError = NSLocalizedString("TOKENSALE_Has_Ended_Error", comment: "Error that shows when the user tries to partcipate in a tokensale that has already ended")
     static let youWillReceiveTitle = NSLocalizedString("TOKENSALE_You_Will_receive_Title", comment: "A title indicating how much the user will receive with a given contribution amount")
-    
-    
+
     //Review Controller
     static let notWhiteListedError = NSLocalizedString("TOKENSALE_Not_Whitelisted_Error", comment: "An error to display when the user is not whitelisted for the tokensale")
     static let pleaseAgreeError = NSLocalizedString("TOKENSALE_Not_Agreed_To_Disclaimers Error", comment: "An error when the user has not yet agreed to the tokensale disclaimers")
@@ -42,7 +41,7 @@ struct TokenSaleStrings {
     static let readSaleAgreement = NSLocalizedString("TOKENSALE_Issuer_Agreement", comment: "Disclaimer text asking the user to aggree that they have read the agreement provided by the tokensale issuer")
     static let o3Agreement = NSLocalizedString("TOKENSALE_O3_Agreement", comment: "Disclaimer text asking the user to agree to the terms of the O3 Application. States that the user is interacting directly with the smart contract")
     static let tokenSaleWebsite = NSLocalizedString("TOKENSALE_Website_Button_Title", comment: "A title for a button that directs the user to the tokensale website button")
-    
+
     //Success, Error, Pending
     static let dateReceiptLabel = NSLocalizedString("TOKENSALE_Receipt_Date_Label", comment: "Label for the date in the token sale receipt in transaction success screen")
     static let tokenSaleNameReceiptLabel = NSLocalizedString("TOKENSALE_Receipt_Tokensale_Name_Label", comment: "Label for token sale name in the token sale receipt in transaction success screen")

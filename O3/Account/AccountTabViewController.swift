@@ -92,8 +92,8 @@ class AccountTabViewController: TabmanViewController, PageboyViewControllerDataS
     }
 
     func setLocalizedStrings() {
-        self.bar.items = [Item(title: NSLocalizedString("WALLET_Assets", comment: "Title of assets tab in wallet screen")),
-                          Item(title: NSLocalizedString("WALLET_Transactions", comment: "Title of Transactions tab in wallet screen")),
-                          Item(title: NSLocalizedString("WALLET_Contacts", comment: "Title of Contacts tab in wallet screen"))]
+        self.bar.items = [Item(title: AccountStrings.assets),
+                          Item(title: AccountStrings.transactions),
+                          Item(title: AccountStrings.contacts)]
     }
 }

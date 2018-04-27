@@ -18,12 +18,6 @@ class ContactsTableViewController: UITableViewController, AddressAddDelegate {
     var fetchedResultsController: NSFetchedResultsController<Contact>?
     var selectedAddress = ""
 
-    let editNameString = NSLocalizedString("CONTACTS_Edit_Name", comment: "Title for editing name of a contact")
-    let sendToAddressString = NSLocalizedString("CONTACTS_Send_To", comment: "Title for sending to contact")
-    let copyAddressString = NSLocalizedString("CONTACTS_Copy_Address", comment: "Title to copy address")
-    let deleteString = NSLocalizedString("CONTACTS_Delete", comment: "Title to delete Contact")
-    let saveString = NSLocalizedString("CONTACTS_Save", comment: "Save Action for Contacts")
-
     @objc func loadData() {
         self.tableView.refreshControl?.beginRefreshing()
         let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
@@ -99,7 +93,7 @@ class ContactsTableViewController: UITableViewController, AddressAddDelegate {
     }
 
     func tappedRemoveAddress(_ index: Int) {
-        OzoneAlert.confirmDialog(message: "Are you sure you want to delete", cancelTitle: "Cancel", confirmTitle: "OK", didCancel: {
+        OzoneAlert.confirmDialog(message: AccountStrings.areYouSureDelete, cancelTitle: OzoneAlert.cancelNegativeConfirmString, confirmTitle: OzoneAlert.okPositiveConfirmString, didCancel: {
 
         }) {
             guard let contacts = self.fetchedResultsController?.fetchedObjects else { return  }
@@ -110,23 +104,23 @@ class ContactsTableViewController: UITableViewController, AddressAddDelegate {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let edit = UIAlertAction(title: editNameString, style: .default) { _ in
+        let edit = UIAlertAction(title: AccountStrings.editName, style: .default) { _ in
             self.tappedEditWatchOnlyAddress(indexPath.row)
         }
         actionSheet.addAction(edit)
 
-        let send = UIAlertAction(title: sendToAddressString, style: .default) { _ in
+        let send = UIAlertAction(title: AccountStrings.sendToAddress, style: .default) { _ in
             self.selectedAddress = self.fetchedResultsController?.object(at: indexPath).address ?? ""
             self.sendTapped()
         }
         actionSheet.addAction(send)
 
-        let copy = UIAlertAction(title: copyAddressString, style: .default) { _ in
+        let copy = UIAlertAction(title: AccountStrings.copyAddress, style: .default) { _ in
             UIPasteboard.general.string = self.fetchedResultsController?.object(at: indexPath).address ?? ""
         }
         actionSheet.addAction(copy)
 
-        let delete = UIAlertAction(title: deleteString, style: .destructive) { _ in
+        let delete = UIAlertAction(title: AccountStrings.delete, style: .destructive) { _ in
             self.tappedRemoveAddress(indexPath.row)
         }
         actionSheet.addAction(delete)
@@ -143,11 +137,11 @@ class ContactsTableViewController: UITableViewController, AddressAddDelegate {
     func tappedEditWatchOnlyAddress(_ index: Int) {
         guard let contacts = fetchedResultsController?.fetchedObjects else { return  }
         let toUpdate = contacts[index]
-        let alert = UIAlertController(title: editNameString, message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: AccountStrings.editName, message: nil, preferredStyle: .alert)
         alert.addTextField { (textfield) in
             textfield.text = toUpdate.nickName
         }
-        let save = UIAlertAction(title: saveString, style: .default) { _ in
+        let save = UIAlertAction(title: AccountStrings.save, style: .default) { _ in
             let textfield = alert.textFields?.first
             toUpdate.nickName = textfield?.text?.trim()
             try? UIApplication.appDelegate.persistentContainer.viewContext.save()
@@ -193,21 +187,16 @@ extension ContactsTableViewController: NSFetchedResultsControllerDelegate {
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch (type) {
+        switch type {
         case .insert:
             if let indexPath = newIndexPath {
                 tableView.insertRows(at: [indexPath], with: .fade)
             }
-            break
         case .delete:
             if let indexPath = indexPath {
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
-            break
         case .update:
-            //            if let indexPath = indexPath, let cell = iTableView.cellForRow(at: indexPath) {
-            //                configureCell(cell, at: indexPath)
-            //            }
             break
         case .move:
             if let indexPath = indexPath {
@@ -217,13 +206,12 @@ extension ContactsTableViewController: NSFetchedResultsControllerDelegate {
             if let newIndexPath = newIndexPath {
                 tableView.insertRows(at: [newIndexPath], with: .fade)
             }
-            break
         }
     }
 
     func setLocalizedStrings() {
-        addAddressButton.setTitle(NSLocalizedString("CONTACTS_Add_Contact_Button_Title", comment: "Title for button when you add a contact to address book"), for: UIControlState())
-        addAddressDescriptionLabel.text =  NSLocalizedString("CONTACTS_Add_Contact_Description", comment: "An informative description about what happens when you add a contact")
+        addAddressButton.setTitle(AccountStrings.addContact, for: UIControlState())
+        addAddressDescriptionLabel.text = AccountStrings.addContactDescription
 
     }
 }

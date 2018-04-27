@@ -15,12 +15,6 @@ class MyAddressViewController: UIViewController {
     @IBOutlet var qrCodeContainerView: UIView!
     @IBOutlet weak var addressInfoLabel: UILabel!
 
-    let saveQRActionString = NSLocalizedString("WALLET_Save_Qr_Action", comment: "An Action Title for saving your QR code")
-    let copyAddressActionString = NSLocalizedString("WALLET_Copy_Address", comment: "An action title for copying our address")
-    let shareActionString = NSLocalizedString("WALLET_Share", comment: "An action title for sharing O3")
-    let savedTitle = NSLocalizedString("WALLET_Saved_Title", comment: "A title to display when you've successfully saved your wallet address qr code")
-    let savedMessage = NSLocalizedString("WALLET_Saved_Description", comment: "A description to give more information about saving the address")
-
     func configureView() {
         applyNavBarTheme()
         view.theme_backgroundColor = O3Theme.backgroundColorPicker
@@ -44,16 +38,16 @@ class MyAddressViewController: UIViewController {
 
     @IBAction func showActionSheet() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let saveQR = UIAlertAction(title: saveQRActionString, style: .default) { _ in
+        let saveQR = UIAlertAction(title: AccountStrings.saveQRAction, style: .default) { _ in
             self.saveQRCodeImage()
         }
         alert.addAction(saveQR)
-        let copyAddress = UIAlertAction(title: copyAddressActionString, style: .default) { _ in
+        let copyAddress = UIAlertAction(title: AccountStrings.copyAddressAction, style: .default) { _ in
             UIPasteboard.general.string = Authenticated.account?.address
             //maybe need some Toast style to notify that it's copied
         }
         alert.addAction(copyAddress)
-        let share = UIAlertAction(title: shareActionString, style: .default) { _ in
+        let share = UIAlertAction(title: AccountStrings.shareAction, style: .default) { _ in
             self.share()
         }
         alert.addAction(share)
@@ -73,7 +67,7 @@ class MyAddressViewController: UIViewController {
             present(alert, animated: true)
         } else {
             //change it to Toast style.
-            let alert = UIAlertController(title: savedTitle, message: savedMessage, preferredStyle: .alert)
+            let alert = UIAlertController(title: AccountStrings.saved, message: AccountStrings.savedMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: OzoneAlert.okPositiveConfirmString, style: .default))
             present(alert, animated: true)
         }
@@ -92,8 +86,7 @@ class MyAddressViewController: UIViewController {
     }
 
     func setLocalizedStrings() {
-        addressInfoLabel.text = NSLocalizedString("WALLET_My_Address_Explanation", comment: "Informative text explaining you can store neo, gas, and nep-5 tokens using this address")
-        self.title = NSLocalizedString("WALLET_My_Address_Title", comment: "Title of the My Address Page")
+        addressInfoLabel.text = AccountStrings.myAddressInfo
+        title = AccountStrings.myAddressTitle
     }
-
 }
