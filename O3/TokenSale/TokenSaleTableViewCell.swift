@@ -17,7 +17,9 @@ class TokenSaleTableViewCell: UITableViewCell {
     @IBOutlet weak var tokenSaleTimeLabel: UILabel!
     @IBOutlet weak var actionLabel: UILabel!
 
+    @IBOutlet weak var liveStatusLabel: UILabel!
     override func awakeFromNib() {
+        liveStatusLabel.text = TokenSaleStrings.liveStatus
         tokenSaleNameLabel.theme_textColor = O3Theme.titleColorPicker
         tokenSaleTimeLabel.theme_textColor = O3Theme.lightTextColorPicker
         tokenSaleShortDescriptionLabel.theme_textColor = O3Theme.titleColorPicker
@@ -61,7 +63,7 @@ class TokenSaleTableViewCell: UITableViewCell {
         formatter.calendar = calendar
         //if the sale ends then we invalidate the timer
         if tokenSaleEndDate! < now {
-            actionLabel.text = "Ended"
+            actionLabel.text = TokenSaleStrings.ended
             actionLabel.theme_textColor = O3Theme.negativeLossColorPicker
             countdownTimer?.invalidate()
             countdownTimer = nil
@@ -69,7 +71,7 @@ class TokenSaleTableViewCell: UITableViewCell {
         }
 
         let string = formatter.string(from: now, to: tokenSaleEndDate!)!
-        tokenSaleTimeLabel.text = String(format: "Ends in %@", string)
+        tokenSaleTimeLabel.text = String(format: TokenSaleStrings.endsIn, string)
     }
 
 }

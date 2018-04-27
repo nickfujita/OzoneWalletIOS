@@ -25,7 +25,7 @@ class TokenSaleReviewTableViewController: UITableViewController {
     @IBOutlet weak var notWhitelistedContainer: UIView!
     @IBOutlet weak var notWhitelistedLabel: UILabel!
     @IBOutlet weak var tokenSaleWebsiteButton: UIButton!
-
+    
     @IBOutlet weak var readSaleAgreementLabel: UILabel! {
         didSet {
             let tap = UITapGestureRecognizer(target: self, action: #selector(readSaleAgreementTapped(_:)))
@@ -68,10 +68,11 @@ class TokenSaleReviewTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         setThemedElements()
 
         if transactionInfo.saleInfo.allowToParticipate == false {
-             let message = String(format: "Your NEO address is not whitelisted to participate in %@ token sale. If you believe this is a mistake, Please contact the team directly. ", transactionInfo.saleInfo.name)
+             let message = String(format: TokenSaleStrings.notWhiteListedError, transactionInfo.saleInfo.name)
             notWhitelistedLabel.text = message
             notWhitelistedContainer.isHidden = false
         } else {
@@ -140,7 +141,7 @@ class TokenSaleReviewTableViewController: UITableViewController {
             //if authenticated then call "submit"
             self.performSegue(withIdentifier: "submit", sender: transactionInfo)
         } else {
-            OzoneAlert.alertDialog(message: "Please aggree to the disclaimers", dismissTitle: "OK") { }
+            OzoneAlert.alertDialog(message: TokenSaleStrings.pleaseAgreeError, dismissTitle: OzoneAlert.okPositiveConfirmString) { }
         }
     }
 
@@ -150,6 +151,16 @@ class TokenSaleReviewTableViewController: UITableViewController {
                 vc.transactionInfo = sender as? TokenSaleTableViewController.TokenSaleTransactionInfo
             }
         }
+    }
+
+    func setLocalizedStrings() {
+        sendTitleLabel.text = TokenSaleStrings.sendTitle
+        priorityLabel.text = TokenSaleStrings.priorityReview
+        receiveTitleLabel.text = TokenSaleStrings.youWillReceiveTitle
+        readSaleAgreementLabel.text = TokenSaleStrings.readSaleAgreement
+        iUnderstandLabel.text = TokenSaleStrings.o3Agreement
+        participateButton.setTitle(TokenSaleStrings.participate, for: UIControlState())
+        tokenSaleWebsiteButton.setTitle(TokenSaleStrings.tokenSalesTitle, for: UIControlState())
     }
 
 }

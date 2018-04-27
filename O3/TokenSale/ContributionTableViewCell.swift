@@ -28,6 +28,8 @@ class ContributionTableViewCell: UITableViewCell {
     @IBOutlet weak var neoRateLabel: UILabel!
     @IBOutlet weak var gasRateLabel: UILabel!
     @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var receiveTitleLabel: UILabel!
+
     @IBOutlet weak var amountTextField: UITextField! {
         didSet {
             inputToolbar = AssetInputToolbar()
@@ -149,6 +151,7 @@ class ContributionTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         setThemedElements()
+        receiveTitleLabel.text = TokenSaleStrings.youWillReceiveTitle
         neoSelectorContainerView.isUserInteractionEnabled = true
         gasSelectorContainerView.isUserInteractionEnabled = true
         neoSelectorContainerView.addGestureRecognizer(

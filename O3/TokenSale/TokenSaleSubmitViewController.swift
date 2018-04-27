@@ -11,6 +11,7 @@ import NeoSwift
 class TokenSaleSubmitViewController: UIViewController {
 
     var transactionInfo: TokenSaleTableViewController.TokenSaleTransactionInfo!
+    @IBOutlet weak var sendingProgressLabel: UILabel!
 
     func setThemedElements() {
         view.theme_backgroundColor = O3Theme.backgroundColorPicker
@@ -42,6 +43,7 @@ class TokenSaleSubmitViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         self.navigationItem.hidesBackButton = true
         self.navigationController?.isNavigationBarHidden = true
         setThemedElements()
@@ -61,5 +63,9 @@ class TokenSaleSubmitViewController: UIViewController {
 
             vc.transactionInfo = info
         }
+    }
+
+    func setLocalizedStrings() {
+        sendingProgressLabel.text = TokenSaleStrings.sendingInProgress
     }
 }

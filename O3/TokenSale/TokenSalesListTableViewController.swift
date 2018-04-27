@@ -14,10 +14,11 @@ import WebBrowser
 class TokenSalesListTableViewController: UITableViewController {
     var tokenSales: TokenSales?
     @IBOutlet var subscribeButton: UIButton?
+    @IBOutlet weak var getNotifiedTitleLabel: UILabel!
+    @IBOutlet weak var getNotifiedDescriptionLabel: UILabel!
 
     func setupNavigationBar() {
         self.navigationController?.hideHairline()
-        self.navigationItem.title = "Token Sales"
     }
 
     func setThemedElements() {
@@ -28,6 +29,7 @@ class TokenSalesListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         setupNavigationBar()
         setThemedElements()
 
@@ -99,7 +101,7 @@ class TokenSalesListTableViewController: UITableViewController {
         }
         let data = TokenSaleTableViewCell.TokenSaleData(imageURL: sale.squareLogoURL, name: sale.name, shortDescription: sale.shortDescription, time: sale.endTime)
         cell.tokenSaleData = data
-        cell.actionLabel.text = "Checking status..."
+        cell.actionLabel.text = TokenSaleStrings.checkingStatus
         checkWhitelisted(sale: sale, indexPath: indexPath)
         return cell
     }
@@ -133,21 +135,29 @@ class TokenSalesListTableViewController: UITableViewController {
                 DispatchQueue.main.async {
                     switch result {
                     case .failure:
-                        cell.actionLabel.text = "not whitelisted"
+                        cell.actionLabel.text = TokenSaleStrings.notWhitelisted
                         cell.actionLabel.theme_textColor = O3Theme.disabledColorPicker
                         self.tokenSales?.live[indexPath.row].allowToParticipate = false
                     case .success(let whitelisted):
                         self.tokenSales?.live[indexPath.row].allowToParticipate = whitelisted
                         if whitelisted == true {
-                            cell.actionLabel.text = "Participate"
+                            cell.actionLabel.text = TokenSaleStrings.participate
                             cell.actionLabel.theme_textColor = O3Theme.primaryColorPicker
                         } else {
-                            cell.actionLabel.text = "Not whitelisted"
+                            cell.actionLabel.text = TokenSaleStrings.notWhitelisted
                             cell.actionLabel.theme_textColor = O3Theme.disabledColorPicker
                         }
                     }
                 }
             })
         }
+    }
+
+    func setLocalizedStrings() {
+        self.navigationItem.title = TokenSaleStrings.tokenSalesTitle
+        getNotifiedTitleLabel.text = TokenSaleStrings.getNotifiedTitle
+        getNotifiedDescriptionLabel.text = TokenSaleStrings.getNotifiedDescription
+        subscribeButton?.setTitle(TokenSaleStrings.subscribe, for: UIControlState())
+
     }
 }

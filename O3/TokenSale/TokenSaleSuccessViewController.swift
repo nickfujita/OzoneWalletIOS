@@ -15,7 +15,10 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet var tableView: UITableView!
     @IBOutlet var transactionCardView: UIView!
     @IBOutlet var statusLabel: UILabel!
+    @IBOutlet weak var transactionLabel: UILabel!
 
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var closeButton: UIButton!
     var transactionInfo: TokenSaleTableViewController.TokenSaleTransactionInfo!
 
     func setThemedElements() {
@@ -24,6 +27,7 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
         tableView.theme_backgroundColor = O3Theme.cardColorPicker
         statusLabel.theme_textColor = O3Theme.accentColorPicker
     }
+    
 
     var tokenSaleTransactionItems: [TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem]! = []
 
@@ -36,13 +40,13 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
         dateFormatter.dateFormat = "dd MMM yyyy, HH:mm ZZZZZ"
         let localDate = dateFormatter.string(from: now)
 
-        let dateItem = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "DATE", value: localDate)
+        let dateItem = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: TokenSaleStrings.dateReceiptLabel, value: localDate)
         tokenSaleTransactionItems.append(dateItem)
 
-        let tokenSale = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "TOKEN SALE", value: transactionInfo.saleInfo.name)
+        let tokenSale = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: TokenSaleStrings.tokenSaleNameReceiptLabel, value: transactionInfo.saleInfo.name)
         tokenSaleTransactionItems.append(tokenSale)
 
-        let txID = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "TXID", value: transactionInfo.txID)
+        let txID = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: TokenSaleStrings.txidReceiptLabel, value: transactionInfo.txID)
         tokenSaleTransactionItems.append(txID)
 
         let amountFormatter = NumberFormatter()
@@ -51,15 +55,15 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
         amountFormatter.locale = Locale.current
         amountFormatter.usesGroupingSeparator = true
 
-        let sending = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "SENDING", value: String(format: "%@ %@", amountFormatter.string(from: NSNumber(value: transactionInfo.assetAmount))!, transactionInfo.assetNameUsedToPurchase))
+        let sending = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: TokenSaleStrings.sendingReceiptLabel, value: String(format: "%@ %@", amountFormatter.string(from: NSNumber(value: transactionInfo.assetAmount))!, transactionInfo.assetNameUsedToPurchase))
         tokenSaleTransactionItems.append(sending)
 
-        let forTokens = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "FOR", value: String(format: "%@ %@", amountFormatter.string(from: NSNumber(value: transactionInfo.tokensToRecieveAmount))!, transactionInfo.tokensToReceiveName))
+        let forTokens = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: TokenSaleStrings.receivingReceiptLabel, value: String(format: "%@ %@", amountFormatter.string(from: NSNumber(value: transactionInfo.tokensToRecieveAmount))!, transactionInfo.tokensToReceiveName))
         tokenSaleTransactionItems.append(forTokens)
 
         //better move fee to its own const
         if transactionInfo.priorityIncluded == true {
-            let priority = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: "PRIORITY 🚀", value: "0.0011 GAS")
+            let priority = TokenSaleTransactionInfoTableViewCell.TokenSaleTransactionItem(title: TokenSaleStrings.priorityReceiptLabel, value: "0.0011 GAS")
             tokenSaleTransactionItems.append(priority)
         }
 
@@ -72,6 +76,7 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLocalizedStrings()
         self.navigationController?.isNavigationBarHidden = true
         self.navigationItem.hidesBackButton = true
         setThemedElements()
@@ -91,7 +96,7 @@ class TokenSaleSuccessViewController: UIViewController, UITableViewDelegate, UIT
     }
 
     @IBAction func shareTapped(_ sender: Any) {
-        let text = String(format: "This receipt proves that your transaction has submitted for procesing on the NEO Blockchain.\n\nOnce it has been authorized on to the blockchain, the funds will leave your wallet, and the token issuer will be responsible for the distribution of the tokens.You can use this transaction ID as proof of your participation in the token sale. Additional details follow.\n\n Date: %@\nToken Sale Name: %@\nTransaction ID: %@\nSent: %@\nShould Recieve: %@\n\nRegardsO3 Team", tokenSaleTransactionItems[0].value, tokenSaleTransactionItems[1].value, tokenSaleTransactionItems[2].value, tokenSaleTransactionItems[3].value, tokenSaleTransactionItems[4].value)
+        let text = String(format: TokenSaleStrings.emailReceipt, tokenSaleTransactionItems[0].value, tokenSaleTransactionItems[1].value, tokenSaleTransactionItems[2].value, tokenSaleTransactionItems[3].value, tokenSaleTransactionItems[4].value)
         let transactionCard = UIImage.imageWithView(view: self.transactionCardView)
         let activityViewController = UIActivityViewController(activityItems: [text, transactionCard], applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
@@ -119,6 +124,13 @@ extension TokenSaleSuccessViewController {
         let item = tokenSaleTransactionItems[indexPath.row]
         cell.info = item
         return cell
+    }
+
+    func setLocalizedStrings() {
+        statusLabel.text = TokenSaleStrings.successfulTransaction
+        transactionLabel.text = TokenSaleStrings.transactionTitle
+    saveButton.setTitle(TokenSaleStrings.saveTitle, for: UIControlState())
+        closeButton.setTitle(TokenSaleStrings.closeTitle, for: UIControlState())
     }
 
 }
