@@ -52,8 +52,7 @@
 "ONBOARDING Login_Button_Specifying_PassCode" = "Login using Passcode";
 
 /* When the user tries to create a new wallet, but they already have one saved on the devicve, this explanation/warning is given to the user */
-"ONBOARDING_Already_Have_Wallet_Explanation" = "Looks like you already have an existing wallet on this device.\n\n" +
-    "Creating a new wallet will write the new private key over the existing one. Please make sure you have your private key backed up.";
+"ONBOARDING_Already_Have_Wallet_Explanation" = "Looks like you already have an existing wallet on this device.\n\n Creating a new wallet will write the new private key over the existing one. Please make sure you have your private key backed up.";
 
 /* Title For Creating a New Wallet in the onboarding flow */
 "ONBOARDING_Create_New _Wallet" = "Create New Wallet";
@@ -80,8 +79,7 @@
 "ONBOARDING_New To O3?" = "New To O3?";
 
 /* A warning given to the user to make sure that they have backed up their private key in a secure location. Also states that deletibg the passcode will delete the key from the device */
-"ONBOARDING_Please_Backup Warning" = "Please backup this private key in another secure location.\n\n" +
-    "It is highly reccomended that you have a passcode set on your iPhone. Removing the passcode from your device will delete your private key from the keychain.";
+"ONBOARDING_Please_Backup Warning" = "Please backup this private key in another secure location.\n\nIt is highly reccomended that you have a passcode set on your iPhone. Removing the passcode from your device will delete your private key from the keychain.";
 
 /* A title presented over the top of the private key, specifies WIF format. e.g. Your Private Key (WIF) */
 "ONBOARDING_Private_Key_title" = "Your Private Key (WIF)";
@@ -90,7 +88,7 @@
 "ONBOARDING_Selecting_Best_Node" = "Selecting Best Node...";
 
 /* Title to start the app after completing the onboarding */
-"ONBOARDING_Start_Action_Title" = ""; /* NEW */
+"ONBOARDING_Start_Action_Title" = "Start"; /* NEW */
 
 /* The first subtitle in the onboarding pages */
 "ONBOARDING_Tutorial_Subtitle_One" = "Safely monitor your wallet from the palm of your hand";
@@ -186,15 +184,13 @@
 "SEND_Not_Enough_Balance_Error" = "You don't have enough %@. Your balance is %.8f"; /* NEW */
 
 /* Error to display when the user is trying to send a token but does not have enough gas to make the invoke occur. It requires 0.00000001 GAS in the wallet in order to send a token */
-"SEND_Not_Enough_Gas_Token_Transfer" = "When Sending a NEP5 Token you must have at least 0.00000001 GAS in your wallet. " +
-    "This GAS is not used, but still required to be in your wallet."; /* NEW */
+"SEND_Not_Enough_Gas_Token_Transfer" = "When Sending a NEP5 Token you must have at least 0.00000001 GAS in your wallet. This GAS is not used, but still required to be in your wallet."; /* NEW */
 
 /* A title for the paste button in the send screen */
 "SEND_Paste_Button_Title" = "Paste"; /* NEW */
 
 /* Error to display when the user is trying to send gas, but the amount they are sending is the max amount. The user can round down the gas amount a small amount to precent this error */
-"SEND_Rounding_Gas_Error" = "When sending all GAS, please subtract 0.00000001 from the total amount. " +
-    "This prevents rounding errors which can cause the transaction to not process"; /* NEW */
+"SEND_Rounding_Gas_Error" = "When sending all GAS, please subtract 0.00000001 from the total amount. This prevents rounding errors which can cause the transaction to not process"; /* NEW */
 
 /* A title for the Select Asset pull up menu */
 "SEND_Select_Asset_Title" = "Select Asset"; /* NEW */
@@ -215,8 +211,7 @@
 "SETTINGS_Add_Watch_Address" = "Add Watch Address"; /* NEW */
 
 /* Description under add address button that describes what a watch address is and how it will work in the app */
-"SETTINGS_Add_Watch_Description" = "Watch Only Addresses let you monitor your portfolio
-    "in an isolated environment. Although you won't be able to send from these addresses you will be able to check the balance. "; /* NEW */
+"SETTINGS_Add_Watch_Description" = "Watch Only Addresses let you monitor your portfolio in an isolated environment. Although you won't be able to send from these addresses you will be able to check the balance. "; /* NEW */
 
 /* Label to describe an address input field */
 "SETTINGS_Address_Label" = "Address"; /* NEW */
@@ -303,8 +298,7 @@
 "TOKENSALE_Ends_In" = "Ends In %@"; /* NEW */
 
 /* A detailed description about what will happen if the user signs up for the email list to get notified about token sales */
-"TOKENSALE_Get_Notified_Description" = "Share your email, and we'll send you info about the latest token sales." +
-    "We vet all tokens that appear on O3, and this email is never shared with third parties. No 💩coins allowed!"; /* NEW */
+"TOKENSALE_Get_Notified_Description" = "Share your email, and we'll send you info about the latest token sales. We vet all tokens that appear on O3, and this email is never shared with third parties. No 💩coins allowed!"; /* NEW */
 
 /* A title showing users can get notified about the latest token sales */
 "TOKENSALE_Get_Notified_Title" = "Get Notified"; /* NEW */
@@ -400,8 +394,7 @@
 "TOKENSALE_Transaction" = "Transaction"; /* NEW */
 
 /* Description that shows when there is an error */
-"TOKENSALE_Transaction_Error_Description" = "Your transaction doesn't go through. " +
-"This could be because of the Smart Contract rejected your transaction. Please try again later or contact the token issuer directly."; /* NEW */
+"TOKENSALE_Transaction_Error_Description" = "Your transaction doesn't go through. This could be because of the Smart Contract rejected your transaction. Please try again later or contact the token issuer directly."; /* NEW */
 
 /* A title for a button that directs the user to the tokensale website button */
 "TOKENSALE_Website_Button_Title" = "Website"; /* NEW */
