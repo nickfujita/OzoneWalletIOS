@@ -36,7 +36,6 @@ class Nep5SelectionCollectionViewController: UIViewController, UICollectionViewD
         super.viewDidLoad()
         setLocalizedStrings()
         setThemedElements()
-        let layout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
         collectionView.dataSource = self
         collectionView.delegate = self
         searchBar.delegate = self
@@ -87,16 +86,16 @@ class Nep5SelectionCollectionViewController: UIViewController, UICollectionViewD
                 NotificationCenter.default.post(name: Notification.Name("AddedNewToken"), object: nil)
                     Answers.logCustomEvent(withName: "Added New Token",
                                            customAttributes: ["Token Name": token.name,
-                                                              "Num Tokens": UserDefaultsManager.selectedNEP5Token?.keys.count,
-                                                              "Which Tokens": UserDefaultsManager.selectedNEP5Token?.description])
+                                                              "Num Tokens": UserDefaultsManager.selectedNEP5Token?.keys.count as Any,
+                                                              "Which Tokens": UserDefaultsManager.selectedNEP5Token?.description as Any])
             } else {
                 cell.inWalletImageView.isHidden = true
                 UserDefaultsManager.selectedNEP5Token?.removeValue(forKey: token.tokenHash)
                 NotificationCenter.default.post(name: Notification.Name("AddedNewToken"), object: nil)
                 Answers.logCustomEvent(withName: "Removed Token",
                                        customAttributes: ["Token Name": token.name,
-                                                          "Num Tokens": UserDefaultsManager.selectedNEP5Token?.keys.count,
-                                                          "Which Tokens": UserDefaultsManager.selectedNEP5Token?.description])
+                                                          "Num Tokens": UserDefaultsManager.selectedNEP5Token?.keys.count as Any,
+                                                          "Which Tokens": UserDefaultsManager.selectedNEP5Token?.description as Any])
             }
         }
     }

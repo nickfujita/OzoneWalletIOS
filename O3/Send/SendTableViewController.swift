@@ -178,7 +178,7 @@ class SendTableViewController: UITableViewController, AddressSelectDelegate, QRS
         amountFormatter.maximumFractionDigits = self.selectedAsset!.decimal
         amountFormatter.numberStyle = .decimal
 
-        var amount = amountFormatter.number(from: (self.amountField.text?.trim())!)
+        let amount = amountFormatter.number(from: (self.amountField.text?.trim())!)
 
         if amount == nil {
             OzoneAlert.alertDialog(message: SendStrings.invalidAmountError, dismissTitle: OzoneAlert.okPositiveConfirmString, didDismiss: {
