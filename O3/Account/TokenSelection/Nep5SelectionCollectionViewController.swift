@@ -35,12 +35,12 @@ class Nep5SelectionCollectionViewController: UIViewController, UICollectionViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         setLocalizedStrings()
+        setThemedElements()
         let layout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
         collectionView.dataSource = self
         collectionView.delegate = self
         searchBar.delegate = self
         self.hideKeyboardWhenTappedAround()
-        searchBar.setBackgroundImage(UIImage(color: .white), for: .any, barMetrics: UIBarMetrics.default)
         loadTokens()
     }
 
@@ -107,6 +107,26 @@ class Nep5SelectionCollectionViewController: UIViewController, UICollectionViewD
                 item.symbol.lowercased().hasPrefix(searchText.lowercased())
         }
         collectionView.reloadData()
+    }
+
+    func setThemedElements() {
+        collectionView.theme_backgroundColor = O3Theme.backgroundColorPicker
+        var background: UIImage
+        if UserDefaultsManager.themeIndex == 0 {
+            background = UIImage(color: .white)!
+            searchBar.setTextFieldColor(color: .white)
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.black]
+        } else {
+            background = UIImage(color: Theme.dark.backgroundColor)!
+            searchBar.setTextFieldColor(color: Theme.dark.backgroundColor)
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: UIColor.white]
+        }
+
+        searchBar.theme_keyboardAppearance = O3Theme.keyboardPicker
+        searchBar.theme_backgroundColor = O3Theme.backgroundColorPicker
+        searchBar.theme_tintColor = O3Theme.textFieldTextColorPicker
+
+        searchBar.setBackgroundImage(background, for: .any, barMetrics: UIBarMetrics.default)
     }
 
     func setLocalizedStrings() {
