@@ -15,7 +15,7 @@ import Crashlytics
 
 class SendTableViewController: UITableViewController, AddressSelectDelegate, QRScanDelegate {
 
-    var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
+    weak var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
 
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var amountField: UITextField!
