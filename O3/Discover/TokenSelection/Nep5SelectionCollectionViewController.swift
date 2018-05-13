@@ -13,6 +13,7 @@ import Crashlytics
 class Nep5SelectionCollectionViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
     let numberOfTokensPerRow: CGFloat = 2
     let gridSpacing: CGFloat = 8
+    var selectedAsset = ""
     var supportedTokens = [NEP5Token]()
     var filteredTokens = [NEP5Token]()
 
@@ -69,8 +70,18 @@ class Nep5SelectionCollectionViewController: UIViewController, UICollectionViewD
         return UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let dest = segue.destination as? AssetDetailViewController else {
+            return
+        }
+        dest.selectedAsset = selectedAsset
+    }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //TODO
+        DispatchQueue.main.async {
+            self.selectedAsset = self.filteredTokens[indexPath.row].symbol
+            self.performSegue(withIdentifier: "segueToAssetDetail", sender: nil)
+        }
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -102,6 +113,6 @@ class Nep5SelectionCollectionViewController: UIViewController, UICollectionViewD
     }
 
     func setLocalizedStrings() {
-
+        searchBar.placeholder = DiscoverStrings.nep5TokenSearch
     }
 }

@@ -16,10 +16,10 @@ class TokenSelectionTabViewController: TabmanViewController, PageboyViewControll
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let nep5TokensViewController = UIStoryboard(name: "TokenSelection", bundle: nil).instantiateViewController(withIdentifier: "nep5SelectionCollectionViewController")
-        let nftTokensViewController = UIStoryboard(name: "TokenSelection", bundle: nil).instantiateViewController(withIdentifier: "nftSelectionViewController")
+        let nep5TokensViewController = UIStoryboard(name: "NewsFeed", bundle: nil).instantiateViewController(withIdentifier: "nep5SelectionCollectionViewController")
+        let newsFeedViewController = UIStoryboard(name: "NewsFeed", bundle: nil).instantiateViewController(withIdentifier: "NewsFeedViewController")
+        self.viewControllers.append(newsFeedViewController)
         self.viewControllers.append(nep5TokensViewController)
-        self.viewControllers.append(nftTokensViewController)
         self.dataSource = self
         applyNavBarTheme()
         setTabmanAppearance()
@@ -45,7 +45,7 @@ class TokenSelectionTabViewController: TabmanViewController, PageboyViewControll
             appearance.state.selectedColor = UserDefaultsManager.theme.primaryColor
             appearance.state.color = UserDefaultsManager.theme.lightTextColor
             appearance.text.font = O3Theme.topTabbarItemFont
-            appearance.layout.edgeInset = 0
+            appearance.layout.edgeInset = 16
             appearance.style.background = .solid(color: UserDefaultsManager.theme.backgroundColor)
         })
         self.bar.location = .top
@@ -58,8 +58,7 @@ class TokenSelectionTabViewController: TabmanViewController, PageboyViewControll
     }
 
     func setLocalizedStrings() {
-        bar.items = [Item(title: TokenSelectionStrings.NEP5),
-                     Item(title: TokenSelectionStrings.artsAndCollectibles)]
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "times"), style: .plain, target: self, action: #selector(tappedClose(_:)))
+        bar.items = [Item(title: DiscoverStrings.newsTitle),
+                     Item(title: DiscoverStrings.NEP5)]
     }
 }
