@@ -204,7 +204,7 @@ public class Account {
             let runningAmountRounded = round(NSDecimalNumber(decimal: runningAmount * pow(10, 8)).doubleValue)
             let amountToGetBack = runningAmountRounded - amountToSendRounded
             let amountToGetBackInMemory = UInt64(amountToGetBack)
-            
+
             payload += toByteArray(amountToGetBackInMemory)
             payload += hashedSignature.bytes
 
@@ -275,7 +275,7 @@ public class Account {
         }
 
         let amountDecimal = claims.gas * pow(10, 8)
-        let amountInt = NSDecimalNumber(decimal: amountDecimal).intValue
+        let amountInt = NSDecimalNumber(decimal: amountDecimal).uint64Value
         payload += [0x00] // Attributes
         payload += [0x00] // Inputs
         payload += [0x01] // Output Count
