@@ -65,15 +65,23 @@ class AccountAssetTableViewController: UITableViewController {
 
     func claimGas() {
         self.enableClaimButton(enable: false)
-        Authenticated.account?.claimGas { _, error in
+        Authenticated.account?.claimGas { success, error in
 
             if error != nil {
                 //if error then try again in 10 seconds
                 DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
                     self.claimGas()
                 }
-                return
             }
+
+            if success == false {
+                DispatchQueue.main.async {
+                    OzoneAlert.alertDialog(message: OzoneAlert.errorTitle, dismissTitle: SendStrings.transactionFailedTitle) {
+                        return
+                    }
+                }
+            }
+
             Answers.logCustomEvent(withName: "Gas Claimed",
                                    customAttributes: ["Amount": self.mostRecentClaimAmount])
             DispatchQueue.main.async {

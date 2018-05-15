@@ -191,8 +191,9 @@ public class Account {
         if needsTwoOutputTransactions {
             //Transaction To Reciever
             payload += [0x02] + asset.rawValue.dataWithHexString().bytes.reversed()
-            let amountToSend = Decimal(toSendAmount) * pow(10, 8)
-            let amountToSendInMemory = NSDecimalNumber(decimal: amountToSend).intValue
+            let amountToSend = toSendAmount * pow(10, 8)
+            let amountToSendRounded = round(amountToSend)
+            let amountToSendInMemory = UInt64(amountToSendRounded)
             payload += toByteArray(amountToSendInMemory)
 
             //reciever addressHash
@@ -200,17 +201,20 @@ public class Account {
 
             //Transaction To Sender
             payload += asset.rawValue.dataWithHexString().bytes.reversed()
-            let amountToGetBack = runningAmount * pow(10, 8) - Decimal(toSendAmount) * pow(10, 8)
-            let amountToGetBackInMemory = NSDecimalNumber(decimal: amountToGetBack).intValue
+            let runningAmountRounded = round(NSDecimalNumber(decimal: runningAmount * pow(10, 8)).doubleValue)
+            let amountToGetBack = runningAmountRounded - amountToSendRounded
+            let amountToGetBackInMemory = UInt64(amountToGetBack)
+
             payload += toByteArray(amountToGetBackInMemory)
             payload += hashedSignature.bytes
 
         } else {
             payload += [0x01] + asset.rawValue.dataWithHexString().bytes.reversed()
-            let amountToSend = Decimal(toSendAmount) * pow(10, 8)
-            let amountToGetBackInMemory = NSDecimalNumber(decimal: amountToSend).intValue
+            let amountToSend = toSendAmount * pow(10, 8)
+            let amountToSendRounded = round(amountToSend)
+            let amountToSendInMemory = UInt64(amountToSendRounded)
 
-            payload += toByteArray(amountToGetBackInMemory)
+            payload += toByteArray(amountToSendInMemory)
             payload += toAddress.hashFromAddress().dataWithHexString()
         }
         return Data(bytes: payload)
@@ -271,7 +275,7 @@ public class Account {
         }
 
         let amountDecimal = claims.gas * pow(10, 8)
-        let amountInt = NSDecimalNumber(decimal: amountDecimal).intValue
+        let amountInt = NSDecimalNumber(decimal: amountDecimal).uint64Value
         payload += [0x00] // Attributes
         payload += [0x00] // Inputs
         payload += [0x01] // Output Count
