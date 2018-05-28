@@ -74,7 +74,7 @@ class AccountAssetTableViewController: UITableViewController {
                 }
             }
 
-            if success == false {
+            if success == true {
                 DispatchQueue.main.async {
                     OzoneAlert.alertDialog(message: OzoneAlert.errorTitle, dismissTitle: SendStrings.transactionFailedTitle) {
                         return
