@@ -237,39 +237,44 @@ class SendTableViewController: UITableViewController, AddressSelectDelegate, QRS
     }
 
     func qrScanned(data: String) {
-        let nep9Data = NEP9.parse(data)
-        let address = nep9Data?.to()
-        let asset = nep9Data?.asset()
-        let amount = nep9Data?.amount()
         
-        toAddressField.text = address
-        
-        
-        if asset != "" {
-            var selected: TransferableAsset?
+        if data.range(of:"neo:") == nil {
+            toAddressField.text = data
+        } else {
+            let nep9Data = NEP9.parse(data)
+            let address = nep9Data?.to()
+            let asset = nep9Data?.asset()
+            let amount = nep9Data?.amount()
             
-            if (asset?.lowercased() == "neo") {
-                selected = O3Cache.neo()
-            } else if (asset?.lowercased() == "gas") {
-                selected = O3Cache.gas()
-            } else {
-                let tokenAssets = O3Cache.tokenAssets()
-                let assetIndex = tokenAssets.index(where: { (item) -> Bool in
-                    item.id.range(of:asset!) != nil
-                })
-                if assetIndex != nil {
-                    selected = tokenAssets[assetIndex!]
+            toAddressField.text = address
+            
+            
+            if asset != "" {
+                var selected: TransferableAsset?
+                
+                if (asset?.lowercased() == "neo") {
+                    selected = O3Cache.neo()
+                } else if (asset?.lowercased() == "gas") {
+                    selected = O3Cache.gas()
+                } else {
+                    let tokenAssets = O3Cache.tokenAssets()
+                    let assetIndex = tokenAssets.index(where: { (item) -> Bool in
+                        item.id.range(of:asset!) != nil
+                    })
+                    if assetIndex != nil {
+                        selected = tokenAssets[assetIndex!]
+                    }
+                }
+                
+                if selected != nil {
+                    self.selectedAsset = selected
+                    self.selectedAssetLabel.text = selected!.symbol
                 }
             }
-     
-            if selected != nil {
-                self.selectedAsset = selected
-                self.selectedAssetLabel.text = selected!.symbol
+            
+            if amount != nil {
+                self.amountField.text = String(format:"%f",amount!)
             }
-        }
-        
-        if amount != nil {
-            self.amountField.text = String(format:"%f",amount!)
         }
         
         enableSendButton()
