@@ -252,9 +252,9 @@ class SendTableViewController: UITableViewController, AddressSelectDelegate, QRS
             if asset != "" {
                 var selected: TransferableAsset?
                 
-                if (asset?.lowercased() == "neo") {
+                if (asset?.lowercased() == "neo" || asset == AssetId.neoAssetId.rawValue) {
                     selected = O3Cache.neo()
-                } else if (asset?.lowercased() == "gas") {
+                } else if (asset?.lowercased() == "gas" || asset == AssetId.gasAssetId.rawValue) {
                     selected = O3Cache.gas()
                 } else {
                     let tokenAssets = O3Cache.tokenAssets()
